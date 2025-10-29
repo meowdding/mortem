@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "morgem",
+  "version": "${version}",
+  "name": "Mortem",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "icon": "assets/mortem/icon.png",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "me.owdding.mortem.Mortem"
+      }
+    ]
+  },
+  "mixins": [
+    "mortem.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16",
+    "minecraft": ">=${minecraft}"
+  }
+}
