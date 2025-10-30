@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -24,6 +25,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    modImplementation {
+        attributes.attribute(Attribute.of("earth.terrarium.cloche.modLoader", String::class.java), "fabric")
+    }
+}
+
 dependencies {
     attributesSchema {
         attribute(Attribute.of("earth.terrarium.cloche.minecraftVersion", String::class.java)) {
@@ -41,7 +48,9 @@ dependencies {
         })
     })
     includeImplementation(libs.skyblockapi)
-    includeImplementation(libs.meowdding.lib)
+    includeImplementation(libs.meowdding.lib) {
+        exclude("tech.thatgravyboat")
+    }
     includeImplementation(versionedCatalog["placeholders"])
     modImplementation(libs.fabric.loader)
     modImplementation(libs.repo.lib)
@@ -57,9 +66,9 @@ dependencies {
 
     modRuntimeOnly(libs.devauth)
 }
-fun DependencyHandler.includeImplementation(dep: Any) {
+fun <T : Any> DependencyHandler.includeImplementation(dep: Provider<T>, action: Action<ExternalModuleDependency> = Action<ExternalModuleDependency> {}) {
     include(dep)
-    modImplementation(dep)
+    modImplementation(dep, action)
 }
 
 val mcVersion = stonecutter.current.version.replace(".", "")
