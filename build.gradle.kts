@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -48,9 +49,7 @@ dependencies {
         })
     })
     includeImplementation(libs.skyblockapi)
-    includeImplementation(libs.meowdding.lib) {
-        exclude("tech.thatgravyboat")
-    }
+    includeImplementation(libs.meowdding.lib)
     includeImplementation(versionedCatalog["placeholders"])
     modImplementation(libs.fabric.loader)
     modImplementation(libs.repo.lib)
@@ -66,9 +65,10 @@ dependencies {
 
     modRuntimeOnly(libs.devauth)
 }
-fun <T : Any> DependencyHandler.includeImplementation(dep: Provider<T>, action: Action<ExternalModuleDependency> = Action<ExternalModuleDependency> {}) {
+
+fun DependencyHandler.includeImplementation(dep: Any) {
     include(dep)
-    modImplementation(dep, action)
+    modImplementation(dep)
 }
 
 val mcVersion = stonecutter.current.version.replace(".", "")
