@@ -52,7 +52,7 @@ object DungeonBreakerDisplay : MortemOverlay {
             color = TextColor.GRAY
 
             append("$current") { color = TextColor.YELLOW }
-            append("/") { color = TextColor.GRAY }
+            append("/")
             append("$max") { color = TextColor.YELLOW }
             append("⸕") { color = TextColor.RED }
         }
