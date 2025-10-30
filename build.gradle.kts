@@ -20,7 +20,7 @@ repositories {
     scopedMaven("https://repo.hypixel.net/repository/Hypixel", "net.hypixel")
     scopedMaven("https://maven.parchmentmc.org/", "org.parchmentmc")
     scopedMaven("https://api.modrinth.com/maven", "maven.modrinth")
-    scopedMaven("https://maven.teamresourceful.com/repository/maven-public/", "tech.thatgravyboat", "me.owdding")
+    scopedMaven("https://maven.teamresourceful.com/repository/maven-public/", "earth.terrarium", "com.teamresourceful", "tech.thatgravyboat", "me.owdding")
     scopedMaven("https://maven.nucleoid.xyz/", "eu.pb4")
     mavenCentral()
 }
