@@ -1,29 +1,36 @@
 package me.owdding.mortem.utils
 
+import me.owdding.mortem.utils.Utils.unsafeCast
+import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
+import tech.thatgravyboat.skyblockapi.utils.extentions.since
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 import kotlin.time.Duration
+import kotlin.time.Instant
 
-class CachedValue<T>(private val cacheTime: Duration, private val supplier: () -> T) {
+@Suppress("ClassName")
+private object UNINITIALIZED_VALUE
 
-    private var value: T? = null
-    private var lastUpdate: Long = 0
+class CachedValue<Type>(private val timeToLive: Duration = Duration.INFINITE, private val supplier: () -> Type) {
+    private var value: Any? = UNINITIALIZED_VALUE
+    var lastUpdated: Instant = Instant.DISTANT_PAST
 
-    operator fun getValue(thisRef: Any?, property: Any?): T = get()
+    operator fun getValue(thisRef: Any?, property: Any?) = getValue()
 
-    fun get(): T {
-        if (value == null || System.currentTimeMillis() - lastUpdate > cacheTime.inWholeMilliseconds) {
-            value = supplier()
-            lastUpdate = System.currentTimeMillis()
+    fun getValue(): Type {
+        if (!hasValue()) {
+            this.value = supplier()
+            lastUpdated = currentInstant()
         }
-        return value!!
+        if (value === UNINITIALIZED_VALUE) throw ClassCastException("Failed to initialize value!")
+        return value.unsafeCast()
     }
+
+    fun hasValue() = value !== UNINITIALIZED_VALUE && lastUpdated.since() < timeToLive
 
     fun invalidate() {
-        value = null
+        value = UNINITIALIZED_VALUE
     }
-
-    operator fun invoke(): T = get()
 }
 
 fun KProperty0<*>.invalidateCache() {
