@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.gradle.kotlin.dsl.withType
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -25,6 +26,12 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    modImplementation {
+        attributes.attribute(Attribute.of("earth.terrarium.cloche.modLoader", String::class.java), "fabric")
+    }
+}
+
 dependencies {
     attributesSchema {
         attribute(Attribute.of("earth.terrarium.cloche.minecraftVersion", String::class.java)) {
@@ -41,28 +48,27 @@ dependencies {
             artifactType("zip")
         })
     })
-    modImplementation(libs.skyblockapi)
-    include(libs.skyblockapi)
-    modImplementation(libs.meowdding.lib)
-    include(libs.meowdding.lib)
-    modImplementation(versionedCatalog["placeholders"])
-    include(versionedCatalog["placeholders"])
+    includeImplementation(libs.skyblockapi)
+    includeImplementation(libs.meowdding.lib)
+    includeImplementation(versionedCatalog["placeholders"])
     modImplementation(libs.fabric.loader)
     modImplementation(libs.repo.lib)
     modImplementation(libs.fabric.language.kotlin)
     modImplementation(versionedCatalog["fabric.api"])
-    modImplementation(versionedCatalog["resourceful.lib"])
-    include(versionedCatalog["resourceful.lib"])
-    modImplementation(versionedCatalog["resourceful.config"])
-    include(versionedCatalog["resourceful.config"])
-    modImplementation(libs.resourceful.config.kotlin)
-    include(libs.resourceful.config.kotlin)
+    includeImplementation(versionedCatalog["resourceful.lib"])
+    includeImplementation(versionedCatalog["resourceful.config"])
+    includeImplementation(libs.resourceful.config.kotlin)
     compileOnly(libs.meowdding.ktmodules)
     compileOnly(libs.meowdding.ktcodecs)
     ksp(libs.meowdding.ktmodules)
     ksp(libs.meowdding.ktcodecs)
 
     modRuntimeOnly(libs.devauth)
+}
+
+fun DependencyHandler.includeImplementation(dep: Any) {
+    include(dep)
+    modImplementation(dep)
 }
 
 val mcVersion = stonecutter.current.version.replace(".", "")
