@@ -43,7 +43,7 @@ object DungeonBreakerDisplay : MortemOverlay {
     override val name: Component = Text.of("Dungeonbreaker Charges")
     override val enabled: Boolean get() = OverlayConfig.dungeonBreakerOverlay && SkyBlockIsland.THE_CATACOMBS.inIsland()
     override val position: Position = OverlayPositions.dungeonBreaker
-    override val bounds: Pair<Int, Int> get() = display.get()?.let { McFont.width(it) to McFont.height } ?: (0 to 0)
+    override val bounds: Pair<Int, Int> get() = display.getValue()?.let { McFont.width(it) to McFont.height } ?: (0 to 0)
 
     private val display = CachedValue(1.ticks) {
         val (current, max) = McPlayer.inventory.firstNotNullOfOrNull { it.getData(BREAKER_CHARGES) } ?: return@CachedValue null
@@ -59,7 +59,7 @@ object DungeonBreakerDisplay : MortemOverlay {
     }
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-        val display = display.get() ?: return
+        val display = display.getValue() ?: return
         graphics.drawString(display, 0, 0, shadow = true)
     }
 
