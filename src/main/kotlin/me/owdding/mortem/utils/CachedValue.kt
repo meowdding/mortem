@@ -1,6 +1,5 @@
 package me.owdding.mortem.utils
 
-import me.owdding.mortem.utils.Utils.unsafeCast
 import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
 import tech.thatgravyboat.skyblockapi.utils.extentions.since
 import kotlin.reflect.KProperty0
