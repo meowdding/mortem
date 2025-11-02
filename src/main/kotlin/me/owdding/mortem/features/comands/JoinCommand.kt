@@ -63,7 +63,7 @@ object JoinCommand {
 
     @Subscription
     fun onRepo(event: FinishRepoLoadingEvent) {
-        RemoteRepo.getFileContentAsJson("dungeon/joincommands.json")?.toData(CODEC)
+        RemoteRepo.getFileContentAsJson("dungeons/joincommands.json")?.toData(CODEC)
     }
 
 }
