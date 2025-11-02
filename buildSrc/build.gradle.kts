@@ -8,6 +8,5 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.meowdding.resources)
     implementation(libs.gson)
 }
