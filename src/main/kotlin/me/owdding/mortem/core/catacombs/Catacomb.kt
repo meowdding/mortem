@@ -3,12 +3,10 @@ package me.owdding.mortem.core.catacombs
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
-import me.owdding.mortem.core.catacombs.nodes.NodeType
+import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
-import net.minecraft.world.level.block.Rotation
 import org.joml.Vector2i
-import org.joml.Vector3f
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 
 data class Catacomb(
@@ -26,20 +24,25 @@ data class Catacomb(
 
     var grid: MutableMap<Vector2i, CatacombsNode<*>> = mutableMapOf()
 
-    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: NodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
+    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
 
     override val instance: InstanceType get() = InstanceType.CATACOMBS
 }
 
-enum class CatacombRoomType {
-    NORMAL,
-    TRAP,
-    FAIRY,
-    PUZZLE,
-    BLOOD,
-    START,
-    UNKNOWN,
-    DEFAULT,
+fun interface CatacombsColorProvider {
+    fun getColor(): Int
+}
+
+enum class CatacombRoomType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
+    NORMAL({ 0xAb6b00 }),
+    TRAP({ 0xFF7F0F }),
+    FAIRY({ 0xF080FF }),
+    PUZZLE({ 0xe050F0 }),
+    MINIBOSS({ 0xFFFF00 }),
+    BLOOD({ 0xFF0000 }),
+    START({ 0x00FF00 }),
+    UNKNOWN({ 0xababab }),
+    DEFAULT({ 0x000000 }),
     ;
 
     companion object {
@@ -49,6 +52,7 @@ enum class CatacombRoomType {
             CatacombMapColor.FAILED -> BLOOD
             CatacombMapColor.PUZZLE -> PUZZLE
             CatacombMapColor.TRAP -> TRAP
+            CatacombMapColor.MINIBOSS -> MINIBOSS
             CatacombMapColor.FAIRY -> FAIRY
             CatacombMapColor.NORMAL -> NORMAL
             else -> null
@@ -57,11 +61,15 @@ enum class CatacombRoomType {
 
 }
 
-enum class CatacombDoorType {
-    WITHER,
-    BLOOD,
-    NORMAL,
-    DEFAULT,
+enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
+    WITHER({ 0x4f4f4f }),
+    BLOOD({ 0xFF0000 }),
+    NORMAL({ 0xab6b00 }),
+    TRAP({ 0xff7f0f }),
+    MINIBOSS({ 0xFFFF00 }),
+    PUZZLE({ 0xe060f0 }),
+    FAIRY({ 0xf080ff }),
+    DEFAULT({ 0x000000 }),
 ;
 
     companion object {
@@ -69,6 +77,10 @@ enum class CatacombDoorType {
             CatacombMapColor.FAILED -> BLOOD
             CatacombMapColor.NORMAL -> NORMAL
             CatacombMapColor.WITHER -> WITHER
+            CatacombMapColor.FAIRY -> FAIRY
+            CatacombMapColor.PUZZLE -> PUZZLE
+            CatacombMapColor.TRAP -> TRAP
+            CatacombMapColor.MINIBOSS -> MINIBOSS
             CatacombMapColor.UNKNOWN -> DEFAULT
             else -> null
         }
@@ -79,10 +91,4 @@ data class StoredCatacombRoom(
     var name: String,
     var centerHash: Long,
     var directionalHashes: Map<Long, Direction>,
-)
-
-data class CatacombRoom(
-    val roomType: CatacombRoomType,
-    val center: Vector3f,
-    val rotation: Rotation,
 )

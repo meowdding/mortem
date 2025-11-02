@@ -4,8 +4,7 @@ import me.owdding.ktmodules.Module
 import me.owdding.lib.overlays.ConfigPosition
 import me.owdding.lib.overlays.Position
 import me.owdding.mortem.core.catacombs.*
-import me.owdding.mortem.core.catacombs.nodes.DoorNode
-import me.owdding.mortem.core.catacombs.nodes.NodeType
+import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
 import net.minecraft.client.gui.GuiGraphics
@@ -107,26 +106,32 @@ object CatacombMapMatcher : MortemOverlay {
                     )
                 }
 
-                val room = instance.getOrCreateNode(roomGridPosition, NodeType.ROOM)
-                room.addPosition(roomGridPosition / 2)
+                val room = instance.getOrCreateNode(roomGridPosition, CatacombNodeType.ROOM)
+                room.roomType = roomType
 
                 mapOverlay[mapPosition] = CatacombMapColor.MINIBOSS.packedId
                 mapOverlay[mapPosition + halfRoom] = CatacombMapColor.MINIBOSS.packedId
                 val rightDoorColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + rightDoor])
                 val rightColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(roomSize + 1, 0)])
                 val rightDoor = CatacombDoorType.getByColor(rightDoorColor)
-                if (rightDoor != null && rightColor != rightDoorColor) instance.grid[roomGridPosition + vectorOneZero] = DoorNode(rightDoor)
+                if (rightDoor != null && rightColor != rightDoorColor) {
+                    val node = instance.getOrCreateNode(roomGridPosition + vectorOneZero, CatacombNodeType.DOOR)
+                    node.mutateType(rightDoor)
+                }
 
                 val downDoorColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + downDoor])
                 val downColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(0, roomSize + 1)])
                 val downDoor = CatacombDoorType.getByColor(downDoorColor)
-                if (downDoor != null && downColor != downDoorColor) instance.grid[roomGridPosition + vectorZeroOne] = DoorNode(downDoor)
+                if (downDoor != null && downColor != downDoorColor) {
+                    val node = instance.getOrCreateNode(roomGridPosition + vectorZeroOne, CatacombNodeType.DOOR)
+                    node.mutateType(downDoor)
+                }
             }
         }
     }
 
     fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
-        val room = getOrCreateNode(position - twoOffset, NodeType.ROOM)
+        val room = getOrCreateNode(position - twoOffset, CatacombNodeType.ROOM)
         grid[position] = room
         grid[position - oneOffset] = room
     }
@@ -168,10 +173,10 @@ object CatacombMapMatcher : MortemOverlay {
             val width = min(if (isHorizontalDoor) 4 else 50, node.dimensions)
             val height = min(if (isVerticalDoor) 4 else 50, node.dimensions)
 
-            val xOffset = (x / 2) * 54 + if (isHorizontalDoor) 50 else 0 + (50 - width) / 2
-            val yOffset = (y / 2) * 54 + if (isVerticalDoor) 50 else 0 + (50 - height) / 2
+            val xOffset = (x / 2) * 54 + if (isHorizontalDoor) 50 else (50 - width) / 2
+            val yOffset = (y / 2) * 54 + if (isVerticalDoor) 50 else (50 - height) / 2
 
-            graphics.fill(xOffset, yOffset, xOffset + width, yOffset + height, if (isRoom) ARGB.opaque(node.hashCode()) else ARGB.color(125, node.hashCode()))
+            graphics.fill(xOffset, yOffset, xOffset + width, yOffset + height, if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()))
         }
 
         super.render(graphics, mouseX, mouseY)
