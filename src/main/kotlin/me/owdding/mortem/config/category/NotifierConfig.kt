@@ -4,7 +4,6 @@ import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.mortem.config.separator
 import me.owdding.mortem.utils.colors.MortemColors
 import net.minecraft.network.chat.Component
-import net.minecraft.util.CommonColors
 import tech.thatgravyboat.skyblockapi.api.profile.party.PartyAPI
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFormattedName
