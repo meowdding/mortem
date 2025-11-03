@@ -5,25 +5,27 @@ import me.owdding.lib.overlays.ConfigPosition
 import me.owdding.lib.overlays.Position
 import me.owdding.mortem.core.catacombs.*
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
+import me.owdding.mortem.utils.Utils.vectorOneOne
+import me.owdding.mortem.utils.Utils.vectorOneZero
+import me.owdding.mortem.utils.Utils.vectorTwoTwo
+import me.owdding.mortem.utils.Utils.vectorTwoZero
+import me.owdding.mortem.utils.Utils.vectorZeroOne
+import me.owdding.mortem.utils.Utils.vectorZeroTwo
+import me.owdding.mortem.utils.extensions.copy
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import org.joml.*
+import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
 
 @Module
 @Overlay
 object CatacombMapMatcher : MortemOverlay {
-
-    private val vectorZeroOne = Vector2i(0, 1)
-    private val vectorOneZero = Vector2i(1, 0)
-    private val vectorOneOne = Vector2i(1, 1)
-    private val vectorZeroTwo = vectorZeroOne * 2
-    private val vectorTwoZero = vectorOneZero * 2
-    private val vectorTwoTwo = vectorOneOne * 2
 
     var data: ByteArray? = null
     var mapOverlay: ByteArray = ByteArray(128 * 128)
@@ -79,6 +81,7 @@ object CatacombMapMatcher : MortemOverlay {
         val downDoor = Vector2i(halfRoomSize, roomSize + 1)
         mapOverlay[topLeft.y * 128 + topLeft.x] = CatacombMapColor.MINIBOSS.packedId
 
+        val rooms = mutableSetOf<RoomNode>()
         for (y in 0 until instance.size.boundaryY) {
             for (x in 0 until instance.size.boundaryX) {
                 val roomCoordinate = Vector2i(x, y)
@@ -107,7 +110,9 @@ object CatacombMapMatcher : MortemOverlay {
                 }
 
                 val room = instance.getOrCreateNode(roomGridPosition, CatacombNodeType.ROOM)
-                room.roomType = roomType
+                room.mutateType(roomType)
+                room.addPosition(roomCoordinate)
+                rooms.add(room)
 
                 mapOverlay[mapPosition] = CatacombMapColor.MINIBOSS.packedId
                 mapOverlay[mapPosition + halfRoom] = CatacombMapColor.MINIBOSS.packedId
@@ -128,12 +133,15 @@ object CatacombMapMatcher : MortemOverlay {
                 }
             }
         }
+
+        CatacombWorldMatcher.matchData(rooms)
     }
 
     fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
         val room = getOrCreateNode(position - twoOffset, CatacombNodeType.ROOM)
         grid[position] = room
         grid[position - oneOffset] = room
+        room.addPosition(position.copy() / 2)
     }
 
     override val name: Component = Text.of("Debug")
@@ -162,7 +170,9 @@ object CatacombMapMatcher : MortemOverlay {
         val catacomb = CatacombsManager.catacomb ?: return
 
 
+        val playerNode = CatacombsManager.worldPosToGridPos(McPlayer.self!!.blockPosition())
         catacomb.grid.forEach { (pos, node) ->
+
             val isVerticalDoor = (pos.y % 2 == 1)
             val isHorizontalDoor = (pos.x % 2 == 1)
             val isDoor = isVerticalDoor xor isHorizontalDoor
@@ -176,7 +186,13 @@ object CatacombMapMatcher : MortemOverlay {
             val xOffset = (x / 2) * 54 + if (isHorizontalDoor) 50 else (50 - width) / 2
             val yOffset = (y / 2) * 54 + if (isVerticalDoor) 50 else (50 - height) / 2
 
-            graphics.fill(xOffset, yOffset, xOffset + width, yOffset + height, if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()))
+            graphics.fill(
+                xOffset,
+                yOffset,
+                xOffset + width,
+                yOffset + height,
+                if (playerNode == pos) -1 else if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()),
+            )
         }
 
         super.render(graphics, mouseX, mouseY)
