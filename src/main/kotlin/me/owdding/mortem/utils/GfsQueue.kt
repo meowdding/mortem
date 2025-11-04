@@ -2,6 +2,7 @@ package me.owdding.mortem.utils
 
 import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
+import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId
 import tech.thatgravyboat.skyblockapi.helpers.McClient
@@ -23,6 +24,11 @@ object GfsQueue {
 
     fun add(id: SkyBlockId, amount: Int) {
         queue.add(Pair(id, amount))
+    }
+
+    @Subscription(ServerChangeEvent::class)
+    fun onServerSwap() {
+        lastFetch = currentInstant().plus(2.seconds)
     }
 
     @Subscription

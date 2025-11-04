@@ -40,7 +40,7 @@ object ItemRefill {
     private fun refill(vararg items: RefillItems, sendOutput: Boolean = true) {
         val output = items.mapNotNull {
             val count = countItem(it.id)
-            if (count <= it.maxStackSize) {
+            if (count < it.maxStackSize) {
                 GfsQueue.add(it.id, it.maxStackSize - count)
                 "${it.maxStackSize - count}x ${it.name}"
             } else null

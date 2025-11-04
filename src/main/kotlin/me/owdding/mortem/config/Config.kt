@@ -5,6 +5,8 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.mortem.Mortem
+import me.owdding.mortem.config.category.MiscConfig
+import me.owdding.mortem.config.category.NotifierConfig
 import me.owdding.mortem.config.category.OverlayConfig
 import me.owdding.mortem.config.category.OverlayPositions
 import java.util.function.UnaryOperator
@@ -17,6 +19,8 @@ object Config : ConfigKt("mortem/config") {
 
     init {
         category(OverlayConfig)
+        category(NotifierConfig)
+        category(MiscConfig)
 
         category(OverlayPositions)
     }
