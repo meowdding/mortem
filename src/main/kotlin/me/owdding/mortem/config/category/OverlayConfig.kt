@@ -9,6 +9,10 @@ object OverlayConfig  : CategoryKt("overlays") {
     var dungeonBreakerOverlay by boolean(true) {
         translation = "mortem.config.overlays.dungeon_breaker_overlay"
     }
+
+    var dungeonBreakerOverlayPrefix by boolean(true) {
+        translation = "mortem.config.overlays.dungeon_breaker_overlay_prefix"
+    }
 }
 
 object OverlayPositions : CategoryKt("overlaysPositions") {
