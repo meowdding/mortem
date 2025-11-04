@@ -1,0 +1,12 @@
+{
+  "secrets": 7,
+  "center": "51dbe6a3c571ee8afe00f79e8b55837e8068f403884e1f855e5c22b99fe364a4",
+  "directions": {
+    "17a59a6a0ad65e499936e769b08ffdb66b8a177a06fc1978bcb53fc81c3d2b84": "NORTH",
+    "0fc95501e097366162a53a1af454d62ab9ad896007ca1c75ae97926fb0048e8c": "SOUTH",
+    "90bbae8343d8385f00c69eae6797314b3940f46234f83938cf73aaa5a2fd6b06": "EAST",
+    "4e1514d61b53510b1a4fc8a2a8ee095152e27e2a2cbc41cf61109a6c2e64f2cd": "WEST"
+  },
+  "name": "Quartz Knight",
+  "id": "quartz_knight"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "85dcb133855b4a66db0c6ff70b78ecd2aa6d129a09c8f807c147b2493c2d9b11",
+  "directions": {
+    "bd7782d4803f6d94db3f76a02bc592f429c012e57a2428a65fb0a8051fd90c18": "NORTH",
+    "bb4a1e108616b6855dd34c51ac406822a81a44b266627f99e1d9536e727a8ce7": "SOUTH",
+    "89a279dfdf404a960730a1c26edfcc7e3e3704d2d7862767d2b2d51125103c12": "EAST",
+    "456dea45531b89b9553f18b8e28c3a25916b9b0ee6c261de18d7ff6ee581dbca": "WEST"
+  },
+  "name": "Slime",
+  "id": "slime"
+}

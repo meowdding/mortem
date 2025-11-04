@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "8f21496818745e3bc07a6185442f95dd3791a6d193e058bd9e7df1c949ed1f53",
+  "directions": {
+    "1d2d19eab26bcb51750d8ad658d3276c5c03abed66d335744379cebc067d9c48": "NORTH",
+    "60e831cabe2ccb0e6fca2a5e5702cdf3c13122702922b63ac8d693309566e4d9": "SOUTH",
+    "bcb4a36a971a9564639fb192d574c3704836885c79627a63e764f13818d7a5af": "EAST",
+    "7e1bfd911323e50bef46103c674fc80647d91d25807c40b79d005ca9a630de08": "WEST"
+  },
+  "name": "Pressure Plates",
+  "id": "pressure_plates"
+}

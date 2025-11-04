@@ -2,8 +2,10 @@ package me.owdding.mortem.core.catacombs.roommatching
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.MultimapBuilder
+import com.google.common.hash.Hasher
 import com.google.common.hash.Hashing
 import me.owdding.ktmodules.Module
+import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.event.CatacombLeaveEvent
@@ -25,6 +27,7 @@ import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 object CatacombWorldMatcher {
 
     private val hashes: Multimap<Vector2i, String> = MultimapBuilder.SetMultimapBuilder.hashKeys().hashSetValues().build()
+    private val todo: MutableSet<RoomNode> = mutableSetOf()
 
     @Subscription
     @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
@@ -42,49 +45,78 @@ object CatacombWorldMatcher {
         if (chunkPos.x !in -12..maxChunkX || chunkPos.z !in -12..maxChunkZ) return
 
         val center = BlockPos(chunkPos.getBlockX(7), 255, chunkPos.getBlockZ(7))
-        hashColumn(chunkAccess, center)
-        hashColumn(chunkAccess, center.relative(Direction.NORTH, 2))
+        cacheColumnHash(Vector2i(center.x, center.z), hashColumn(chunkAccess, center))
+        hashColumn(chunkAccess, center, Direction.NORTH)
+
+        matchData(todo)
     }
 
     fun createDirectionalHashes(chunkAccess: ChunkAccess): Map<Direction?, String> {
         val chunkPos = chunkAccess.pos
         val center = BlockPos(chunkPos.getBlockX(7), 255, chunkPos.getBlockZ(7))
+        val hash = hashColumn(chunkAccess, center)
+        cacheColumnHash(Vector2i(center.x, center.z), hash)
         return buildMap {
-            this[null] = hashColumn(chunkAccess, center)
-            this[Direction.NORTH] = hashColumn(chunkAccess, center.relative(Direction.NORTH, 2))
-            this[Direction.SOUTH] = hashColumn(chunkAccess, center.relative(Direction.SOUTH, 2))
-            this[Direction.EAST] = hashColumn(chunkAccess, center.relative(Direction.EAST, 2))
-            this[Direction.WEST] = hashColumn(chunkAccess, center.relative(Direction.WEST, 2))
+            this[null] = hash
+            this[Direction.NORTH] = hashColumn(chunkAccess, center, Direction.NORTH)
+            this[Direction.SOUTH] = hashColumn(chunkAccess, center, Direction.SOUTH)
+            this[Direction.EAST] = hashColumn(chunkAccess, center, Direction.EAST)
+            this[Direction.WEST] = hashColumn(chunkAccess, center, Direction.WEST)
         }
     }
 
+    @Suppress("UnstableApiUsage")
+    fun hashColumn(chunkAccess: ChunkAccess, centerBlock: BlockPos, direction: Direction): String {
+        val hasher: Hasher = Hashing.sha256().newHasher()
+        val offset = centerBlock.relative(direction, 4)
+        hasher.putString(hashColumn(chunkAccess, offset), Charsets.UTF_8)
+        hasher.putString(hashColumn(chunkAccess, offset.relative(direction.clockWise, 3)), Charsets.UTF_8)
+        hasher.putString(hashColumn(chunkAccess, offset.relative(direction.counterClockWise, 5)), Charsets.UTF_8)
+        hasher.putString(hashColumn(chunkAccess, centerBlock.relative(direction.opposite, 2)), Charsets.UTF_8)
+        hasher.putString(hashColumn(chunkAccess, centerBlock.relative(direction.clockWise, 4)), Charsets.UTF_8)
+
+        val hash = hasher.hash().asBytes().toHexString()
+        cacheColumnHash(Vector2i(offset.x, offset.z), hash)
+        return hash
+    }
+
+    fun cacheColumnHash(pos: Vector2i, hash: String) {
+        hashes.put(pos, hash)
+    }
+
+    @Suppress("UnstableApiUsage")
     fun hashColumn(chunkAccess: ChunkAccess, top: BlockPos): String {
-        val hash = Hashing.sha256().hashString(BlockPos.betweenClosed(top, top.below(255)).joinToString("_") {
+        val hasher = Hashing.sha256().newHasher()
+        BlockPos.betweenClosed(top, top.below(255)).forEach {
             val state: BlockState = chunkAccess.getBlockState(it)
 
-            return@joinToString BuiltInRegistries.BLOCK.getKey(
-                if (state.isAir || state in BlockTagKey.IGNORED_BLOCKS) {
-                    Blocks.AIR
-                } else state.block,
-            ).toString()
-        }, Charsets.UTF_8).asBytes()
-        val hashString = hash.toHexString()
-        hashes.put(Vector2i(top.x, top.z), hashString)
-        return hashString
+            hasher.putString(
+                BuiltInRegistries.BLOCK.getKey(
+                    if (state.isAir || state in BlockTagKey.IGNORED_BLOCKS) Blocks.AIR else state.block,
+                ).toString(),
+                Charsets.UTF_8,
+            )
+        }
+        return hasher.hash().asBytes().toHexString()
     }
 
     fun matchData(rooms: MutableSet<RoomNode>) {
-        rooms.forEach {
+        rooms.filter { it.roomType != CatacombRoomType.UNKNOWN }.forEach {
             val origin = it.minMiddleChunkPos()
             val offset = it.getMiddleChunkOffset() ?: return@forEach
             val hashes = hashes.get((origin + offset).mul(16).add(7, 7))
-            val storedRoom = hashes.firstNotNullOfOrNull { CatacombsManager.backingRooms[it] } ?: return@forEach
-            it.backingData = storedRoom
+            val storedRoom = hashes.firstNotNullOfOrNull { hash -> CatacombsManager.backingRooms[hash] }
+            if (storedRoom != null) {
+                it.backingData = storedRoom
+            } else {
+                todo.add(it)
+            }
         }
     }
 
     @Subscription(CatacombLeaveEvent::class)
     fun onLeave() {
         hashes.clear()
+        todo.clear()
     }
 }

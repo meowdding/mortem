@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "ee104c4cb43d095f64b3a344241d86cdd8337ae08c741d60e2f557dc31398ed2",
+  "directions": {
+    "e78277529bb4aead7a31dd5c4514859a1125360b94dbda0a2973f162368bcea0": "NORTH",
+    "ede512e5a8fb1919c97eccdbc7f307bf5391268820000c247df068676d8a2646": "SOUTH",
+    "7ead2bd3182c12a29d0f04a7a5e4a916aa3af617ad84ead7585f064918a66439": "EAST",
+    "ed9783f2cc8a2645e7c8bccb0b1f9e3fc6d08d3f6a6029b1dc02ae570879ece3": "WEST"
+  },
+  "name": "Diagonal",
+  "id": "diagonal"
+}

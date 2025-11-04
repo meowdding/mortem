@@ -19,6 +19,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import org.joml.*
+import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
@@ -170,7 +171,6 @@ object CatacombMapMatcher : MortemOverlay {
         val catacomb = CatacombsManager.catacomb ?: return
 
 
-        val playerNode = CatacombsManager.worldPosToGridPos(McPlayer.self!!.blockPosition())
         catacomb.grid.forEach { (pos, node) ->
 
             val isVerticalDoor = (pos.y % 2 == 1)
@@ -186,13 +186,21 @@ object CatacombMapMatcher : MortemOverlay {
             val xOffset = (x / 2) * 54 + if (isHorizontalDoor) 50 else (50 - width) / 2
             val yOffset = (y / 2) * 54 + if (isVerticalDoor) 50 else (50 - height) / 2
 
+            val roomNode = node as? RoomNode
             graphics.fill(
                 xOffset,
                 yOffset,
                 xOffset + width,
                 yOffset + height,
-                if ((node as? RoomNode)?.backingData != null) -1 else if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()),
+                if (roomNode?.backingData != null) ARGB.opaque(node.getColor())
+                else if (isRoom) ARGB.greyscale(ARGB.color(255, node.getColor()))
+                else ARGB.greyscale(ARGB.color(125, node.getColor())),
             )
+
+            val data = roomNode?.backingData
+            if (data != null) {
+                graphics.drawString(McFont.self, data.name, xOffset, yOffset, -1)
+            }
         }
 
         super.render(graphics, mouseX, mouseY)

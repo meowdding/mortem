@@ -1,7 +1,6 @@
 package me.owdding.mortem.core.catacombs
 
 import me.owdding.ktmodules.Module
-import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.catacombs.roommatching.CatacombMapMatcher
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.core.event.CatacombJoinEvent
@@ -12,10 +11,9 @@ import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.extensions.sendWithPrefix
-import me.owdding.mortem.utils.extensions.toBlockPos
-import me.owdding.mortem.utils.extensions.transpose
 import net.minecraft.core.BlockPos
 import net.minecraft.network.protocol.game.ClientboundMapItemDataPacket
+import net.minecraft.world.level.chunk.status.ChunkStatus
 import org.joml.Vector2i
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
@@ -28,10 +26,12 @@ import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
-import tech.thatgravyboat.skyblockapi.utils.extentions.filterKeysNotNull
+import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toJsonOrThrow
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toPrettyString
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
@@ -56,6 +56,18 @@ object CatacombsManager {
         if (catacomb != null) reset()
         val catacomb = Catacomb(floor)
         this@CatacombsManager.catacomb = catacomb
+
+        val maxChunkX = -12 + (catacomb.size.boundaryX * 2)
+        val maxChunkZ = -12 + (catacomb.size.boundaryY * 2)
+        McClient.runNextTick {
+            for (x in -12..maxChunkX) {
+                for (y in -12..maxChunkZ) {
+                    val chunk = McLevel.level.getChunk(x, y, ChunkStatus.FULL, false) ?: continue
+                    CatacombWorldMatcher.scanChunk(chunk)
+                }
+            }
+        }
+
         CatacombJoinEvent(catacomb).post()
     }
 
@@ -77,44 +89,32 @@ object CatacombsManager {
         catacomb = null
     }
 
+
     @Subscription
     fun command(event: RegisterCommandsEvent) {
-        event.registerWithCallback("mortem dev create_room") {
-            val instance = catacomb ?: return@registerWithCallback
-            val gridPosition = worldPosToGridPos(this.source.position.toBlockPos())
-            val node = instance.grid[gridPosition] as? RoomNode ?: return@registerWithCallback
-            val origin = node.minMiddleChunkPos()
-            val offset = node.getMiddleChunkOffset()
-
-            if (offset == null) {
-                Text.of("Offset is null (this should be impossible)", CatppuccinColors.Mocha.red).sendWithPrefix()
-            } else {
-                val chunkPos = origin.add(offset)
-                val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.y)
-                val hashes = CatacombWorldMatcher.createDirectionalHashes(chunk)
-
-                val centerHash = hashes[null]!!
-                if (backingRooms[centerHash] != null) {
-                    Text.of("Room with hash already exists!", CatppuccinColors.Mocha.red).sendWithPrefix()
-                    return@registerWithCallback
+        event.registerWithCallback("mortem dev column_hash") {
+            val chunkPos = McPlayer.self!!.chunkPosition()
+            val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.z)
+            val hash = CatacombWorldMatcher.hashColumn(chunk, McPlayer.self!!.blockPosition().atY(255))
+            Text.of("Hash for current position is ") {
+                append(hash) {
+                    color = CatppuccinColors.Mocha.pink
                 }
-
-                val storedRoom = StoredCatacombRoom("", centerHash, hashes.filterKeysNotNull().transpose())
-                storedRoom.markChange()
-                backingRooms[centerHash] = storedRoom
-                Text.of("Created new room!", CatppuccinColors.Mocha.green).sendWithPrefix()
-            }
+                color = CatppuccinColors.Mocha.lavender
+            }.sendWithPrefix()
         }
     }
 
     private val defaultPath: Path = McClient.config.resolve("mortem/data")
+
     @Subscription(TickEvent::class)
     @TimePassed("5s")
     fun saveAll() {
         val rooms = defaultPath.resolve("rooms").createDirectories()
         this.backingRooms.values.forEach {
+            if (!it.shouldSerialize) return@forEach
             it.shouldSerialize = false
-            rooms.resolve(it.centerHash).writeText(it.toJsonOrThrow(MortemCodecs.getCodec()).toPrettyString())
+            rooms.resolve("${it.id}.json").writeText(it.toJsonOrThrow(MortemCodecs.getCodec()).toPrettyString())
         }
     }
 

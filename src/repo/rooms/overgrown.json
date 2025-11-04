@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "5b4303882ce24bb3d7b5cc463e41b70efb7d1295036c53cada82d01339fba714",
+  "directions": {
+    "02cb89b1ddac8bf2b9b911d4ff184ee1e615b32383e419202aba226186437d14": "NORTH",
+    "17c50f7140def62a6a7c37058fce30395c8bc1f0006ebe4db02f059b69b6e214": "SOUTH",
+    "1942495db43df7480de842593653789aa25bc0084fea0ee5a2e936f3a74482b9": "EAST",
+    "62b1777c5615b1de01e1f762aaa5db89f702c303032261d6a9c2b7acbc4af163": "WEST"
+  },
+  "name": "Overgrown",
+  "id": "overgrown"
+}

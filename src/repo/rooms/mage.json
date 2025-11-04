@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "0657c9ac0f3a335a4a4075d7a7080d87d4fa5bd4dba60822da1a238ce250def1",
+  "directions": {
+    "fed497078e8a4a81bf48e7d9e213ebab59960ed89ce28848d3ceb9e17dcd3fac": "NORTH",
+    "fdd9a651f088be293c6248f9e4da50c877d200aa859b88a9c790f76edd4e4ad3": "SOUTH",
+    "0eafa1f6b0afff5206669f2899d2fe87ca4f61ffd8ebcacc7a5158ec1fa857c5": "EAST",
+    "517704b6682e4d5bcde0ead948e1c3e828125bc1e24a56b0ff51d8e8d37bf8fa": "WEST"
+  },
+  "name": "Mage",
+  "id": "mage"
+}

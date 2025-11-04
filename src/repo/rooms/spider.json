@@ -1,0 +1,12 @@
+{
+  "secrets": 9,
+  "center": "81626795404bd5ed637bbedc23b90cefe069353ef47b88acf61626c3ce7f908b",
+  "directions": {
+    "8ff3aab6a8b83430d661453469da1981318d63db5121b0b6a240a775c8345a60": "NORTH",
+    "54e4ba357acdd035dede9cbaf25f516bb422229c8de45cb9584220e23a5e2a74": "SOUTH",
+    "a631b3e85db74df3048c759cc306c81349d2ca6c4f547b8d986ad6c9e569c55c": "EAST",
+    "499f66bd2b5d5911246fd7a9a649dceb7594f3de87d082a4cb5c8fdb75a05b59": "WEST"
+  },
+  "name": "Spider",
+  "id": "spider"
+}

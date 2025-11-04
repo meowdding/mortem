@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "bb6fc82c62253802bf1d39de1f9101a0a02e06e8d9cd62019d1cc22871cb33d3",
+  "directions": {
+    "db5688dd6f26556a1fce55918accec91f08865d63fb01047cf7e20ec71fc55d1": "NORTH",
+    "93f909c3275e1355b9d3b96d9078ed3aaf89239114c1dfe14f4a744bdde14b1f": "SOUTH",
+    "3161071868cd39920dbc8ee8dfec7234d8f35571694ba843afbe48cf56d44114": "EAST",
+    "eebb1d7d61f9ce3119fb99c254996c23e1801823c621779d6b8cf498201fa885": "WEST"
+  },
+  "name": "Water Board",
+  "id": "water_board"
+}

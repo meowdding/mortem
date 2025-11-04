@@ -1,14 +1,20 @@
 package me.owdding.mortem.core.catacombs
 
+import me.owdding.ktcodecs.FieldName
 import me.owdding.ktcodecs.GenerateCodec
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
+import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
 import org.joml.Vector2i
+import org.joml.minus
+import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
+import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
+import java.util.concurrent.ConcurrentHashMap
 
 data class Catacomb(
     val floor: DungeonFloor,
@@ -23,9 +29,16 @@ data class Catacomb(
         }
     var mapRoomAndDoorSize: Int = 0
 
-    var grid: MutableMap<Vector2i, CatacombsNode<*>> = mutableMapOf()
+    var grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
+
+    inline fun <reified T : CatacombsNode<T>> getNeighbours(position: Vector2i): Map<Vector2i, T> = buildList {
+        add(position + Utils.vectorOneZero)
+        add(position + Utils.vectorZeroOne)
+        add(position - Utils.vectorOneZero)
+        add(position - Utils.vectorZeroOne)
+    }.associateWith { grid[it] as? T }.filterValuesNotNull()
 
     override val instance: InstanceType get() = InstanceType.CATACOMBS
 }
@@ -91,8 +104,10 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
 @GenerateCodec
 data class StoredCatacombRoom(
     var name: String,
-    val centerHash: String,
-    val directionalHashes: Map<String, Direction>,
+    var id: String,
+    var secrets: Int,
+    @FieldName("center") val centerHash: String,
+    @FieldName("directions") val directionalHashes: Map<String, Direction>,
 ) {
     var shouldSerialize = false
 

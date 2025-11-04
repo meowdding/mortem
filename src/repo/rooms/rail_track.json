@@ -1,0 +1,12 @@
+{
+  "secrets": 9,
+  "center": "9a87b6707cc54475fd3762eb03cc90c35881f8edf546c80bf2a1d5d0dfb00071",
+  "directions": {
+    "7bb13b1839565e08534de7530dda0106e4a56529cf7385b73310dcd71d4d96e4": "NORTH",
+    "8106e4e4760de0d2d7bc7ca0a541cc81da23bf1a865dd44daf4fd2ee91329ace": "SOUTH",
+    "f46d59edfa8cc777b98d15fdb0e4ddaf4758163b34fd71dfd945f5409513ccaa": "EAST",
+    "af44d14053355ed44cdfea24e6b21f667c105916980e3fc39800598a2532a7bc": "WEST"
+  },
+  "name": "Rails",
+  "id": "rail_track"
+}

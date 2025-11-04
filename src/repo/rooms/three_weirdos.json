@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "613b396877f370dce374996aef358ada894ac9329c8a9603e6a5164bc0844712",
+  "directions": {
+    "a361376ae774d12cb30396178da98592b1f9d811cf420f9607829c59a57eb4a7": "NORTH",
+    "f94205dbc3c5f49c1b32ee7787bbedaf92547fe877aa55a6358a5c75b28af0c4": "SOUTH",
+    "e3bf8713b636f989b1fdf2d2a08ba57a0bb7936be3952b0f6e744afbad70d988": "EAST",
+    "03855272ca252ebaf2815e89b662814ade85e0ef136b1181f2de2a7e3f4e6b54": "WEST"
+  },
+  "name": "Three Weirdos",
+  "id": "three_weirdos"
+}
