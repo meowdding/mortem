@@ -29,7 +29,11 @@ object DungeonBreakerDisplay : MortemOverlay {
     override val bounds: Pair<Int, Int> get() = display.getValue()?.let { McFont.width(it) to McFont.height } ?: (0 to 0)
 
     private val display = CachedValue(1.ticks) {
-        val (current, max) = McPlayer.inventory.firstNotNullOfOrNull { it.getData(DataTypes.DUNGEONBREAKER_CHARGES) } ?: return@CachedValue null
+        val (current, max) = if (OverlayConfig.dungeonBreakerShowWhenHolding) {
+            McPlayer.heldItem.getData(DataTypes.DUNGEONBREAKER_CHARGES)
+        } else {
+            McPlayer.inventory.firstNotNullOfOrNull { it.getData(DataTypes.DUNGEONBREAKER_CHARGES) }
+        } ?: return@CachedValue null
 
         Text.of {
             color = TextColor.GRAY
