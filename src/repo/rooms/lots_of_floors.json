@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "2753fed2bcb4da5832f829a3e73a8a355e4a0a5f6ddadf54e8404cdf4b7265f2",
+  "directions": {
+    "7546134313c1cb3da15e89bfb23342f5268671373836d13dea2c21eb52a4a04b": "NORTH",
+    "cbd852d996b93eaa1687bfb615a6c65e54276a783a895d1d598fd96774bbc71f": "SOUTH",
+    "48a07b2d0d60c6c50cad115a5bb9248c0cfc00275cee1bf1fb6b6c1d3bd87ed8": "EAST",
+    "57346a947548e85fd32c7c7eb07f6a05c6595464c75e79551bc4431c286583ec": "WEST"
+  },
+  "name": "Lots of Floors",
+  "id": "lots_of_floors"
+}

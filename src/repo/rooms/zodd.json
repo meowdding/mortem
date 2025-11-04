@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "e25144626e136d01217fe995dd4f4d90f9c741383f3b0e62d906d9568dfa6b19",
+  "directions": {
+    "d82479ec2cf5509aca4ecb858a63680f9ab6d6cb84bc2c4602865df49b83ab0a": "NORTH",
+    "0d9745853857d71bc15c10a219f6cb2eb095f30dc378e30b34ca6124a9dab4b1": "SOUTH",
+    "ac650e4bbdc19d1ed9c63910141ec0b36644820aa58f11c0fe53d12836b8738d": "EAST",
+    "74cebc0d00f7eb6508c3aa98b57e09305f191cff2921a834daf9ff548c65bc01": "WEST"
+  },
+  "name": "Zodd",
+  "id": "zodd"
+}

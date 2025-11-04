@@ -18,9 +18,9 @@ import me.owdding.mortem.utils.extensions.copy
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
+import net.minecraft.world.level.block.Rotation
 import org.joml.*
 import tech.thatgravyboat.skyblockapi.helpers.McFont
-import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
 
@@ -200,6 +200,13 @@ object CatacombMapMatcher : MortemOverlay {
             val data = roomNode?.backingData
             if (data != null) {
                 graphics.drawString(McFont.self, data.name, xOffset, yOffset, -1)
+                graphics.drawString(McFont.self, when (roomNode.rotation) {
+                    Rotation.NONE -> "0°"
+                    Rotation.CLOCKWISE_90 -> "90°"
+                    Rotation.CLOCKWISE_180 -> "180°"
+                    Rotation.COUNTERCLOCKWISE_90 -> "270°"
+                    else -> "null"
+                }, xOffset, yOffset + 10, -1)
             }
         }
 

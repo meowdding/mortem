@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "d390f534a61da7f3a6b335e6ab0699169ec44624f1074f8b9cb7e0cd783863d2",
+  "directions": {
+    "137fee44c0b0d7f0b6c97da98a0ddf8baea7704676f396d110c93939293eb703": "NORTH",
+    "51ddc37198fae4609be86ba73768382cfbd76839ae594969397c3c28e884279e": "SOUTH",
+    "b302434a4e1ff4022c737638bad2cb496d440b14e40039065b7a428de3a4ca6b": "EAST",
+    "8329c0fb52136fe929dd4040c471cf61e748f564e4a5798dc8cbdf37ccd0d384": "WEST"
+  },
+  "name": "Ice Fill",
+  "id": "ice_fill"
+}

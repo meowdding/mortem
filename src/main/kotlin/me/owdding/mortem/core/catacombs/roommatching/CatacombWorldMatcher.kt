@@ -15,6 +15,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import org.joml.Vector2i
@@ -49,6 +50,7 @@ object CatacombWorldMatcher {
         hashColumn(chunkAccess, center, Direction.NORTH)
 
         matchData(todo)
+        todo.removeIf { it.rotation != null }
     }
 
     fun createDirectionalHashes(chunkAccess: ChunkAccess): Map<Direction?, String> {
@@ -104,10 +106,23 @@ object CatacombWorldMatcher {
         rooms.filter { it.roomType != CatacombRoomType.UNKNOWN }.forEach {
             val origin = it.minMiddleChunkPos()
             val offset = it.getMiddleChunkOffset() ?: return@forEach
-            val hashes = hashes.get((origin + offset).mul(16).add(7, 7))
-            val storedRoom = hashes.firstNotNullOfOrNull { hash -> CatacombsManager.backingRooms[hash] }
+            val center = (origin + offset).mul(16).add(7, 7)
+            val centerHashes = hashes.get(center)
+            val directionHashes = hashes.get(center.add(0, -4))
+            val storedRoom = centerHashes.firstNotNullOfOrNull { hash -> CatacombsManager.backingRooms[hash] }
             if (storedRoom != null) {
                 it.backingData = storedRoom
+                val direction = directionHashes.firstNotNullOfOrNull { hash -> storedRoom.directionalHashes[hash] }
+                if (direction == null) {
+                    todo.add(it)
+                    return@forEach
+                }
+                it.rotation = when (direction) {
+                    Direction.EAST -> Rotation.COUNTERCLOCKWISE_90
+                    Direction.SOUTH -> Rotation.CLOCKWISE_180
+                    Direction.WEST -> Rotation.CLOCKWISE_90
+                    else -> Rotation.NONE
+                }
             } else {
                 todo.add(it)
             }
