@@ -14,6 +14,8 @@ import kotlin.time.Duration.Companion.seconds
 // TODO: MLIB
 //  check wether item is actually in the sack
 //  combine same ids
+//  last message send by player to server
+//  last server switch
 object GfsQueue {
 
     private val queue: Queue<Pair<SkyBlockId, Int>> = LinkedList()
