@@ -1,9 +1,10 @@
 package me.owdding.mortem.core.catacombs
 
+import me.owdding.ktcodecs.GenerateCodec
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
-import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
+import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
 import org.joml.Vector2i
@@ -87,8 +88,15 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
     }
 }
 
+@GenerateCodec
 data class StoredCatacombRoom(
     var name: String,
-    var centerHash: Long,
-    var directionalHashes: Map<Long, Direction>,
-)
+    val centerHash: String,
+    val directionalHashes: Map<String, Direction>,
+) {
+    var shouldSerialize = false
+
+    fun markChange() {
+        shouldSerialize = true
+    }
+}

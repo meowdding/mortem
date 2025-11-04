@@ -86,12 +86,11 @@ loom {
 }
 
 compactingResources {
-    basePath = "../../../src/repo"
+    basePath = "repo"
+    pathDirectory = "../../src"
 
-    tasks.withType<ProcessResources> {
-        configureTask(this)
-    }
-
+    configureTask(tasks.named<AbstractCopyTask>("processResources").get())
+    compactToArray("rooms")
 }
 
 ksp {

@@ -3,6 +3,7 @@ package me.owdding.mortem.core.catacombs.nodes
 import me.owdding.mortem.core.catacombs.CatacombDoorType
 import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsColorProvider
+import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.utils.Utils
 import org.joml.Vector2i
 import org.joml.component1
@@ -59,6 +60,7 @@ class RoomNode(
 ) : CatacombsNode<RoomNode>(CatacombNodeType.ROOM, 50) {
     var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE
     val positions: MutableSet<Vector2i> = mutableSetOf()
+    var backingData: StoredCatacombRoom? = null
 
     override fun toString() = "Room[type=$roomType]"
     fun addPosition(position: Vector2i) {

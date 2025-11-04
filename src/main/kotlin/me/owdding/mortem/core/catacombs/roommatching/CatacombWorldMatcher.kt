@@ -2,12 +2,7 @@ package me.owdding.mortem.core.catacombs.roommatching
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.MultimapBuilder
-import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
-import com.mojang.serialization.Decoder
-import com.mojang.serialization.DynamicOps
-import com.mojang.serialization.Encoder
-import com.mojang.serialization.codecs.RecordCodecBuilder
+import com.google.common.hash.Hashing
 import me.owdding.ktmodules.Module
 import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
@@ -21,16 +16,15 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import org.joml.Vector2i
+import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import java.util.*
-import java.util.function.Function
 
 @Module
 object CatacombWorldMatcher {
 
-    private val hashes: Multimap<Vector2i, Int> = MultimapBuilder.SetMultimapBuilder.hashKeys().hashSetValues().build()
+    private val hashes: Multimap<Vector2i, String> = MultimapBuilder.SetMultimapBuilder.hashKeys().hashSetValues().build()
 
     @Subscription
     @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
@@ -52,7 +46,7 @@ object CatacombWorldMatcher {
         hashColumn(chunkAccess, center.relative(Direction.NORTH, 2))
     }
 
-    fun createDirectionalHashes(chunkAccess: ChunkAccess, top: BlockPos): Map<Direction?, Int> {
+    fun createDirectionalHashes(chunkAccess: ChunkAccess): Map<Direction?, String> {
         val chunkPos = chunkAccess.pos
         val center = BlockPos(chunkPos.getBlockX(7), 255, chunkPos.getBlockZ(7))
         return buildMap {
@@ -64,23 +58,29 @@ object CatacombWorldMatcher {
         }
     }
 
-    fun hashColumn(chunkAccess: ChunkAccess, top: BlockPos): Int {
-        val hash = Objects.hash(
-            BlockPos.betweenClosed(top, top.below(255)).mapNotNull {
-                val state: BlockState = chunkAccess.getBlockState(top)
+    fun hashColumn(chunkAccess: ChunkAccess, top: BlockPos): String {
+        val hash = Hashing.sha256().hashString(BlockPos.betweenClosed(top, top.below(255)).joinToString("_") {
+            val state: BlockState = chunkAccess.getBlockState(it)
 
-                return@mapNotNull BuiltInRegistries.BLOCK.getKey(
-                    if (state.isAir || state in BlockTagKey.IGNORED_BLOCKS) {
-                        Blocks.AIR
-                    } else state.block,
-                )
-            }.toTypedArray(),
-        )
-        hashes.put(Vector2i(top.x, top.z), hash)
-        return hash
+            return@joinToString BuiltInRegistries.BLOCK.getKey(
+                if (state.isAir || state in BlockTagKey.IGNORED_BLOCKS) {
+                    Blocks.AIR
+                } else state.block,
+            ).toString()
+        }, Charsets.UTF_8).asBytes()
+        val hashString = hash.toHexString()
+        hashes.put(Vector2i(top.x, top.z), hashString)
+        return hashString
     }
 
     fun matchData(rooms: MutableSet<RoomNode>) {
+        rooms.forEach {
+            val origin = it.minMiddleChunkPos()
+            val offset = it.getMiddleChunkOffset() ?: return@forEach
+            val hashes = hashes.get((origin + offset).mul(16).add(7, 7))
+            val storedRoom = hashes.firstNotNullOfOrNull { CatacombsManager.backingRooms[it] } ?: return@forEach
+            it.backingData = storedRoom
+        }
     }
 
     @Subscription(CatacombLeaveEvent::class)

@@ -191,7 +191,7 @@ object CatacombMapMatcher : MortemOverlay {
                 yOffset,
                 xOffset + width,
                 yOffset + height,
-                if (playerNode == pos) -1 else if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()),
+                if ((node as? RoomNode)?.backingData != null) -1 else if (isRoom) ARGB.opaque(node.getColor()) else ARGB.color(125, node.getColor()),
             )
         }
 
