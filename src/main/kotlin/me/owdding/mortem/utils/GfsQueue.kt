@@ -3,6 +3,7 @@ package me.owdding.mortem.utils
 import me.owdding.ktmodules.Module
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
+import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId
 import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.time.currentInstant
 import tech.thatgravyboat.skyblockapi.utils.time.since
@@ -11,12 +12,14 @@ import kotlin.time.Duration.Companion.seconds
 
 @Module
 // TODO: MLIB
+//  check wether item is actually in the sack
+//  combine same ids
 object GfsQueue {
 
-    private val queue: Queue<Pair<String, Int>> = LinkedList()
+    private val queue: Queue<Pair<SkyBlockId, Int>> = LinkedList()
     private var lastFetch = currentInstant()
 
-    fun add(id: String, amount: Int) {
+    fun add(id: SkyBlockId, amount: Int) {
         queue.add(Pair(id, amount))
     }
 
@@ -27,7 +30,7 @@ object GfsQueue {
 
         val (id, amount) = queue.poll() ?: return
 
-        McClient.sendCommand("/gfs $id $amount")
+        McClient.sendCommand("/gfs ${id.skyblockId} $amount")
         lastFetch = currentInstant()
     }
 }

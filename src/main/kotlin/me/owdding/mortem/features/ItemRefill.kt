@@ -8,9 +8,10 @@ import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.dungeon.DungeonEnterEvent
 import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent
 import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent.Companion.argument
+import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId
+import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId.Companion.getSkyBlockId
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.command.EnumArgument
-import tech.thatgravyboat.skyblockapi.utils.extentions.getSkyBlockId
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 
 @Module
@@ -37,13 +38,12 @@ object ItemRefill {
     }
 
     private fun refill(vararg items: RefillItems, sendOutput: Boolean = true) {
-        val output = items.map {
-            val count = countItem(it.name)
-            if (count >= it.maxStackSize) {
-                GfsQueue.add(it.name, it.maxStackSize - count)
-            }
-
-            "${it.maxStackSize - count}x ${it.name}"
+        val output = items.mapNotNull {
+            val count = countItem(it.id)
+            if (count <= it.maxStackSize) {
+                GfsQueue.add(it.id, it.maxStackSize - count)
+                "${it.maxStackSize - count}x ${it.name}"
+            } else null
         }
 
         if (sendOutput) {
@@ -52,14 +52,16 @@ object ItemRefill {
         }
     }
 
-    private fun countItem(id: String) = McPlayer.inventory.filter { it.getSkyBlockId().equals(id, true) }.sumOf { it.count }
+    private fun countItem(id: SkyBlockId) = McPlayer.inventory.filter { it.getSkyBlockId() == id }.sumOf { it.count }
 
-    enum class RefillItems(val maxStackSize: Int = 64) {
+    enum class RefillItems(val maxStackSize: Int = 64, id: String? = null) {
         SPIRIT_LEAP(maxStackSize = 16),
         SUPERBOOM_TNT,
         ENDER_PEARL(maxStackSize = 16),
         DECOY,
         INFLATABLE_JERRY,
         ;
+
+        val id = SkyBlockId.item(id ?: name)
     }
 }
