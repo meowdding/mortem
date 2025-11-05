@@ -12,19 +12,11 @@ import org.joml.component2
 import kotlin.math.max
 import kotlin.math.min
 
-sealed interface CatacombNodeType<T : CatacombsNode<T>> {
-    val constructor: () -> T
-
-    companion object {
-        private class NodeTypeImpl<T : CatacombsNode<T>>(override val constructor: () -> T) : CatacombNodeType<T>
-
-        private inline fun <reified T : CatacombsNode<T>> create(noinline constructor: () -> T) = NodeTypeImpl(constructor)
-
-        val UNKNOWN: CatacombNodeType<UnknownNode> = create { UnknownNode }
-        val VOID: CatacombNodeType<VoidNode> = create { VoidNode }
-        val DOOR: CatacombNodeType<DoorNode> = create(::DoorNode)
-        val ROOM: CatacombNodeType<RoomNode> = create(::RoomNode)
-    }
+sealed class CatacombNodeType<T : CatacombsNode<T>>(val constructor: () -> T) {
+    object Unknown : CatacombNodeType<UnknownNode>({ UnknownNode })
+    object Void : CatacombNodeType<VoidNode>({ VoidNode })
+    object Door : CatacombNodeType<DoorNode>(::DoorNode)
+    object Room : CatacombNodeType<RoomNode>(::RoomNode)
 }
 
 abstract class CatacombsNode<T : CatacombsNode<T>>(
@@ -32,19 +24,19 @@ abstract class CatacombsNode<T : CatacombsNode<T>>(
     val dimensions: Int,
 ) : CatacombsColorProvider
 
-object UnknownNode : CatacombsNode<UnknownNode>(CatacombNodeType.UNKNOWN, 0) {
+object UnknownNode : CatacombsNode<UnknownNode>(CatacombNodeType.Unknown, 0) {
     override fun toString() = "Unknown"
     override fun getColor(): Int = 0xF0F0b0
 }
 
-object VoidNode : CatacombsNode<VoidNode>(CatacombNodeType.VOID, 0) {
+object VoidNode : CatacombsNode<VoidNode>(CatacombNodeType.Void, 0) {
     override fun toString() = "Void"
     override fun getColor(): Int = 0x696969
 }
 
 class DoorNode(
     var doorType: CatacombDoorType = CatacombDoorType.DEFAULT,
-) : CatacombsNode<DoorNode>(CatacombNodeType.DOOR, 10) {
+) : CatacombsNode<DoorNode>(CatacombNodeType.Door, 10) {
     override fun toString() = "Door"
     fun mutateType(type: CatacombDoorType) {
         doorType = when (doorType) {
@@ -58,7 +50,7 @@ class DoorNode(
 
 class RoomNode(
     var roomType: CatacombRoomType = CatacombRoomType.DEFAULT,
-) : CatacombsNode<RoomNode>(CatacombNodeType.ROOM, 50) {
+) : CatacombsNode<RoomNode>(CatacombNodeType.Room, 50) {
     var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE
     val positions: MutableSet<Vector2i> = mutableSetOf()
     var backingData: StoredCatacombRoom? = null

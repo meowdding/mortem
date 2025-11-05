@@ -110,7 +110,7 @@ object CatacombMapMatcher : MortemOverlay {
                     )
                 }
 
-                val room = instance.getOrCreateNode(roomGridPosition, CatacombNodeType.ROOM)
+                val room = instance.getOrCreateNode(roomGridPosition, CatacombNodeType.Room)
                 room.mutateType(roomType)
                 room.addPosition(roomCoordinate)
                 rooms.add(room)
@@ -121,7 +121,7 @@ object CatacombMapMatcher : MortemOverlay {
                 val rightColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(roomSize + 1, 0)])
                 val rightDoor = CatacombDoorType.getByColor(rightDoorColor)
                 if (rightDoor != null && rightColor != rightDoorColor) {
-                    val node = instance.getOrCreateNode(roomGridPosition + vectorOneZero, CatacombNodeType.DOOR)
+                    val node = instance.getOrCreateNode(roomGridPosition + vectorOneZero, CatacombNodeType.Door)
                     node.mutateType(rightDoor)
                 }
 
@@ -129,7 +129,7 @@ object CatacombMapMatcher : MortemOverlay {
                 val downColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(0, roomSize + 1)])
                 val downDoor = CatacombDoorType.getByColor(downDoorColor)
                 if (downDoor != null && downColor != downDoorColor) {
-                    val node = instance.getOrCreateNode(roomGridPosition + vectorZeroOne, CatacombNodeType.DOOR)
+                    val node = instance.getOrCreateNode(roomGridPosition + vectorZeroOne, CatacombNodeType.Door)
                     node.mutateType(downDoor)
                 }
             }
@@ -139,7 +139,7 @@ object CatacombMapMatcher : MortemOverlay {
     }
 
     fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
-        val room = getOrCreateNode(position - twoOffset, CatacombNodeType.ROOM)
+        val room = getOrCreateNode(position - twoOffset, CatacombNodeType.Room)
         grid[position] = room
         grid[position - oneOffset] = room
         room.addPosition(position.copy() / 2)
