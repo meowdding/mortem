@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
-import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -56,6 +54,7 @@ dependencies {
     modImplementation(libs.repo.lib)
     modImplementation(libs.fabric.language.kotlin)
     modImplementation(versionedCatalog["fabric.api"])
+    includeImplementation(versionedCatalog["olympus"])
     includeImplementation(versionedCatalog["resourceful.lib"])
     includeImplementation(versionedCatalog["resourceful.config"])
     includeImplementation(libs.resourceful.config.kotlin)
