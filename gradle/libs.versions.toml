@@ -13,9 +13,11 @@ meowdding-resources = "1.0.17"
 rconfigkt = "3.5.15"
 
 gson = "2.12.1"
+
 meowdding-ktmodules = "1.0.5"
 meowdding-ktcodecs = "1.1.0"
 meowdding-lib = "3.0.13"
+meowdding-remote-repo = "1.0.2"
 
 [libraries]
 
@@ -29,9 +31,12 @@ devauth = { module = "me.djtheredstoner:DevAuth-fabric", version.ref = "devauth"
 resourceful-config-kotlin = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-fabric-1.21.5", version.ref = "rconfigkt" }
 
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+meowdding-resources = { module = "me.owdding.repo:compacting-resources", version.ref = "meowdding-resources" }
 meowdding-ktmodules = { module = "me.owdding.ktmodules:KtModules", version.ref = "meowdding-ktmodules" }
 meowdding-ktcodecs = { module = "me.owdding.ktcodecs:KtCodecs", version.ref = "meowdding-ktcodecs" }
 meowdding-lib = { module = "me.owdding.meowdding-lib:meowdding-lib", version.ref = "meowdding-lib" }
+meowdding-remote-repo = { module = "me.owdding.repo:remote-repo", version.ref = "meowdding-remote-repo" }
 
 [plugins]
 meowdding-resources = { id = "me.owdding.resources", version.ref = "meowdding-resources" }
