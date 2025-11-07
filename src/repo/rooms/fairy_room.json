@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "9e8c17ac1a10c095377fa7808ed240c5948f14ba6b7ec71927af36699ade61e4",
+  "directions": {
+    "631fcb5075a93d547aff977ef817b14b951631ebe71cd5da0868492f5f3eefd8": "NORTH",
+    "e2c83933fe1e06f16ce5feec62b7b5588cb90e4452082dc5006d33c72a321952": "SOUTH",
+    "7ced8bde073de746af143f22678f8f66fc1cd9a36027c6ca3d392ac09660dfd4": "EAST",
+    "7e978f18d86fea5ba417fc2148f1cc463b6a28656abd9bb5fc2d96c73ee7c4d5": "WEST"
+  },
+  "name": "Fairy Room",
+  "id": "fairy_room"
+}

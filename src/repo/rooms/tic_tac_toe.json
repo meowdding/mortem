@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "1133c1715c4375c27faf56b67d2e652d66c573787da2b7824519dc52f5b7f753",
+  "directions": {
+    "62816234e761712b6f6ae37be4811c118ce1d25f75888b0d5ad15d3f159dc9f1": "SOUTH",
+    "abc16bd664fc52848fdc362c1454ec5b1c8d4a3bfc1eb5e18667d421ca2273ed": "NORTH",
+    "1b060cdbf0bb4f04546718d79307415dbd7a78b4051f30b0ec613f6f2d97efc3": "WEST",
+    "35b720e2ca4a267ceafaa6eddd5f0be0a48022680397da3860d254d0bbc75241": "EAST"
+  },
+  "name": "Tic Tac Toe",
+  "id": "tic_tac_toe"
+}

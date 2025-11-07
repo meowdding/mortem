@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "e6e5fbc0c897559cd4c2d97ea4d452f98494aaee075c2c264e9b8c012df88422",
+  "directions": {
+    "f0e38074c046438eb0671837c90d0a89f0d479c17dc181660f354c9f8d07ab46": "NORTH",
+    "966c526c7a7a0c0ca55aaeae01c13c99f5010a1eb5839d54312249b8b4c36035": "SOUTH",
+    "79bb54600bf77844b14d95bcfadaa93a311a9c75230b2ce7e6282fde3add87df": "EAST",
+    "0c46a31c20dc2ef32e6bfd1d2eba4f2dcddbd06ef3474095ca8a3bf96c0934c6": "WEST"
+  },
+  "name": "Water",
+  "id": "water"
+}

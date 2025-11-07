@@ -1,0 +1,28 @@
+{
+  "values": [
+    "minecraft:chests",
+    "minecraft:trapped_chest",
+    "minecraft:player_head",
+    "minecraft:player_wall_head",
+    "minecraft:ice", 
+    "minecraft:packed_ice", 
+    "minecraft:polished_granite", 
+    "minecraft:polished_diorite", 
+    "minecraft:polished_andesite", 
+    "minecraft:andesite", 
+    "minecraft:spruce_slab", 
+    "minecraft:red_wool", 
+    "minecraft:blue_wool", 
+    "minecraft:purple_wool",
+    "minecraft:orange_wool",
+    "minecraft:lime_wool",
+    "minecraft:sticky_piston",
+    "minecraft:piston_head",
+    "minecraft:stone_brick_stairs",
+    "minecraft:brick_stairs", 
+    "minecraft:smooth_stone_slab", 
+    "minecraft:cracked_stone_bricks", 
+    "minecraft:tripwire", 
+    "minecraft:oak_log"
+  ]
+}

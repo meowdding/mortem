@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "62328e3c94fccac52a363ab34c0ac2dd78286e1e2ec1dfdc09eb04310ff3c63a",
+  "directions": {
+    "59871eb081a0bd58aa550c1eda53949626b1903bb71a84ec70bb142b59d53db5": "NORTH",
+    "c1f35548808077a994fc18e7dfd235a081a55f1c7c9861f64879e7373b3759c5": "SOUTH",
+    "450d0839ef7a7c166dc9504923112d8d9acf54ba84d8fcf6dc1a425866b62b60": "EAST",
+    "9f9a605e0a7f87d6e089de81175601833423499c64fdb723dd932ac57100b096": "WEST"
+  },
+  "name": "Dueces",
+  "id": "dueces"
+}

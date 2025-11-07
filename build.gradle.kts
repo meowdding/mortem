@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -12,6 +11,7 @@ plugins {
     kotlin("jvm") version "2.2.20"
     alias(libs.plugins.ksp)
     `versioned-catalogues`
+    alias(libs.plugins.meowdding.resources)
 }
 
 repositories {
@@ -84,6 +84,14 @@ loom {
     if (accessWidenerFile.exists()) {
         accessWidenerPath.set(accessWidenerFile)
     }
+}
+
+compactingResources {
+    basePath = "repo"
+    pathDirectory = "../../src"
+
+    configureTask(tasks.named<AbstractCopyTask>("processResources").get())
+    compactToArray("rooms")
 }
 
 ksp {

@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "0c0ac89e44d454ce2c0fb1ea3c34388cca1d828453184abb9351971f8fed0888",
+  "directions": {
+    "1269fd741b925995987dc82eb9922f9ea83d1384a044dda949f9325f17ffcbf3": "NORTH",
+    "2ec701bf73325ac6e716ff631f00332dff2a8dffce74b2cea69f8b2263d89d8b": "SOUTH",
+    "8a062b9aea25b7882c2c0fefe43f1d328df18d7176353434cf6388f5614f4d8b": "EAST",
+    "d402dba0713409cf304f552e39144e1e74cd9c366bff635bcac2529d2750bb4a": "WEST"
+  },
+  "name": "Sarcophagus",
+  "id": "sarcophagus"
+}

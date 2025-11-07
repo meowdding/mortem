@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "2379c99779f60353ca2de2806ca6bec8c0bf507f04747e782382124609d3fce4",
+  "directions": {
+    "d0d836b815dff8615db5031d4be3657042624c53e38747fb66f12d2c6e719888": "NORTH",
+    "cfe7abe13f0c61a6b7e281a0c9936cea57addb7b4c87e0bf7b60e604b4e188ed": "SOUTH",
+    "13efc7ad2f189fe3522ef34e2542209ff05add5b04f590b76e2c7c02e50af58e": "EAST",
+    "ba9a7cbc46d047a44287c28e39af3d2bd66ec6e95f71ac552cc42dd7d991033c": "WEST"
+  },
+  "name": "Purple Flags",
+  "id": "purple_flags"
+}

@@ -3,6 +3,7 @@ pluginManagement {
         maven("https://maven.kikugie.dev/snapshots")
         maven("https://maven.fabricmc.net/")
         gradlePluginPortal()
+        maven("https://maven.teamresourceful.com/repository/maven-public/")
     }
 }
 

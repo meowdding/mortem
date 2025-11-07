@@ -11,6 +11,7 @@ import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 
 @Module
 object Mortem : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResolve() {
+    const val gitRef = $$"$Id$"
 
     val SELF = FabricLoader.getInstance().getModContainer("mortem").get()
     val MOD_ID: String = SELF.metadata.id

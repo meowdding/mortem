@@ -1,5 +1,6 @@
 package me.owdding.mortem.utils.extensions
 
+import me.owdding.lib.extensions.floor
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.Vec3
 import org.joml.*
@@ -38,5 +39,6 @@ fun Vector3ic.toVec3() = Vec3(toBlockPos())
 
 fun Vec3.toVector3dc(): Vector3dc = toVector3d()
 fun Vec3.toVector3d(): Vector3d = Vector3d(x, y, z)
+fun Vec3.toBlockPos(): BlockPos = BlockPos(this.x.floor(), this.y.floor(), this.z.floor())
 fun Vector3dc.toVec3() = Vec3(x(), y(), z())
 fun Vector3fc.toVec3() = Vec3(x().toDouble(), y().toDouble(), z().toDouble())

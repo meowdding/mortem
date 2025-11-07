@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "979b06de4518e9c84af228d1396c4824105e1ee83db99fd9503e4c96161e84ec",
+  "directions": {
+    "fd4602c404b8069626e552efe1a26d29a59fd4b88e7f7394576b8073f09c01eb": "NORTH",
+    "97db6dbf3360aba466563bfc9007a3254a4dd7e3bdf2ae9dd0b88c215dae3f20": "SOUTH",
+    "6e771b3849b248e1f14d8b0ed285cce553b3f5fc7f321fa1d24eafd42db9659b": "EAST",
+    "f9c778212841398c76288782fc274c8fc4cc82778fd7431eb10a1048e33096d9": "WEST"
+  },
+  "name": "Market",
+  "id": "market"
+}

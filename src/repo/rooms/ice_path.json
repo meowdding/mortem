@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "fb7738bc0253709a813be153d18ec092d386414c3798a34668d53c129684f281",
+  "directions": {
+    "0b0b8321d0aa6655030ca6f80b95857d605f1cb9280b1ab0a884d7a6518a90ba": "EAST",
+    "fecd68b119499dd3709b507ca958e92642d645edb463a6d7c88fb361a8898177": "WEST",
+    "188755c5b7945a08ee450da9716a7be034860f54fdf07e38cf6e5e63b7d36c78": "SOUTH",
+    "4d589850b0b3d07fe68cf1f0c635c046befff2e0905e6e337ce8c6451b172d99": "NORTH"
+  },
+  "name": "Ice Path",
+  "id": "ice_path"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "f9cc51e1ed965ae3172806a039a3ff0e93dcc2a4e6d7bc3537ead29e6c181622",
+  "directions": {
+    "c611b32fbce3a074a1ba04cf12c21d4f5d1411e92ba64e502bd7ef52db5dd8d2": "NORTH",
+    "4485cf3215f654677313e597388a97bbd456a42f10a9a0737745d78dcc354a72": "SOUTH",
+    "5bc35c41c1a6507b32c1ceee2373cbf071fe2daaba4325f62533974f04039fb9": "EAST",
+    "00b8d474e8c1d8e0046e54a83a1a410766621f80f9df607ab6e61b18967d3de9": "WEST"
+  },
+  "name": "Catwalk",
+  "id": "catwalk"
+}

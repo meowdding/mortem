@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "d6316acac3bdefca2dcb2d5187873e116e9aea1931d892edb5bfde17c95bff92",
+  "directions": {
+    "a5a7dcde53e866543c0549187d1071ec0a95df5fb00c29080fcf60ddcc979d36": "NORTH",
+    "711bd7c7e9745eba61282adc39e885904a622f9ba75207d041fe26194471b76c": "SOUTH",
+    "8e07bd253821fbb3dd9a50207f27694ea1005910b780ee647f63eea459c52564": "EAST",
+    "fc1bda1fc765d3818cbe8790d37de6cc2012b6165bdd38d74c7e99b460e675d8": "WEST"
+  },
+  "name": "Andesite",
+  "id": "andesite"
+}

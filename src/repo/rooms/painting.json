@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "d62507698b39ef441f7a7765ab6a3a3b681662c1bffc9b7eebfeb208e7901c1c",
+  "directions": {
+    "a969a1c0f17153a01d0a9fac02d35f05fffbf3c2e105a6f578f0b4c12d496366": "NORTH",
+    "aec1ed77799ca9b6f695a7af4ae4d4048b87a94270585368d9b3c33890359a82": "SOUTH",
+    "ebdcb2f1f078b944496ad450b1b9a4f2ded359b8540617aa6b24077f9970cb2d": "EAST",
+    "3cb3fa696531f2ce9ae5d2aa768744800bfd225d48921ab8a07f8f7ab6a8ba62": "WEST"
+  },
+  "name": "Painting",
+  "id": "painting"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "e86320aada84ab2be12a936259ab9f5476344466197102d3e89b7223d4d6b0c2",
+  "directions": {
+    "3ad36a208aa747f1d2aa2c4a9f24f304308bc3c4ddf2ada2b9d32accfd08d2ce": "NORTH",
+    "9ffb9ff0c991cddebbd8ff9a441ac9cd686b112a6392fe3a635df9a7284045d5": "SOUTH",
+    "a891fd60ce41f2e07703bed6beebbf0a8138e17f512fcb89c63679313ac580fb": "EAST",
+    "0ca9db5672900860f448650de744c18caa6a142a1b18b17a542fe9a1a5ea1bc9": "WEST"
+  },
+  "name": "Basement",
+  "id": "basement"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "79842bc93dbf2f552c3edd36cc7ffe5597638ccd71ef9670a7e74df85a8e3ae8",
+  "directions": {
+    "92ce881402685ce6fe5af58cb9c154b3602e90831dea31494e9c54c36b72f70a": "NORTH",
+    "03749007854cb64115a5cf5a384a76c2aa8363540cd7cfb531870258a55c401a": "SOUTH",
+    "8fbaa42288dec2a841c4c07a42c71d454334152905d0ea5d546551c38abb4463": "EAST",
+    "de00b81e161848c124eb3d637bb0ca6e94317973a083c4d5b5f85328da266427": "WEST"
+  },
+  "name": "Arena",
+  "id": "arena"
+}

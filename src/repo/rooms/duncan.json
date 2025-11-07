@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "1fd41dbd7fddf683aee4b42ab97fe9876cac362a02b9c47f548b32b73d73e004",
+  "directions": {
+    "7f82c0d370ecfc50bb95e93459333f8b9da6887f3109d4e48e054ec6bd3526e5": "NORTH",
+    "4d547cb3de1ca89082e73c87504260fa6d8bca657d310542db5af9381a7d7759": "SOUTH",
+    "47749cbc7a16654ceb4be6fd2099a37d40a327c7f10244d66028caf459d3312a": "EAST",
+    "efd01d58118c77155de9fc9f577319b0e9485a917968d85092698046a1831a7c": "WEST"
+  },
+  "name": "Duncan",
+  "id": "duncan"
+}

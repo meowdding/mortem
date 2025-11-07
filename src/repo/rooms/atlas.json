@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "d7aa73af31906ad35cd74e16f7d61530602e66239bfcd938cbfa9ff5e843f25f",
+  "directions": {
+    "33146652863f0cd3aa6ed264b80531592cd70b5ad33b000a6fd558acfc02ca1b": "NORTH",
+    "80f0baf7a518a6510a65b2fdd4bbe9138d844c2f13815d713a0c7a1d8f7adc48": "SOUTH",
+    "8173c080e1137a6baed7b29b8833203d1f2d6ba72e6b9964ec4fd463d4e86e5e": "EAST",
+    "2bbbf8bde2bab5caaf43f9f357f56c532f95f831c6b7bda61aee0f1635a95430": "WEST"
+  },
+  "name": "Atlas",
+  "id": "atlas"
+}
