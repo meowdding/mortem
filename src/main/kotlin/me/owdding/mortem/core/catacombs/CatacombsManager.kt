@@ -41,7 +41,7 @@ import kotlin.math.floor
 @Module
 object CatacombsManager {
 
-    val backingRooms: MutableMap<String, StoredCatacombRoom> = mutableMapOf()
+    private val backingRooms: MutableMap<String, StoredCatacombRoom> = mutableMapOf()
 
     init {
         val list: List<StoredCatacombRoom> = Utils.loadRepoData("rooms", CodecUtils::list)

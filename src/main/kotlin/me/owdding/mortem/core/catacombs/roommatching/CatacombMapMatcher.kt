@@ -28,9 +28,6 @@ import kotlin.math.min
 @Overlay
 object CatacombMapMatcher : MortemOverlay {
 
-    var data: ByteArray? = null
-    var mapOverlay: ByteArray = ByteArray(128 * 128)
-
     operator fun ByteArray.get(x: Int, y: Int) = this.getOrNull(y * 128 + x)
     operator fun ByteArray.get(vector2i: Vector2i) = this.getOrNull(vector2i.y * 128 + vector2i.x)
     operator fun ByteArray.set(x: Int, y: Int, value: Byte) = this.set(y * 128 + x, value)
@@ -38,9 +35,6 @@ object CatacombMapMatcher : MortemOverlay {
 
     fun updateInstance(instance: Catacomb, mapColors: ByteArray) {
         if (mapColors[0, 0] != CatacombMapColor.NONE.packedId) return
-
-        data = mapColors
-        mapOverlay = ByteArray(mapColors.size)
 
         if (instance.mapTopLeft == null) {
             var smallestX = 127
@@ -80,7 +74,6 @@ object CatacombMapMatcher : MortemOverlay {
         val halfRoom = Vector2i(halfRoomSize)
         val rightDoor = Vector2i(roomSize + 1, halfRoomSize)
         val downDoor = Vector2i(halfRoomSize, roomSize + 1)
-        mapOverlay[topLeft.y * 128 + topLeft.x] = CatacombMapColor.MINIBOSS.packedId
 
         val rooms = mutableSetOf<RoomNode>()
         for (y in 0 until instance.size.boundaryY) {
@@ -115,8 +108,6 @@ object CatacombMapMatcher : MortemOverlay {
                 room.addPosition(roomCoordinate)
                 rooms.add(room)
 
-                mapOverlay[mapPosition] = CatacombMapColor.MINIBOSS.packedId
-                mapOverlay[mapPosition + halfRoom] = CatacombMapColor.MINIBOSS.packedId
                 val rightDoorColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + rightDoor])
                 val rightColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(roomSize + 1, 0)])
                 val rightDoor = CatacombDoorType.getByColor(rightDoorColor)
@@ -150,26 +141,7 @@ object CatacombMapMatcher : MortemOverlay {
     override val bounds: Pair<Int, Int> = 20 to 20
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-        /*val data = data ?: return
-        val width = sqrt(data.size.toFloat()).toInt()
-
-        for ((index, data) in data.withIndex()) {
-            val x = index % width
-            val y = index / width
-
-            val color = MapColor.getColorFromPackedId(data.toInt())
-            if (ARGB.alpha(color) > 0.1 && ((x % 2) == 0) xor ((y % 2) == 0)) {
-                graphics.fill(x, y, x + 1, y + 1, color)
-            }
-
-            val overlayData = mapOverlay.getOrNull(index) ?: continue
-            val overlay = MapColor.getColorFromPackedId(overlayData.toInt())
-            if (ARGB.alpha(overlay) > 0.1) {
-                graphics.fill(x, y, x + 1, y + 1, overlay)
-            }
-        }*/
         val catacomb = CatacombsManager.catacomb ?: return
-
 
         catacomb.grid.forEach { (pos, node) ->
 

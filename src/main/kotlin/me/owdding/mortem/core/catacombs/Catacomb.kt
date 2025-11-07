@@ -29,7 +29,7 @@ data class Catacomb(
         }
     var mapRoomAndDoorSize: Int = 0
 
-    var grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
+    val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
 

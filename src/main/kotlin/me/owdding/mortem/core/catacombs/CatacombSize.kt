@@ -27,7 +27,7 @@ enum class CatacombSize(
             F2, M2, F3, M3 -> NORMAL
             F4, M4 -> LARGE
             F5, M5, F6, M6 -> GIGANTIC
-            F7, M7 -> COLOSSAL
+            else -> COLOSSAL
         }
     }
 }
