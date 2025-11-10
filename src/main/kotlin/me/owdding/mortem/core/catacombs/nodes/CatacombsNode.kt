@@ -5,10 +5,18 @@ import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.utils.Utils
+import me.owdding.mortem.utils.extensions.mutableCopy
+import me.owdding.mortem.utils.extensions.sendWithPrefix
+import me.owdding.mortem.utils.extensions.toVec2d
 import net.minecraft.world.level.block.Rotation
 import org.joml.Vector2i
+import org.joml.Vector3d
+import org.joml.Vector3dc
+import org.joml.Vector3i
+import org.joml.Vector3ic
 import org.joml.component1
 import org.joml.component2
+import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.max
 import kotlin.math.min
 
@@ -120,6 +128,54 @@ class RoomNode(
             CatacombRoomType.DEFAULT, CatacombRoomType.UNKNOWN -> type
             else -> roomType
         }
+    }
+
+    fun getCenter(): Vector2i = minMiddleChunkPos().add(getMiddleChunkOffset() ?: Utils.vectorZeroZero).mul(16).add(7, 7)
+
+    fun worldToRoom(vec3d: Vector3dc): Vector3dc {
+        val origin = getCenter().toVec2d().add(0.5, 0.5)
+        Text.of(origin.toString()).sendWithPrefix()
+        val original = vec3d.mutableCopy().sub(origin.x, 0.0, origin.y)
+        return when (rotation) {
+            Rotation.CLOCKWISE_90 -> Vector3d(original.z(), original.y(), -original.x())
+            Rotation.CLOCKWISE_180 -> Vector3d(-original.x(), original.y(), -original.z())
+            Rotation.COUNTERCLOCKWISE_90 -> Vector3d(-original.z(), original.y(), original.x())
+            else -> original
+        }
+    }
+
+    fun worldToRoom(vec3i: Vector3ic): Vector3ic {
+        val origin = getCenter()
+        val original = vec3i.mutableCopy().sub(origin.x, 0, origin.y)
+        return when (rotation) {
+            Rotation.CLOCKWISE_90 -> Vector3i(original.z(), original.y(), -original.x())
+            Rotation.CLOCKWISE_180 -> Vector3i(-original.x(), original.y(), -original.z())
+            Rotation.COUNTERCLOCKWISE_90 -> Vector3i(-original.z(), original.y(), original.x())
+            else -> original
+        }
+    }
+
+    fun roomToWorld(vec3i: Vector3ic): Vector3i {
+        val room = when (rotation) {
+            Rotation.COUNTERCLOCKWISE_90 -> Vector3i(vec3i.z(), vec3i.y(), -vec3i.x())
+            Rotation.CLOCKWISE_180 -> Vector3i(-vec3i.x(), vec3i.y(), -vec3i.z())
+            Rotation.CLOCKWISE_90 -> Vector3i(-vec3i.z(), vec3i.y(), vec3i.x())
+            else -> vec3i.mutableCopy()
+        }
+        val origin = getCenter()
+        Text.of(origin.toString()).sendWithPrefix()
+        return room.add(origin.x, 0, origin.y)
+    }
+
+    fun roomToWorld(vec3d: Vector3dc): Vector3d {
+        val room = when (rotation) {
+            Rotation.COUNTERCLOCKWISE_90 -> Vector3d(vec3d.z(), vec3d.y(), -vec3d.x())
+            Rotation.CLOCKWISE_180 -> Vector3d(-vec3d.x(), vec3d.y(), -vec3d.z())
+            Rotation.CLOCKWISE_90 -> Vector3d(-vec3d.z(), vec3d.y(), vec3d.x())
+            else -> vec3d.mutableCopy()
+        }
+        val origin = getCenter().toVec2d().add(0.5, 0.5)
+        return room.add(origin.x, 0.0, origin.y)
     }
 }
 

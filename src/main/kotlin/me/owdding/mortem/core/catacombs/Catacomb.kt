@@ -108,6 +108,7 @@ data class StoredCatacombRoom(
     var secrets: Int,
     @FieldName("center") val centerHash: String,
     @FieldName("directions") val directionalHashes: Map<String, Direction>,
+    @FieldName("extra_rotation_handling") val extraRotationHandling: Boolean = false,
 ) {
     var shouldSerialize = false
 

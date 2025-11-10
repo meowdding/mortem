@@ -1,6 +1,9 @@
 package me.owdding.mortem.core.catacombs
 
 import me.owdding.ktmodules.Module
+import me.owdding.lib.extensions.shorten
+import me.owdding.mortem.Mortem
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.catacombs.roommatching.CatacombMapMatcher
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.core.event.CatacombJoinEvent
@@ -11,16 +14,20 @@ import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.extensions.sendWithPrefix
+import me.owdding.mortem.utils.extensions.toVector3dc
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.game.ClientboundMapItemDataPacket
 import net.minecraft.world.level.chunk.status.ChunkStatus
 import org.joml.Vector2i
+import org.joml.Vector3dc
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.TimePassed
 import tech.thatgravyboat.skyblockapi.api.events.dungeon.DungeonEnterEvent
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.level.PacketReceivedEvent
+import tech.thatgravyboat.skyblockapi.api.events.location.ServerDisconnectEvent
 import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
@@ -46,6 +53,145 @@ object CatacombsManager {
     init {
         val list: List<StoredCatacombRoom> = Utils.loadRepoData("rooms", CodecUtils::list)
         backingRooms.putAll(list.associateBy { it.centerHash })
+
+        val actualRooms = setOf(
+            "Entry",
+            "Blood Room",
+            "Fairy Room",
+            "Ice Path",
+            "Teleport Maze",
+            "Ice Fill",
+            "Creeper Beams",
+            "Old Trap",
+            "New Trap",
+            "Midas",
+            "Shadow Assassin",
+            "Higher Blaze",
+            "Lower Blaze",
+            "Tic Tac Toe",
+            "Tic Tac Toe",
+            "Three Weirdos",
+            "Boulder",
+            "Water Board",
+            "Quiz",
+            "Dragon Miniboss",
+            "Default",
+            "Zodd",
+            "Diagonal",
+            "Quartz Knight",
+            "Doors",
+            "Cages",
+            "Long Hall",
+            "Grand Library",
+            "Arrow Trap",
+            "Skull",
+            "Scaffolding",
+            "Red Green",
+            "Jumping Skulls",
+            "Redstone Warrior",
+            "Perch",
+            "Sloth",
+            "Purple Flags",
+            "Painting",
+            "Altar",
+            "Grass Ruin",
+            "Cathedral",
+            "Basement",
+            "Chambers",
+            "Double Diamond",
+            "Gravel",
+            "Raccoon",
+            "Hallway",
+            "Golden Oasis",
+            "Stairs",
+            "Balcony",
+            "Dip",
+            "Dino Site",
+            "Hall",
+            "Mural",
+            "Banners",
+            "Pressure Plates",
+            "Big Red Flag",
+            "Melon",
+            "Beams",
+            "Red Blue",
+            "Redstone Crypt",
+            "Museum",
+            "Redstone Key",
+            "Market",
+            "Steps",
+            "Overgrown Chains",
+            "Drawbridge",
+            "Drop",
+            "Chains",
+            "Cage",
+            "Spider",
+            "Leaves",
+            "Mines",
+            "Spikes",
+            "Double Stair",
+            "Layers",
+            "Crypt",
+            "Flags",
+            "Cell",
+            "Catwalk",
+            "Overgrown",
+            "Sewer",
+            "Admin",
+            "Mossy",
+            "Pedestal",
+            "Mushroom",
+            "Duncan",
+            "Bridges",
+            "Andesite",
+            "Mage",
+            "Small Waterfall",
+            "Supertall",
+            "Blue Skulls",
+            "Temple",
+            "Lava Skulls",
+            "Well",
+            "Knight",
+            "Buttons",
+            "Dome",
+            "Deathmite",
+            "Archway",
+            "Lava Ravine",
+            "Tomioka",
+            "Rails",
+            "Locked Away",
+            "Sword",
+            "Gold Mine",
+            "Granite",
+            "End",
+            "Atlas",
+            "Wizard",
+            "Slime",
+            "Waterfall",
+            "Prison Cell",
+            "Small Stairs",
+            "Slabs",
+            "Water",
+            "Lots of Floors",
+            "Carpets",
+            "Withermancer",
+            "Pit",
+            "1x1 skulls",
+            "Dueces",
+            "Mirror",
+            "Sarcophagus",
+            "Logs",
+            "Cobble Wall Pillar",
+            "Criss Cross",
+            "Black Flag",
+            "Multicolored",
+            "Quad Lava",
+            "Admin 2",
+            "Four Banner",
+        )
+
+        val rooms = backingRooms.map { it.value.name.lowercase() }
+        actualRooms.filterNot { rooms.contains(it.lowercase()) }.forEach { Mortem.error("Missing room $it") }
     }
 
     var catacomb: Catacomb? = null
@@ -82,7 +228,7 @@ object CatacombsManager {
         }
     }
 
-    @Subscription(ServerChangeEvent::class)
+    @Subscription(ServerChangeEvent::class, ServerDisconnectEvent::class)
     fun reset() {
         val instance = catacomb ?: return
         CatacombLeaveEvent(instance).post()
@@ -101,6 +247,50 @@ object CatacombsManager {
                     color = CatppuccinColors.Mocha.pink
                 }
                 color = CatppuccinColors.Mocha.lavender
+            }.sendWithPrefix()
+        }
+        fun format(coordinate: Vector3dc): Component = Text.of {
+            append(coordinate.x().shorten(2)) { color = CatppuccinColors.Mocha.red }
+            append(" ")
+            append(coordinate.y().shorten(2)) { color = CatppuccinColors.Mocha.green }
+            append(" ")
+            append(coordinate.z().shorten(2)) { color = CatppuccinColors.Mocha.blue }
+        }
+        event.registerWithCallback("mortem dev room_pos") {
+            val catacomb = catacomb ?: return@registerWithCallback
+            val playerNode = catacomb.grid[worldPosToGridPos(McPlayer.self!!.blockPosition())]
+            if (playerNode !is RoomNode) {
+                Text.of("Not in any room!", CatppuccinColors.Mocha.red).sendWithPrefix()
+                return@registerWithCallback
+            }
+
+            val roomPos = playerNode.worldToRoom(McPlayer.position!!.toVector3dc())
+            Text.of("Current room pos: ") {
+                color = CatppuccinColors.Mocha.text
+                append(format(roomPos))
+            }.sendWithPrefix()
+        }
+        event.registerWithCallback("mortem dev room_pos_test") {
+            val catacomb = catacomb ?: return@registerWithCallback
+            val playerNode = catacomb.grid[worldPosToGridPos(McPlayer.self!!.blockPosition())]
+            val pos = McPlayer.position!!.toVector3dc()
+            if (playerNode !is RoomNode) {
+                Text.of("Not in any room!", CatppuccinColors.Mocha.red).sendWithPrefix()
+                return@registerWithCallback
+            }
+
+            val roomPos = playerNode.worldToRoom(pos)
+            Text.of("World: ") {
+                color = CatppuccinColors.Mocha.text
+                append(format(pos))
+            }.sendWithPrefix()
+            Text.of("World -> Room: ") {
+                color = CatppuccinColors.Mocha.text
+                append(format(roomPos))
+            }.sendWithPrefix()
+            Text.of("World -> Room -> World: ") {
+                color = CatppuccinColors.Mocha.text
+                append(format(playerNode.roomToWorld(roomPos)))
             }.sendWithPrefix()
         }
     }

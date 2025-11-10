@@ -1,6 +1,7 @@
 package me.owdding.mortem.utils.extensions
 
 import me.owdding.lib.extensions.floor
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.Vec3
 import org.joml.*
@@ -42,3 +43,10 @@ fun Vec3.toVector3d(): Vector3d = Vector3d(x, y, z)
 fun Vec3.toBlockPos(): BlockPos = BlockPos(this.x.floor(), this.y.floor(), this.z.floor())
 fun Vector3dc.toVec3() = Vec3(x(), y(), z())
 fun Vector3fc.toVec3() = Vec3(x().toDouble(), y().toDouble(), z().toDouble())
+
+fun Vector2i.toVec2d() = Vector2d(x().toDouble(), y().toDouble())
+
+fun Vector3dc.toRoomPos(roomNode: RoomNode) = roomNode.worldToRoom(this)
+fun Vector3dc.toWorldPos(roomNode: RoomNode) = roomNode.roomToWorld(this)
+fun Vector3ic.toRoomPos(roomNode: RoomNode) = roomNode.worldToRoom(this)
+fun Vector3ic.toWorldPos(roomNode: RoomNode) = roomNode.roomToWorld(this)

@@ -7,6 +7,8 @@ import com.google.common.hash.Hashing
 import me.owdding.ktmodules.Module
 import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsManager
+import me.owdding.mortem.core.catacombs.nodes.CatacombRoomShape
+import me.owdding.mortem.core.catacombs.nodes.DoorNode
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.event.CatacombLeaveEvent
 import me.owdding.mortem.core.event.ChunkEvent
@@ -19,10 +21,10 @@ import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import org.joml.Vector2i
-import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import kotlin.math.sign
 
 @Module
 object CatacombWorldMatcher {
@@ -102,17 +104,36 @@ object CatacombWorldMatcher {
         return hasher.hash().asBytes().toHexString()
     }
 
+    fun RoomNode.rotationForOneByOne(): Direction? {
+        val catacomb = CatacombsManager.catacomb ?: return null
+        val gridPosition = positions.first()
+        val doors = catacomb.getNeighbours<DoorNode>(gridPosition)
+        if (doors.size == 1) {
+            val (position) = doors.entries.first()
+            return when {
+                (gridPosition.x - position.x).sign == 1 -> Direction.WEST
+                (gridPosition.x - position.x).sign == -1 -> Direction.EAST
+                (gridPosition.y - position.y).sign == 1 -> Direction.NORTH
+                (gridPosition.y - position.y).sign == -1 -> Direction.SOUTH
+                else -> null
+            }
+        }
+        return null
+    }
+
     fun matchData(rooms: MutableSet<RoomNode>) {
         rooms.filter { it.roomType != CatacombRoomType.UNKNOWN }.forEach {
-            val origin = it.minMiddleChunkPos()
-            val offset = it.getMiddleChunkOffset() ?: return@forEach
-            val center = (origin + offset).mul(16).add(7, 7)
+            val center = it.getCenter()
             val centerHashes = hashes.get(center)
             val directionHashes = hashes.get(center.add(0, -4))
             val storedRoom = centerHashes.firstNotNullOfOrNull { hash -> CatacombsManager.backingRooms[hash] }
             if (storedRoom != null) {
                 it.backingData = storedRoom
-                val direction = directionHashes.firstNotNullOfOrNull { hash -> storedRoom.directionalHashes[hash] }
+
+                val direction = (if (storedRoom.extraRotationHandling && it.shape == CatacombRoomShape.ONE_BY_ONE) {
+                    it.rotationForOneByOne()
+                } else null) ?: directionHashes.firstNotNullOfOrNull { hash -> storedRoom.directionalHashes[hash] }
+
                 if (direction == null) {
                     todo.add(it)
                     return@forEach
