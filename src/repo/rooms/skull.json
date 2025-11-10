@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "20e9b785edf140334ab372c901043212af5b3709c0ae5d035afc096db16b3ff1",
+  "directions": {
+    "403982ad607ec3c359916be82ad33b0fe82e8b827bb6200317fcdb7c1fc0e33a": "NORTH",
+    "94afa9e9fd68b82bc6ae4deb1de87de7631d8fcf8233d42c72e9c858f6c35845": "SOUTH",
+    "d539027278d1d73348c014545a651efd25b3c240f992793c69cce0880eeaec48": "EAST",
+    "ecc4965885b8c0c54b8fd65ffc1e0b47a67980a5d48574d5a60bb554b8689194": "WEST"
+  },
+  "name": "Skull",
+  "id": "skull"
+}

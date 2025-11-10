@@ -1,0 +1,13 @@
+{
+  "center": "a244a249603c0bd11aaef4e0aa6c7cfd039cea3a802b04187a810ec0ff6e9618",
+  "directions": {
+    "51b91be52e5c6ea2e199f671fa44382a795223280ec93d762d7ed42c5036afe3": "NORTH",
+    "d407b66cb52c1d0590293daca68ca386fb8e58879a9b997a19e1668cb8d617aa": "SOUTH",
+    "128f73538041c40333917b5f1c8de7382ffd33f9b971f11f255e4700f72609f1": "EAST",
+    "6579f806d72d0bf42950fcb38a7f2c8ac177641ef0b3be7a4fc42348702fd4a1": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Crypt",
+  "id": "crypt",
+  "secrets": 5
+}

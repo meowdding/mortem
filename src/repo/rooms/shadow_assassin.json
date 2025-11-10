@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "174718f2f9620051fb78b00a9bbef2e0b63b403fab0497a55710680d2d714a97",
+  "directions": {
+    "323f4836111990c533199f2ab6201218a7c4170229d5a5cd1882bb26b7dba010": "EAST",
+    "a2eb822e2e421c614b304d7e0ef5cca4ad1cae2aa9300f124fcdee07e42c245e": "WEST",
+    "147b6a00f6ab71a20040daad8eb9e75ee05261855645f9c9de8cd49ae6987ba7": "SOUTH",
+    "52469b2dd9bf7b5cba15504df39746847beba974f686494ee4bf3e09d79c3288": "NORTH"
+  },
+  "name": "Shadow Assassin",
+  "id": "shadow_assassin"
+}

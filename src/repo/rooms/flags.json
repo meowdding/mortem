@@ -1,0 +1,12 @@
+{
+  "secrets": 7,
+  "center": "28b1db5441962a09221009d8d3899819d4683afbd5b4ab27b03d5d23a3c1e7b4",
+  "directions": {
+    "edbe3d6e2c8c22bc0912b4dfa51917b43f9ab3effb58add5bcb4bff0178b64be": "NORTH",
+    "ce49ef242a712614b261d89009a5eea2aafa683510f489e153c4495e34e143ef": "SOUTH",
+    "dac585edf561324cf7ffb262409eb65e424112002f9e3097580abe7d16306672": "EAST",
+    "3201403747a3b9c2e421e90672d0754655936784c52d7d3cd4fc4f6d0e261f80": "WEST"
+  },
+  "name": "Flags",
+  "id": "flags"
+}

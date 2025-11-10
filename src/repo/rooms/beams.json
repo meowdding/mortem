@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "a304a9c13bb77c872cd7a02bf88644d212c58d5ba0e95ffec63e98517623f166",
+  "directions": {
+    "736e7187a7d621984047ce7354ba30a3f2c831d14f0ee6ea7d5a7301cc62be3c": "NORTH",
+    "bf7dbe2bf83415ddb32eb8c2b5a786a9ba8f75f2712927bd125350b8810bb7a0": "SOUTH",
+    "84058a7bc381882e7fedf68f20ebdb0eeb2c526435d670cf92ecd2a40fb11f22": "EAST",
+    "016cfa0a88a9b15b24b81e74fc61044ea269567e065d6fd163f5e6120afc5fbd": "WEST"
+  },
+  "name": "Beams",
+  "id": "beams"
+}

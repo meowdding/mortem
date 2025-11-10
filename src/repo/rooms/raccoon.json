@@ -1,0 +1,13 @@
+{
+  "center": "f8a399617ad1f3409e288ffe91b6d6c93f0c9b1b7bbfa66dea8701ec67d9f137",
+  "directions": {
+    "e5288d573180979fbb7ae865810fae389a6ffeb406131fdebdaf52039e3dba9d": "NORTH",
+    "17cb37cce50d40e2566a415cc55f8d1d27f343853769b2d53a3df5940505ecef": "SOUTH",
+    "33705c48564c0844561638d23573a8814aa8b71579568deb5f90298305415a5f": "EAST",
+    "f52b11feec5f33a72caeb1301a18a64dad5b91ce7a514a74e011b46f5c7c3551": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Raccoon",
+  "id": "raccoon",
+  "secrets": 4
+}

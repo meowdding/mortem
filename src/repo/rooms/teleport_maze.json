@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "6f512610c7288ce2b93323bc6a3c1301fc3d534a50e9e79de4da23aa1928b1ef",
+  "directions": {
+    "2a2629a9265887ee1bf36fc2d9852e2aca34f036bd6ae06e1eba14c744a8333a": "WEST",
+    "8dbc4a8e6e5fb35a039f01f6a337d9eeb0869d302b917d0458763ae8de0e50e5": "EAST",
+    "7972e6e778abfcbc665dfbddedb269ed3a1ecb5db0e68b9bda78f355c839b4b5": "NORTH",
+    "f60fe2152afb9f301fe9079b3dc1862d46d9e661953ee40dbf158ad8219ebee0": "SOUTH"
+  },
+  "name": "Teleport Maze",
+  "id": "teleport_maze"
+}

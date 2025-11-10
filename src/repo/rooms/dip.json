@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "8c8dce093e144aaae7782cb389a169e35767535e1f92501b04b2fecc0329b625",
+  "directions": {
+    "8b1800966c5ba63f75910aa53b7e100717232d38846f02f148feca3f6c2c7652": "NORTH",
+    "823e42bdb0b969746551629766ecbf18acfbfde68c4580dbeaf47ce779048162": "SOUTH",
+    "9bfff5b2a05349aac8bcca43ae315fbf1500c75dd3f5a82aa40b0a18c59e230f": "EAST",
+    "83f8c97fbadc1e9b02d8f04232fa65920ab7310ba153acd7f361419f47224b7b": "WEST"
+  },
+  "name": "Dip",
+  "id": "dip"
+}

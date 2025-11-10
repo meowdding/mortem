@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "dca64e0909d08c5ffb0599a9b366001774e499499e3739fc54abe44fa8a0e617",
+  "directions": {
+    "c052f78f29d8e4ebf7fa2e244d42cbf16999aeddd72cd873ca9578b4c7ed4e35": "NORTH",
+    "fd2050bd52ff1488bd3dc5aa4db2ecac284fc2440484dfb207ea899ffec57680": "SOUTH",
+    "fe25f28a212de03d75ac3492a85ff7a5dcd62c74b49a4568765e9421b2aaa5d8": "EAST",
+    "99b15b5a6757dfe256c13f572743b09f70a02a1aafc3f3cc96cddaaae22f2294": "WEST"
+  },
+  "name": "Gold Mine",
+  "id": "gold"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "c57b89b9321009e869b3ae67c9bc673851828450993f880b813c367d37c282f9",
+  "directions": {
+    "fae126181fcfd0b61c136ca9621bdefa7d219ad03f089010b982ac38c583deda": "WEST",
+    "dedfb7a1e51554f7f5709249ea6d1c37d5980ab68449e858868d0330428a56fd": "EAST",
+    "13131bca7be7334fd99fcc93206445f623cb2d9e3894e1ba148f08411c20d4ad": "NORTH",
+    "71189fa1731822e392a5d5df73928ddc3fec9a3ee94e67645a41768a898251d3": "SOUTH"
+  },
+  "name": "Midas",
+  "id": "midas"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "1c929938cf5e03323d0e906f536e41afc55ba18ea9ad4875c4344c416a6b1992",
+  "directions": {
+    "33e3394de1e709ed2dcf2d2b484b64e55cd3c8fd6f2bf9ad3b417626f4e4d6a8": "NORTH",
+    "cc23b5804644b15b79f8b95c951e29b46d131cf522d3149b806f5b46b98596de": "SOUTH",
+    "665993a491e3675658b2c48b56d98916cf0b9f5cc99158ad49b6b2edc72604ec": "EAST",
+    "c80cf720d1cdb2a77b500cb807e4db83d3521010b10ba9e66637763e8f7335cf": "WEST"
+  },
+  "name": "Pedestal",
+  "id": "pedestal"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "8f62fca006303f2696d527c45d8f18838f245b031fab6e5d017a77f4eb7ca930",
+  "directions": {
+    "79d9040367ccefb3398d9acdee284366821a1de2d31c00a35b63d86a83b77bc2": "SOUTH",
+    "b99be951868b0fede689aad0431359ff037ccd1e1fb8c98cc0ea28706dafb1ca": "NORTH",
+    "c5e9e36c7a3c846c5d17ad625e0d3af492e3c950e5bac637b0b6ad61698f0e6d": "WEST",
+    "d61cd61090b2fc9fd44d57fcc16591715968206b35f87f485a40b1e4b615eec0": "EAST"
+  },
+  "name": "New Trap",
+  "id": "trap_very_hard"
+}

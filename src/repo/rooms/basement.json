@@ -1,0 +1,13 @@
+{
+  "center": "e86320aada84ab2be12a936259ab9f5476344466197102d3e89b7223d4d6b0c2",
+  "directions": {
+    "de0148a5073762d24a193ba32dd5b3342130f86f65a55e250bf4b99a8e9ef697": "NORTH",
+    "cff10c329b451daaac73396fc2ad983825cf81ff72eb5c00f7baa82de6544b08": "SOUTH",
+    "743e503f4dc91c514e198a63ba18f3d403849f2893872966781a8b159c9df95b": "EAST",
+    "aa710edd73ba5a12df4a22414358c63b76d11274b409a0010202cb684c93ace0": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Basement",
+  "id": "basement",
+  "secrets": 1
+}

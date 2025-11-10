@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "8dcd1909f66fe18beb404997697ea5963c6bd91df6b173aa61083799ba106a46",
+  "directions": {
+    "fd081fbc9cf75a08a7ff31929b2e71dd805afbc65949735e474f3c8b458f3028": "NORTH",
+    "e63cede2616259836ac4523a3d9ef266c418e6c069afff5a345c063b6ba6f446": "SOUTH",
+    "e30cfd33b548ad2e79ed16b22a06975d7a5344c2e676d89987a1f7e5ac151e16": "EAST",
+    "87a5be1843ab710e5fe240933fe0e383027bc1a8c43446a43b78ba5b4dc3f819": "WEST"
+  },
+  "name": "Hallway",
+  "id": "hallway"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "9e4f1fb27c039f7333b0fb5a2738321861d00ebea326744bb5cece9540d4baa6",
+  "directions": {
+    "575e3b12c5f0e4cdae3444ae544f6414b69ed7f3ea0950a2d3102fbbef884fdb": "NORTH",
+    "1ba44d94c93afe1fde3d70a093280e36bd89cf30fcbd3d084d2ae94e03eca08f": "SOUTH",
+    "b64f823f3482ca0438f94909e378be1145e63c3f9d5da6af5de652b7e0b03c72": "EAST",
+    "20b2f23dbe0172694817c3c8c2193093544642e6bc7c089f0d6bd814aad4d2a8": "WEST"
+  },
+  "name": "Lava Ravine",
+  "id": "lava_ravine"
+}

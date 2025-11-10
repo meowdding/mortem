@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "8af7053a25d31089ad6a36d5cdbc70d4734897a34019b8bcf9d106dcb3baf540",
+  "directions": {
+    "5958ea9fff7bc4df8e2ef28642134504779f04dbef23d699cab690f56f5cf4e5": "EAST",
+    "cc794422dfc3ad87f02a9ee43a77fcbb47b02a8b64eb90bb64348a38437d2786": "WEST",
+    "1f054a48cb5552ab3bc012aadb992382c332a8c897753910885d1ecfdd1af082": "SOUTH",
+    "a0707ee4efb83b78eb539ca42b473aad90968ea78fa8ccbbfea1936be90c232c": "NORTH"
+  },
+  "name": "Blood Room",
+  "id": "blood_room"
+}

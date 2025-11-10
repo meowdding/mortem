@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "3632f6dbbdec436c3559214515bca52c9c6a50820f70f0598ef01ac987706c3b",
+  "directions": {
+    "348929428bb7f4bd0b0a9205cd9920efc12c398ce86c6d8a020300c609b98e60": "NORTH",
+    "3dcc216b9030b1d623719028126958217b4c3ecb1dd3de09d4efcc732a0449b0": "SOUTH",
+    "8b2eae2ae5859d311444535e860bcf7a526c0dd8f78ce2d7327ac4ad5726713e": "EAST",
+    "0b776ec061a006c556e21fde9537c4a39891fddf9743f2cdade54ce920dbd1a8": "WEST"
+  },
+  "name": "Mossy",
+  "id": "mossy"
+}

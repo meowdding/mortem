@@ -1,0 +1,13 @@
+{
+  "center": "d0d34f1eccc7cfef9fc5db24ef29c5a2dbd8bccb5168c1e2ce89520648d2c21a",
+  "directions": {
+    "fb74647a09ac5cece17beea4c883ef96403913e5983baa4ba313663cfbd71814": "NORTH",
+    "6e2c53ce05a27f7cf1eea559b82bc01c77eeed24b40c2e7132bfb12e1c488abf": "SOUTH",
+    "a55aa46c2d1bda6f17c808d4b02f4b233e082336065ae146ae40884e4a30882a": "EAST",
+    "433f43c6ba76bd5c92986be60c6304285667dfc9758b64bb9c63585bf3075bf5": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Spikes",
+  "id": "spikes",
+  "secrets": 3
+}

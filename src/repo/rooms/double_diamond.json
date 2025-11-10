@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "430ec7cb3b90fab783a52cc0ce795ffa5fd086c2c21f32549a135ac84b59c394",
+  "directions": {
+    "ea51888920d71bae2079ed230e62bc081799f6af193f9ed738b19fc58c7df32d": "NORTH",
+    "caeff8d6e4774e82a8373c12996fa58406e32b04ab45945959f54195cc8ae8da": "SOUTH",
+    "aafc508ead15746467491450e07b4df3d82252c245ed66e1358aa39f2da196ed": "EAST",
+    "c769fb338c4bfcdc4e92b20f3508366b6473840f7eae1c3333028f4c89d61a95": "WEST"
+  },
+  "name": "Double Diamond",
+  "id": "double_diamond"
+}

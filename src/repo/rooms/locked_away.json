@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "9d3c6733c719592ebfdc358161026df278593d0c0830452d8927b94b4d2d26af",
+  "directions": {
+    "1bc4f9e692b3550a6b52a03680644f20da5b8d8ad18eacd30291c432cb365ddf": "NORTH",
+    "f3af2aca35669a42f8d7aad1a1f230be39c770d79412f985e27da2516edee12d": "SOUTH",
+    "4734c96fcfb9c1f9d922f4990afffbc0a5c4617004a2863166601b43e5566805": "EAST",
+    "e5eec85630d4bc92b64d3655bb92616b58b7b0741384142d0466d2f3d154f131": "WEST"
+  },
+  "name": "Locked Away",
+  "id": "locked_away"
+}

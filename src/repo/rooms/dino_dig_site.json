@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "36b7a9c2eb5cd27d416425d1c91ef6de3444a8de47baa196bb9296e1a275d920",
+  "directions": {
+    "19f2a4f44e0f50b2677ca4dcfff2744e52a7e0354592fcfd39e5e8e2db1c9235": "NORTH",
+    "489a33adf0dc2b1e3f23817d97449333dc76971f1fb555ce42e6d3b5dce9d3cd": "SOUTH",
+    "4fdfba93d3c8115526092eba088cf223abc888ef18bc1b063de43c97405ceb6b": "EAST",
+    "1db11a97d51549d229f12b604aad6fd01175816b6a27530c5bfb8549bf4dda8c": "WEST"
+  },
+  "name": "Dino Site",
+  "id": "dino_dig_site"
+}

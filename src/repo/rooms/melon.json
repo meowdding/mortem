@@ -1,0 +1,12 @@
+{
+  "secrets": 7,
+  "center": "eb15d11dc61d513f84032d495e07eee94b8c95222a741c73d7e4e2fe040c72f8",
+  "directions": {
+    "7023072ddf283055bc5999b2c3371542fd50efa6cccb0e47e8caf8bad63d188e": "NORTH",
+    "ce8a21be0dbbad328061f674bc835762480691947ea5ae61a26ea4f433973760": "SOUTH",
+    "cb6e2aac052e78791db8aae200760cb3c8785f975a6491949e5fbe84a5437222": "EAST",
+    "f37b95e5f43d3243fe20995d897c17d0d3f7adc888093016404fa27bd954c7c4": "WEST"
+  },
+  "name": "Melon",
+  "id": "melon"
+}

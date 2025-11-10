@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "b02c9863485ea3c5183384eb7a97fb3760828451ab11ce86ac8a84037223ef16",
+  "directions": {
+    "967758fe9edf9e183425029e700bb527f25679f49a2753a30c033e8e66defb2c": "NORTH",
+    "54d9aeb8909423b559e2e4d527166f9448f45cbe58bed51b29cf078aeb3f1b38": "SOUTH",
+    "fab6bf8bbef3de1e3d1bbe039954ea8fcaebc4cbe02a9f8e36bc602911de49b9": "EAST",
+    "af9def18ac75f1f20b714125488c8cd2eb9006133a81423c5f373c7b5884ca26": "WEST"
+  },
+  "name": "Buttons",
+  "id": "buttons"
+}

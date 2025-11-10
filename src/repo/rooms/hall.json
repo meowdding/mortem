@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "fa8910ef4a411eebafdce4644b768cc12baf68b32bdd0a149f482dd5172f8154",
+  "directions": {
+    "d46f0b2e08b0f42f4a9a4773fe2cb14d077960eb5ba93c5ef5ae867db3af0ed9": "NORTH",
+    "90ea861c709b2ada1cecf2cbbb0624d215cc25021b1772e9f03b9b6f6d4e2c0f": "SOUTH",
+    "6e16acdfe02bc5ea00592e33531b4eb99a3b2dd539a8374ca2edfef46241aebd": "EAST",
+    "e22b19cf365170539ba4df531b05bd4d89966a8a2c34da2b189c57e4052bf8e2": "WEST"
+  },
+  "name": "Hall",
+  "id": "hall"
+}

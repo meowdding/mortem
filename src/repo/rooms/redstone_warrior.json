@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "9d9fb98f6f7003294f697450117143a60b5ddb785db1e2687379b5b7a7daa02b",
+  "directions": {
+    "3dac99e000a8a6ae4e782169f9f670ca4c283f47fb0376af9fd9a49cf3c274b6": "NORTH",
+    "67ee415a432bbb868edf3071f3c11b64d64f63a24ba2fa1e5fd7a66b5fd25390": "SOUTH",
+    "cb024697f2a33acc9b05734bd43e53330f3d61950fcfce1bf36eae2a9a31874d": "EAST",
+    "1b9503e9fa079fc9af29f6afc13db630a505bf2eb918e6bba161fd70e443c440": "WEST"
+  },
+  "name": "Redstone Warrior",
+  "id": "redstone_warrior"
+}

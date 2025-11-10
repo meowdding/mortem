@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "b905f197bf8adc6cc32250de24d53c96003b40c0fdd959283aacd00db0427f90",
+  "directions": {
+    "e8b09c3c67fd8e6221fea56a999d9c0dedd7c23bb8e5db738dda4cf4184adb5b": "EAST",
+    "143d464139fa5b88c1b9cd645a2757202db4084c96feffa84939f808cbf72ab1": "WEST",
+    "b30f8ad882fad62645e71e51ad72d58142f528f2d0f3d9be100222d6437bfe51": "SOUTH",
+    "dfef4af56874058aa7bec17ba2f04ca41ebfda866e29f5f3132cc091f1d78d15": "NORTH"
+  },
+  "name": "Default",
+  "id": "default"
+}

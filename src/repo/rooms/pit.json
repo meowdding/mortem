@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "49d4444327eaed3dd8b1a50e2aaa07574509a74f2d5a02abb4488eb79af7419d",
+  "directions": {
+    "1dd902f8b1d200a1485f5e2358bcc2aac6ef8de3668cdd3d6159aeebcc3d59cb": "NORTH",
+    "2ee159d1fad43c3c1e7f8e61cc38931844aa5b9d9d8380ae5e8d6eb0557b050f": "SOUTH",
+    "c90c3e039ee55069daa205043418dbe494807ad680cd70c0076d009d1fc69bd7": "EAST",
+    "67f7edae622c951402e1705ea3b593f2479d7f3f46529f90d418225404e3e0fd": "WEST"
+  },
+  "name": "Pit",
+  "id": "pit"
+}

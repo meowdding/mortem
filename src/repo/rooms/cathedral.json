@@ -1,0 +1,12 @@
+{
+  "secrets": 8,
+  "center": "2ee48ada21404f3e9633de504fe0cc00dcf6c737e0f8f8ff2170855e391b1e5d",
+  "directions": {
+    "7e3c45d0382dd78c17f96cce6a56c4d58d5f66b38b7bd14f3ad151b195c0d899": "NORTH",
+    "ad0f1687d6bb092b8030d2c17ede48b56398058d26869a722ec7368403bb048f": "SOUTH",
+    "fc14c87e08f1110834b297d366fdae5144bd7bf78b679f16944ac8e61b70b007": "EAST",
+    "95edf1c4675f67b352fb7d4718f3d395fb3f3bc576ee86ada07346afd65ff753": "WEST"
+  },
+  "name": "Cathedral",
+  "id": "cathedral"
+}

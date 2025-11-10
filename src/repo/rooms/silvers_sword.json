@@ -1,0 +1,13 @@
+{
+  "center": "017b9571e98bb0b2c91638f10616d0771826775668c312b2e93d3e60228aebe4",
+  "directions": {
+    "7a447c315a49eb87afc65110d1f140c41dad9737d99b7a60c4ff37d8e74d2cab": "NORTH",
+    "72ebcaae8c5f58549ee7b577ae83b79aac2bb8784cfbbb4540532961940696e8": "SOUTH",
+    "642a126913cd3f41fc5a336e73ea7f91b57560a1295ad7ecfba64411bd59a755": "EAST",
+    "cb447c772bb5bdf5e54ffa324aa2f5d148b017523e9093c999c233c01f133961": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Sword",
+  "id": "silvers_sword",
+  "secrets": 1
+}

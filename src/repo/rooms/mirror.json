@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "81a67d1a7f449e6ee11058a5e4764fd1e43b6ce2678c0f053eae18ab80880fcd",
+  "directions": {
+    "5b3072a52f17bdf0d9a5aa610ab3cf4592c8f82d3bc3cbcd15d5b357d19d7f64": "NORTH",
+    "4a1c9cfe3fae343ef79428fb863bf6b30bdeb46aaa7a621c5667583fe82d0bce": "SOUTH",
+    "00bf1d2eb12ca7e4544da3751784cd2b8edacf3e09993668d6242c269b37610d": "EAST",
+    "4010f3e9679116eda822aa0294bed681cb179815ea689ef3f5627aee3cd3384b": "WEST"
+  },
+  "name": "Mirror",
+  "id": "mirror"
+}

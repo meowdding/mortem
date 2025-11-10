@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "438cdd6424dfa2129539017158e2609197feb802d35f286849d8a036f3ab4dd3",
+  "directions": {
+    "389a824143a62b36877e627e953628ccfacb11514b2afb6e345f417734b5acb5": "NORTH",
+    "90b4dd27872c469aa57967aa55594bdfed33c2ff72a8593b83f4c178c5a21dd8": "SOUTH",
+    "6bc83ac1038dccf3f52bc89a4c45146337a3d44313092153a71f5ca508b3fa12": "EAST",
+    "bf4db1b1b38345d3025e77e8ccf0ed05b1c0e2f52163e94c7f00e563b21947a2": "WEST"
+  },
+  "name": "Chambers",
+  "id": "chambers"
+}

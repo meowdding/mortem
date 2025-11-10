@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "57fd9a5c5635d07e5d30dc6331c3905ec12c0a9006dceed076e12f63abb98f52",
+  "directions": {
+    "dc01c9d0a22dbaabb946dd381b609eddf48af2a9056303996fe33065700576d7": "NORTH",
+    "35eac08b6df955bdfd8491e042b2273dcf3c36aa100d8b58ed5f95ed1a51b1f5": "SOUTH",
+    "78115f8cc0404fee80883024eaf8f750c421f9c11800ae7c3fd66095ef7ee6c0": "EAST",
+    "2c7e1f7ffbfd6719e6e88c6e7a8ba4956ed6ec3674c26e5f031e53dc108e27eb": "WEST"
+  },
+  "name": "Tomioka",
+  "id": "tomioka"
+}

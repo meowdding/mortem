@@ -1,0 +1,12 @@
+{
+  "secrets": 7,
+  "center": "e149f3f99c08519c15b297ec54dedd48f9a96db4064ae2802dcd614b7e0fc8cb",
+  "directions": {
+    "845a22bbb8dd210d87622e5eb71b5118e7530f84a4574cd2beca4ec79a7531f6": "NORTH",
+    "b293cedaffd4e448797e8049a0936b16dd693a73c788325492d9fb0fee93af36": "SOUTH",
+    "614944417d2a23978648221165327e341861f7f52ee4320ed497b37852961e6c": "EAST",
+    "d33f76fa92d44b9c34c4e90593c94dc2bebd470fd6e30fe347c7787a1aac0c5e": "WEST"
+  },
+  "name": "Sewer",
+  "id": "sewer"
+}

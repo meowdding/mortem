@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "46d60dd6150e3bab0b2f74b3d94f25ce8fd9b3ef69f0ce131cdcf6ee8de0e062",
+  "directions": {
+    "c37279baff4cbd08158b7edf0e3493c95f3a14b093c4d10404f4061826718338": "NORTH",
+    "d1a931dc2d174a38df31b54aeafd9307efcd082f617f272468dcafcae8949a96": "SOUTH",
+    "4990fc2f684c3f78e8e765549e6e5e4a4555875df3e469c8a349220988109161": "EAST",
+    "707c5cb2c3da99ca2f8dbfd7890ffebb3bc46b27c80561afc49538834cedc133": "WEST"
+  },
+  "name": "Stairs",
+  "id": "stairs"
+}

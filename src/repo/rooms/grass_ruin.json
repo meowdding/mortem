@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "559c5ef56f5f4ee4fdb2707194d4ca359dd0947e85fbd20ad9fc3922704c43cd",
+  "directions": {
+    "c89dadea76b4a4ff9778e483f92c7d4b78629b49c7e1fcf7bf5553d457dcb3a4": "NORTH",
+    "44a5d2768237d8d3748fafbaa77c95192e8751489b5976496f0def3bd6b88279": "SOUTH",
+    "b5094f3b38543c114d8b19674879a6575dd7df61f8999b07d8d4b363e26ed470": "EAST",
+    "0c4d44860ccf3d5f83177f9f664fc114f66d7231054e0ee90aea28a9386a12fe": "WEST"
+  },
+  "name": "Grass Ruin",
+  "id": "grass_ruin"
+}

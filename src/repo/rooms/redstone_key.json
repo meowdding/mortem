@@ -1,0 +1,13 @@
+{
+  "center": "5aafa2b56fd65655903bf1718d87978d8f7510068a3c6f5f1396ec2ab1833c80",
+  "directions": {
+    "aa239b40ef49ecbc25fd1e0a90b631a64a4acfd09ede6777bfd4a15d995af1a0": "NORTH",
+    "7e6e683e55a394e98a46e99735f8af544dfa69e600b2b0030489429ced3b71ac": "SOUTH",
+    "0680dfe39936d9d6155ecbd25eec7d1ca8c1bf1241146da6b2348cc53813f651": "EAST",
+    "3349feb8e4e721fa64821ddf8ade190a8fc9a618918554c462651cd626454ba3": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Redstone Key",
+  "id": "redstone_key",
+  "secrets": 3
+}

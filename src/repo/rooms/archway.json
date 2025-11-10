@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "53bf9b9e779a820f15151ac61d41959a347bfab07f73b9b6e0bf4a3a4224c6de",
+  "directions": {
+    "73b9d22e6dba85c0f0941775eabac8da0d11538a397b9b96408fde03e1bad578": "NORTH",
+    "24eb05d3e84fa979b495e60194df184cf0941cff753108ca35acb84110ff6815": "SOUTH",
+    "46bcfc00d0b26c2cbba9a3a995a343e4d02c5829858c74d4cfcc5bc47de1c1f9": "EAST",
+    "e600bee018cff05b050d52411b53048e4e57482c0714505c9cf0833fd1190651": "WEST"
+  },
+  "name": "Archway",
+  "id": "archway"
+}

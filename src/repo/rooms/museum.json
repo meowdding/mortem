@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "3ebd55f5b8cfe6c0753bfc89c2a5175afbaf0ee12ca4af33dbbddd67c6f39c8e",
+  "directions": {
+    "e1b330b2ab0cb4a6cb384341ee1f86b8ef2c82d20d1ffe270b8e2ebcc1a8cd67": "NORTH",
+    "284073272a3d78fcffd95075684a28dcaf7de7bc2335f2ee41a38c75fe2fc32a": "SOUTH",
+    "925302fdd6a3bdad41b8eb5a903d4d8a839e3141aea9c4685feb9389f8c84e87": "EAST",
+    "1e02d6d364e0c97396d9f012c10021a5e58d5f88d1392d34b39878ea0b03a136": "WEST"
+  },
+  "name": "Museum",
+  "id": "museum"
+}

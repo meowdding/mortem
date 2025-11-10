@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "213424fc9acc71833270748a50cd7f39ebf15068621d109d430ff65e2c630ead",
+  "directions": {
+    "dba453acd7a89ec13f4f636ee68379e4fa778d6ab0f2befecbaec99f2553e830": "NORTH",
+    "79cc78460adcc10198b2ccc0c63452381aeb01ec359a7f19a0f0511d12f8ce5c": "SOUTH",
+    "6374380623231e559e2b2918213ca8987c00731b6eaaaadd51a3d7720c2b85ef": "EAST",
+    "c46517d2ce255e75226a28a0cde021c0c5ec16acb82b2cc428d99fbec2c056a1": "WEST"
+  },
+  "name": "Blue Skulls",
+  "id": "blue_skulls"
+}

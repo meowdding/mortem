@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "7a5e7dc7decf10d1f5c2ce213e10e0e0ffbef6aba740452bb2c1d0bf58719607",
+  "directions": {
+    "fbc6ee42ec43dfb63106b026bd4713364d820ba716704ef5ebe808f0f76199b0": "NORTH",
+    "cbb4914ea09e66708887234bd37c1007947a8aa63aaee2e14a1d4e283508717f": "SOUTH",
+    "4d894125745a986072a7d10d56ba49b3eb10f14d677a99dcfd2db8f51689187b": "EAST",
+    "054dc6ba5a316b42312cea450d93371d42a19bfabe38460e4fd707d86123671e": "WEST"
+  },
+  "name": "Granite",
+  "id": "granite"
+}

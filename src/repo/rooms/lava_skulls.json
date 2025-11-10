@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "ae8faee6f3e3e0891e5d9256b56fed90bfbc6020f7d13b94c32ffbba1c5b278c",
+  "directions": {
+    "6696cc59aa96aba963cb2cbfc0391db61011805d73af837a0cb4dc440193915a": "NORTH",
+    "7c48418c17681f35321d61c641a134dc3e60db10e64376858d08e70588a32f6f": "SOUTH",
+    "3d5bce099a0a8ee61080a58441ef9821e49589d9e9e60f679bb618acc878a574": "EAST",
+    "dbc3a92e46aba12ce82f99e0d885dc28bb17b2924a6c7e1af268d5d1e031d262": "WEST"
+  },
+  "name": "Lava Skulls",
+  "id": "lava_skulls"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "4644b89675532e741b0db97a624dff2089acea96fe7f2ab3ac76775d0e3733d7",
+  "directions": {
+    "9e07c6a415f1ede0ccc998f36e49404b72d55f7e96744d0491e43291fcd25909": "NORTH",
+    "ffd4b47b7858932b748a2e030275afcb3abd3bce08e1ce9cfd972b484d370104": "SOUTH",
+    "5c862c72cb5f3d915ccec139f71511265daeaa6ac438c3aca6baadc0c47e22ad": "EAST",
+    "0e599d252d5d61d05058226445a7eb5f40d2635ae3782b4c77cae964196d81b6": "WEST"
+  },
+  "name": "Criss Cross",
+  "id": "crypts"
+}

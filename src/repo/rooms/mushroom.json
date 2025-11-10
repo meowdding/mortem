@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "f2857fdb5146b1fc31fd10f4ae98e2e6699ea173fa5a6076ff5ebe0396fffe1d",
+  "directions": {
+    "7d2efee3cd1747c03c94270d9223c9a430514d4536ef34879881cd2510cfa1ed": "NORTH",
+    "ebd5768f2288cfa7136d1f4aad65c6c91df20f822c2bff53c962cefc5f071535": "SOUTH",
+    "8de84db660260d7f8d0029ef60d4744eb1e98e9700d73b8a892fde6634439da0": "EAST",
+    "b5bdcdfa55d5f0f2f7e9bfe52d71d309639dac2e4a3998b473ba30a9ad34df02": "WEST"
+  },
+  "name": "Mushroom",
+  "id": "mushroom"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "2c324bb0b5e2827f0d1538653bca37507559ca3f775cf01ad18621882592fbb5",
+  "directions": {
+    "cd76e9ffa34cf3820e8605d87acbc99d0c22247274ccbd4e81ff154c171cbcff": "NORTH",
+    "b1276ea6669290184093dbfa2e2bfdf969d9c3d7b6d70f24c0d95a7d2604865b": "SOUTH",
+    "ec268cc28f3e8b73916abcfff6a768c0154b8bd7b110da0415ac3cda2b8bb675": "EAST",
+    "0f6614bc9e1d61511fb0142da28f5378b8cbf017afd70f4b545745ec2182c539": "WEST"
+  },
+  "name": "Small Waterfall",
+  "id": "small_waterfall"
+}

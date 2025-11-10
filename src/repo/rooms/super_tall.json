@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "b476817f8c0f81d2d0faff17dc886689dba6caa93a478e5042f151e1e704cc22",
+  "directions": {
+    "22e973f938be72a45b66feee54b3d9888b49ea3c60f856dc3e99d386ec6f4190": "NORTH",
+    "02fd30b0cf5e51f88c56f069abf6db6dfb01551530b5cdef3209261e765a745b": "SOUTH",
+    "488d3a2b26914b581cd8421e16dc703cdefc5c5f89a823e8482ecfa425c765c7": "EAST",
+    "38d01955a4f2be37e935cae85ebcf8026835838a8faa3f6f29c1b26f90272925": "WEST"
+  },
+  "name": "Supertall",
+  "id": "super_tall"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "c5f15ac1b9e0ded9dbc098e9d4e5ab3a64b36b1eafad19efa87206554c4bc5c7",
+  "directions": {
+    "f0b60350a30cc97990df4cce0c443ed9c9d9a08d65f73831426eae66fe8d53a8": "NORTH",
+    "69bc79d8ff088a81bfa288fd206d5cfea51d5954f7158d074e010485269557e8": "SOUTH",
+    "758a8ba8dbafe1ee7ab903e7b1fc062cc4adc3930e15c7d8b721caafa0228938": "EAST",
+    "90ba0880aec037f588f4f2869f24c487338b8611b607d5d72290e4e2cf0b6f11": "WEST"
+  },
+  "name": "Sloth",
+  "id": "sloth"
+}

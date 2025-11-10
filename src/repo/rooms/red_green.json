@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "a81ace98090591c916bb130c9bbb4544c2212404aa5103c3030ba74b973161c8",
+  "directions": {
+    "3c045d498f9a1e7eb53f42dd5046df8871f17a61762e7a7c485c5bac321bef0c": "NORTH",
+    "131ce7fafde209c4f1a02261888c3a0a727ca56667edc6ef2ce6ee5eba59b631": "SOUTH",
+    "d2d99fb9b696a5288cde29c5bb95e4bd438e1a26ba238367a0e517acbfe208e7": "EAST",
+    "278680a608da5abeda3d868e0f07b9790312ff137f298755db3acb10ba68faac": "WEST"
+  },
+  "name": "Red Green",
+  "id": "red_green"
+}

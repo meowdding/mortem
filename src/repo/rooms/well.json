@@ -1,0 +1,12 @@
+{
+  "secrets": 7,
+  "center": "3d2afd33b540a0073d927df582194dd510bdee3cbfb13e48e2f22d0abe726d57",
+  "directions": {
+    "c7eaab83787f506dee692b5a65e3ef80086f5681ace24fed1f39eb4957ed576a": "NORTH",
+    "fa72b74b0092dba4db1665c97042ad7b9692b5509a0902dfe5b7503bb6b46210": "SOUTH",
+    "5fc7031b2ffce3fde35971d24482154d1ca267c6fd0ea106277710bb0b061b86": "EAST",
+    "e80a7bd9a13545493407d72b65ddf62d764127bc9d33b5090ba1056a764cc1a8": "WEST"
+  },
+  "name": "Well",
+  "id": "well"
+}

@@ -1,0 +1,13 @@
+{
+  "center": "5773636ac22d050c2793124d072dc3d24519e98692f93df92711b419a53f4e9c",
+  "directions": {
+    "f801c2198f79730bf19e3843e71282ff84a6161eaf81ecbcf2f86b4a5fdc5834": "NORTH",
+    "6e754090446fe344d002a8e55900c3ad9816ad23472b89942096c4572a6a4b70": "SOUTH",
+    "0c878833a8d8fce8b8e887800da2e9f116367247122a04727c78f5979588f4ae": "EAST",
+    "e4ec69aca7aa16f80b8dce2ab595dffb9e8fd1f533061e4f143e67c8bd5b9932": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Jumping Skulls",
+  "id": "jumping_skulls",
+  "secrets": 1
+}

@@ -1,0 +1,13 @@
+{
+  "center": "d224013c899c3f419128fcfd0b0b34f3407d1ef3c6416573af11ec6be7624bee",
+  "directions": {
+    "192083b596b4266aa51a060d37bef3cee61bbee6ca7a35674a93021e6cfb5d5e": "NORTH",
+    "b86e83a418af48e657324c9a5be809a406f4df202c586fdd7495449a971a3bec": "SOUTH",
+    "bf85e23550abeed4e2d69ef7e300916bfa34c7b026b1af79dbd34ef9c9b08299": "EAST",
+    "797c0e303214b4fdcba5df46b12d3c23da3936b94817ac7aa6550a589ac14e00": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Cages",
+  "id": "cages",
+  "secrets": 2
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "00b8467b4d852f1b419086fba05fd3155173b3d943b7128738d0cb14d9c5d8a0",
+  "directions": {
+    "b603b4aa4ce690e9a5c135576f8d5b45334dc6746686b9377c17e353dd9c4b10": "NORTH",
+    "a672b4acb0df3b1313c3d9e0424aeb31b49b0fc5630b4321632149033b596c76": "SOUTH",
+    "57d8097959ef60b559a5253b13393ef59946bd20268794edb3c3f1ee35344b0e": "EAST",
+    "5bcbeba1eff0711449b350dc565193f91c97d3c9b03ffde275fa62e48ed95f53": "WEST"
+  },
+  "name": "Prison Cell",
+  "id": "prison_cell"
+}

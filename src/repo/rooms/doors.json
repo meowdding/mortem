@@ -1,0 +1,12 @@
+{
+  "secrets": 5,
+  "center": "bd44125c7f20e79528eb296289a03659fde3edc68f261384b6e66cc22cb77391",
+  "directions": {
+    "49c714823ab88c0debcc08202663b2bc22beab083f113b6b2405d34754e0b664": "NORTH",
+    "1a0cf23e585d973a2f1c816237dfe8951aa84a45bfe0b50c5d7afa546142dcab": "SOUTH",
+    "9a4961366bf46aa2a4ddfd1d3279be1957c60f2243c9f64200f63680aca0c1c9": "EAST",
+    "f1e27815e06ec3bd3797501090cc0d09320202f141d42ea5b9c1166d33137046": "WEST"
+  },
+  "name": "Doors",
+  "id": "doors"
+}

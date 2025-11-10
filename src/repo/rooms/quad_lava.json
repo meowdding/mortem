@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "2c99deb32bd9106eb6cd5d962c738acf13a23dad356a052022a8f3f241e7690f",
+  "directions": {
+    "752f734435ee116c3b621b4ccf77089ea660ee0e10a34c04ad418d40f6dd082f": "NORTH",
+    "43c908ca7057618c64e16a306fee855fb98b472f22a2190ef7018c2cc95e18eb": "SOUTH",
+    "dd8661a2c2ead979a384701f8b4411215e55ddb05a800808d304a5483713d192": "EAST",
+    "b5415a22693c4a641a59a7b7b91f888a3005af1cd074007fc0354b72e29ae3f6": "WEST"
+  },
+  "name": "Quad Lava",
+  "id": "quad_lava"
+}

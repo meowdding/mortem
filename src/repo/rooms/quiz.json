@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "07eb52d7de5e8c266e8a62f10a800c0d91dc894ce9abc186e3520f58e1dec15b",
+  "directions": {
+    "a5576a8f60f47272b9d1497118efcb0887ce9f75ef379423449355fe11fc07d6": "WEST",
+    "723e8a4e950583d3938ebcaab3e4c1efbbfb4eda311596945724fd45289d416a": "EAST",
+    "c811a453bbaf884a065237c28eabe13cc79a60468b8abb93883425ad48d078b1": "NORTH",
+    "7c3e655ebd5537c355338ffaed5853eb767d2542ca356d168b2b767281b1981f": "SOUTH"
+  },
+  "name": "Quiz",
+  "id": "quiz"
+}

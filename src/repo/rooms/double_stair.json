@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "9912ebdf191cac2c2b42505aed535e549c13e28b059d5711adadd98d9c7e0fe8",
+  "directions": {
+    "4017356bb1466aa950856229a79609df9cc438e706c214c0ef347ef98e4610c6": "NORTH",
+    "158a3ed9889165097027dc5d761bd9d8439d8d9b2f04a48ae4a19d247e794b97": "SOUTH",
+    "c75536e791f117c4cb0705e3cc8fa6246b7eab2fcfef2dfe115ea6867f7327b3": "EAST",
+    "183dfbba98544859412e7a260c897105cc3e53d18e7ab34dd67918914cc9d1aa": "WEST"
+  },
+  "name": "Double Stair",
+  "id": "double_stair"
+}

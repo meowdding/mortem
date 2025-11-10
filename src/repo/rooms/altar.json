@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "9f3cd5f00909c8c9a082aacaf6df1ea183eb285717e57b10494ac8db066b5606",
+  "directions": {
+    "8f56dabb6cc09002e6788b25cd16e9752331d0da9ba72a0ce00b5c2eaac97096": "NORTH",
+    "732a93b194ea1e1d33397d5624f6adc16561b453ab7bf59445117923e3939a26": "SOUTH",
+    "8f43d5fa8d4d336b2ff7e1da560b19215e2484e626d43b01a925528372bd1cf0": "EAST",
+    "ef13e50f7cf4cc667ecf2bfdd542335793f91d3e328b75b00b829d416eb093a1": "WEST"
+  },
+  "name": "Altar",
+  "id": "altar"
+}

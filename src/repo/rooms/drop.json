@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "ee8c8d6ec306ed7085e65c62ae82ce7ab0deabd028b851edb366819795a46269",
+  "directions": {
+    "3734c08e47dd0ad2c77489bf4abc2c808984d35e3a3e5a03a4972fda938684cb": "NORTH",
+    "b63ce26930e59c95c11f36ee2b35004d2d3bb2c028b30805d65d42a3fdc98386": "SOUTH",
+    "35e18739bfa8344b2a266e26faab4e21998b799194c82798e16e8aa2e342cb6a": "EAST",
+    "89e7016dc350ee7b816198311fa87a738439e7c17d3e0ce455440366d45d75be": "WEST"
+  },
+  "name": "Drop",
+  "id": "drop"
+}

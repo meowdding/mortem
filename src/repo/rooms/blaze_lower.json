@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "fd877873cdd69e9dd46f539647a60b5d36e58e0c2ca21b91256cf4669008bb48",
+  "directions": {
+    "309e02e7c7dade670dad89eafe4142c8cbd89b772d37406f01dac9a6dbf9f860": "EAST",
+    "1725b1f0f269174b2631d8434bc64317a8e25dfa7f576e22139e0b103187f17c": "WEST",
+    "9c672d91a64ba6659945175dd338bbba9e8d47404dda56ed55a40ed6d0c7b425": "SOUTH",
+    "d92b92f45e7023720f4bb9cc8fb79f12aa027c6ef72c984809bd749e556bff09": "NORTH"
+  },
+  "name": "Blaze Lower",
+  "id": "blaze_lower"
+}

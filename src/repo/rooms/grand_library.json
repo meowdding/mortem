@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "911ab6c3e98efa0850aca0a1331ca3b8701d9730853850fc16118585dea25186",
+  "directions": {
+    "b6fc3c155ca750562ae010bb651db0ea4131bf8473abc6bf00b88f3c495ddf74": "NORTH",
+    "e4d0f1a4f8f75e4f19b3784891d8cbdbd931ad2a1029f1b9213d4f73d0d82e9c": "SOUTH",
+    "10c411a128df2a28bfe9dd1f35e3bef0ccf82aee7214b6da008c1c582c2481b9": "EAST",
+    "8d80ac918717f1d6dc6ab7883a1d12543eeba52189e862f7fbaf50b5c6a41fb9": "WEST"
+  },
+  "name": "Grand Library",
+  "id": "grand_library"
+}

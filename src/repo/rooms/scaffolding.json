@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "2306290823b3d1d5bdaa1e2c852e059843d520e28479de6b0b150ac7aa4b7b25",
+  "directions": {
+    "471f70dd37c8fb88747250e8b6047297f05e9099a6f1966d222a172c28ec3490": "NORTH",
+    "dda38af0af51d9ff3bec27cea5714b19302e7b73b3a8b720c3213d92b76351f1": "SOUTH",
+    "4986d959da0eae7973484f69ffea461b455504fc2bfa284d3d69b49a48c853e1": "EAST",
+    "52c4e50bbe53436b6d1c2bb91363b221b6a58a5256b46847a5886e06943a1877": "WEST"
+  },
+  "name": "Scaffolding",
+  "id": "scaffolding"
+}

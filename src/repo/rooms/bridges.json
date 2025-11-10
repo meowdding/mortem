@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "2d12db71f2814630c144e8082f9a2ac047f7921e1e99c63c05b6fa67742d4b16",
+  "directions": {
+    "9d02f2e662114cf0d6f8a7de39718f138a405557243b132c76298d1301a48f98": "NORTH",
+    "60da70117f8efeb78679b02c2820d7e7d9face57f2cf49dc606409bb746d1321": "SOUTH",
+    "fd4f7dee8c8bfb13b4c8199425ba056f66b20ad1d4f3b4c85e6c8f6acc684688": "EAST",
+    "2a99693406c4d8d0cbec3cb87f33870d288024ce36d62a5255850ead3410fb6b": "WEST"
+  },
+  "name": "Bridges",
+  "id": "bridges"
+}

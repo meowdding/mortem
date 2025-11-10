@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "576718dc7a33d35181a14e3b967ddf9ede6e488afcbdb8c79276343640888f1e",
+  "directions": {
+    "77492002fc0c91fe25af09db0a7222d20a561efcc349dccf0eda88905dd4bf4a": "WEST",
+    "7bd07c882e7783eb67f97d6c35b9e82504ec21aee38fc5b26313ff522ac34b74": "EAST",
+    "2e1c479567e0426f8b52bff0a42478a4f0eddb9df158cc053826d890b95a18f7": "NORTH",
+    "3894c400523cfd6a024fca7927da621c6249ba3ee221077dc7dfef80735c181f": "SOUTH"
+  },
+  "name": "Blood Pillars",
+  "id": "blood_pillars"
+}

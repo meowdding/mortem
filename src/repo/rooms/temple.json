@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "4e8650405f17bd10b706c41b28092cce7d87d0278b389b2e65d6867f4cec8267",
+  "directions": {
+    "64799fa40321ceb5716d12a8b89d5d2117c1ef9db405598318d5dfaaeb4088a9": "NORTH",
+    "f09c612a42adf789b44b9b307493ce4c446d24d1802ae769d4967346415a0380": "SOUTH",
+    "e34fbb11d08eff7842a20cd35af810ae8c21621d96f5a07f73ac8b671e3a655d": "EAST",
+    "7ecb41376ad11a4a2a3cd4aa8cf53088caa06668395d1ad53185ff19860303fc": "WEST"
+  },
+  "name": "Temple",
+  "id": "temple"
+}

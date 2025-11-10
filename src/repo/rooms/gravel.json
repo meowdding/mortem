@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "6686534f279fcfe522c2e70291a46c7c7f4cd4be11e4ea8976022f66c853f811",
+  "directions": {
+    "064a80ef2834c42484c49722e594a2e0de457e10ff7745ed1d8ce15ffb930f2a": "NORTH",
+    "bc47d888923ee3428e2464ea62a9639756533a6c0fcba50ec1a0fd442ff731c7": "SOUTH",
+    "917694e09f68a4c4e60ac4b346cb0d2796339d3640fdd04e5363022d43d4e98b": "EAST",
+    "cd0f049555f8a95f297f97b6ff95688afd2ca6fedabd99729460f99e5985f5e1": "WEST"
+  },
+  "name": "Gravel",
+  "id": "gravel"
+}

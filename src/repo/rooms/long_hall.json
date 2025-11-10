@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "5c4701a5f30589a3064b0419e475f3b4f96d228eda7f43e1095803590fe4b518",
+  "directions": {
+    "7014d3959b0dbadf7043f99cd112e2f64eabcc16953082a783b5f6ccb5a61bc9": "NORTH",
+    "850d0e3be19049303ad7940c5434fa7d485842e3e70cec70d474591b1cbf07d9": "SOUTH",
+    "3f89459339df762fdf62d6b1b503899ddf2ee9ca684b70c656ff1a70e166c71c": "EAST",
+    "224a77608c35574398ebfa997626940920f0099bb49971fd0468b1c52d2b7f73": "WEST"
+  },
+  "name": "Long Hall",
+  "id": "long_hall"
+}

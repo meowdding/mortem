@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "709d1189f9da578539cd1170490509e8913e0371de658af470c22544495ff3b5",
+  "directions": {
+    "6a0f8683fe2d99e34c3f66a53349ada789afd89ab8a4c472944c4c50505e1ddd": "EAST",
+    "7d4986b64fd33630fc8cd78d98b6d398a3ab7869b51720217ca4588bb6c3e244": "WEST",
+    "ed1866879e45b5e1cff5db0b3b414ba3b67b3d1e16f8e74e61bb04e21411c039": "SOUTH",
+    "fe6d6ef6e5aaeeb15213850fea1807f2645728b6a98d8d1f8f49d57f14b559fb": "NORTH"
+  },
+  "name": "Old Trap",
+  "id": "trap_hard"
+}

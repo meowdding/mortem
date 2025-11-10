@@ -1,0 +1,12 @@
+{
+  "secrets": 4,
+  "center": "a7737ed231e413cb26e0e1a6cc2e38eab6fa2e6f710a069e794e6705aadcd86e",
+  "directions": {
+    "7114d260e7cb2718fae43bc93c743c8afdcda29e4e4d26c04cf903961e680d70": "NORTH",
+    "2c403a544126931c01e42818ed3812990ad82fb1a8f483ad1fc7a21e762896da": "SOUTH",
+    "1982fd6b5869b95d9c561b9b08a3dba104f6c54e2df0dcc16b5bcff6d7d4c604": "EAST",
+    "77976d2079c3dabac3b59266adab4a435bd0f0af2d3957f177a959e7c1f40e40": "WEST"
+  },
+  "name": "Balcony",
+  "id": "balcony"
+}

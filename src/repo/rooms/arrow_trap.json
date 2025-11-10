@@ -1,0 +1,13 @@
+{
+  "center": "b267545ff367a16d8179221de259198fda7d65bbd77093cabde1724848edae8d",
+  "directions": {
+    "4892ed1d3449c39b534d743c58dc2b8eb9d74467a09daf27337668b94345614f": "NORTH",
+    "c3637dc5888a185d8d8bda1663706ae9f1aa5d40acc3b636e5b297a6d0c00751": "SOUTH",
+    "2ee6908d9196ab6e8d95b3b1ef68ad04777f36561262a02270b4426c79f70093": "EAST",
+    "65beaa56a788af9b51c4b76089ee03623fb2bd5a76fdb0eedb13f8d95bd6a849": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Arrow Trap",
+  "id": "arrow_trap",
+  "secrets": 1
+}

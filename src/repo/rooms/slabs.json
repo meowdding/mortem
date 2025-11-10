@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "058778b466761a699971e0a18e6c9e4087f4f4e87ee7912dd40f2284d7f878a2",
+  "directions": {
+    "9b879379155b50f7dceedab16833a09537c4cf6b2e8f12bdbf8058b15eee9359": "NORTH",
+    "31119d9116d9feb2c108d721e0c207605a86f834111562a03e0b4dd4843b5291": "SOUTH",
+    "96cb2df1dff9d2e0005d414f614e0804286cdc2c269f1b5660126b95bdf4eaf5": "EAST",
+    "7a44b86adbef0b4f17dbc5cedf2f1b98a2bcb17e20cad4029ccb7694ad4d0a74": "WEST"
+  },
+  "name": "Slabs",
+  "id": "slabs"
+}

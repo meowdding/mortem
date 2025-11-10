@@ -1,0 +1,12 @@
+{
+  "secrets": 3,
+  "center": "437ea862be785a7766959e63da39ed41b10741f66bf9633a3d377de0ff698c72",
+  "directions": {
+    "d8fb7982f1c73ac0f9677076ecad305e9992b8c1c81e0699341dcbd1da371ba6": "NORTH",
+    "90659bebd214ca4cd7202afd96c56dbc521ace63f28594a989888c06e007af0c": "SOUTH",
+    "ca565d30ae086fdcef89713d73bfda8e66e401b993f9fd33a16a19f07ff2617f": "EAST",
+    "4b1d497288dec6d39f42b698bb01e4f58d02c1e15ce722986fe60688c1ba7410": "WEST"
+  },
+  "name": "Redstone Crypt",
+  "id": "redstone_crypt"
+}

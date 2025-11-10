@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "0d1b26651f6e3c86637f5732ed48be57cad63af244862ae00db377883827bf00",
+  "directions": {
+    "e1407405ded78642d90a85e1527de91fcb5703ca528cfa0fb5bce897b471ae70": "SOUTH",
+    "4265113667d70a35cd270f89e6afb38e1ec02b511575af4eecb2a3dc2fdd0509": "NORTH",
+    "6a8161673d5f9fb9ee006c4529759b4d50e4cefbb5483bf6ca05751177852a76": "WEST",
+    "f57ef3bdfa634d5f4a19e42e57a09b40b48f07b41aa7a67013b8aea678f8bd00": "EAST"
+  },
+  "name": "Dragon Miniboss",
+  "id": "dragon_miniboss"
+}

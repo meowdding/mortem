@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "fad2744412af7ae66f2d36462c7116c012549f4cdbc8ee98af70ed016f298579",
+  "directions": {
+    "b6bade12996bfe11b3b9df8db1ae64f8615af445dfdda0742e9b01f9b212854a": "NORTH",
+    "a1c8ff38e63ef4e7dfbe28f9960f5f2abb00bf6ede19cdf1ff206aed71f14a24": "SOUTH",
+    "294b00b22600a640d8bf392212844ca92419eeb10fd6824d154e41bd815c8cd3": "EAST",
+    "fee2c14e35636c746812465cefdd3e8ae01a35266e160aba863269bd556966d2": "WEST"
+  },
+  "name": "Multicolored",
+  "id": "multicolored"
+}

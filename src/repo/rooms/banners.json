@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "6305d3221fe6b6479dcf0b4510e5e5fd350308efad0909cccde1a090c50f9381",
+  "directions": {
+    "61d8f84368a0b8d481ca4760770860acdb7e487a477a57f095c139c58a560564": "NORTH",
+    "9736eb0457e3066fb2f8b89cbe8b7bbf3ef3b7af5ccbd60b7451ff8f217e57d4": "SOUTH",
+    "7f37ae031a70f9203c267b69bcd36e70a55f6ca1224af320fdc5674f5b079969": "EAST",
+    "61c2aacd4508820986a51e5c8b1758f620c3455555f311061001c2ab3e78c8dc": "WEST"
+  },
+  "name": "Banners",
+  "id": "banners"
+}

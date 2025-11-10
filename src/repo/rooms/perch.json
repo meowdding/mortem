@@ -1,0 +1,13 @@
+{
+  "center": "1513c1d7311f8c0125fcf7e70d371a5f7620e5b2778f3638c02a36a0d546a6c4",
+  "directions": {
+    "9cccaf2548583cdca19ddf685c13044b6bc26bba93aa3096f1b8465dd0090172": "NORTH",
+    "897793eb1e3cfd6716def18abd49557fc03b5e533482fcac3d2fe959d1ad37ac": "SOUTH",
+    "e53ad84b4887baa72d66f57d8167933c1dcbe5ac1e34a0f4f770682ff0e4310c": "EAST",
+    "c44cc36f2a8b89ca971c4c5c478f45c665394e9fcdd740f8c8e1b8a0dd6c5efc": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "Perch",
+  "id": "perch",
+  "secrets": 2
+}

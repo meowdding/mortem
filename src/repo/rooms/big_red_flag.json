@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "b4b04e1f763aea3c989c89db486e90104f4dc795be482cfb68b545ebe68fb351",
+  "directions": {
+    "598fb2d70c9d0aa2df4f92cc0d6958a90f02df764acf34731290823d95bba6da": "NORTH",
+    "74351b7eec2e58af383d10435740f41453f535d745094490adb4024b9bffde7e": "SOUTH",
+    "cd189dac4153c27d225aab82d9ca9f3486a2f64c8d2be6238c0bb2f864ad4065": "EAST",
+    "61f84ce0a05c86708ca3a3ac54e1997980fde4b21268d8b795429ec0c5431e64": "WEST"
+  },
+  "name": "Big Red Flag",
+  "id": "big_red_flag"
+}

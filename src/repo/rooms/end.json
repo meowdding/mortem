@@ -1,0 +1,13 @@
+{
+  "center": "257096bc0b28f843602d6507ad25fbae63225a8d80541f92ef108f9fe55a9e13",
+  "directions": {
+    "66f02bca19ee0ccbfcf724391480a58170bca2b021033ce6b905a20b14f2d09f": "NORTH",
+    "baf3e42f77ad16d85b6d86d5b0ade494ae3329d1ad64a558c3c1894d10318d12": "SOUTH",
+    "8903e93c71edfa922a58e620b616fb399a4d249562cb5ce8bbf92ed1d8833cae": "EAST",
+    "614a6d0f17060c15f38665db5718dcbc808a9932c196f8def4dd03e89bfe26ed": "WEST"
+  },
+  "extra_rotation_handling": false,
+  "name": "End",
+  "id": "end",
+  "secrets": 2
+}

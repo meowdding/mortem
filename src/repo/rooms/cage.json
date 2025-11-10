@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "4e2f0ad04033e7601b466b80aeb679b5dd9c45f14c8912dc84acef6f6ba005eb",
+  "directions": {
+    "75c6b81357a302666a9f6b8c8b02109051df4b7d1b7cbfcc8cd54345da9cb5e5": "NORTH",
+    "29496f559630b5536450f9fe4acfb52b1e3e5e7343c9c6d78129b057519657a8": "SOUTH",
+    "ce40d44e6a133e417345ab8cbbc5ec7caa4fe996adc038c879d4bcfb34fe4259": "EAST",
+    "7357a8c49edf91d3bf9df2228dfaf16bc44287718b17aee3f8bbef5fd449dbd9": "WEST"
+  },
+  "name": "Cage",
+  "id": "cage"
+}

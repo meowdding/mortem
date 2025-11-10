@@ -1,0 +1,12 @@
+{
+  "secrets": 10,
+  "center": "14dfbda887f833ce58e573670f36d5b3dbb2c0452c82492673ff510aa4df9171",
+  "directions": {
+    "87c647e7876970906d8c276e88b02bc164493d9fe7fb6f768193e38c2e9fe189": "NORTH",
+    "aa01e8f3f0a04f82d1db166b8e8ff9c958e642c02a6828fc29a6a7e71fe237ef": "SOUTH",
+    "fccae659e5d7d2e96e14620716046200ef3d2ff546ba89ff9724c5e1e5b1a8e3": "EAST",
+    "093184b1ffcbf039f466e4e61b2d25f6a984f513203f2694d78f9a9c98f5a0f7": "WEST"
+  },
+  "name": "Mines",
+  "id": "mines"
+}

@@ -1,0 +1,12 @@
+{
+  "secrets": 0,
+  "center": "a2e5c21760fe7028665c42f1dd5568f54d70f8a49e1d8392a1b72cb8f2d72f3f",
+  "directions": {
+    "e6e55896a75719a67f4903b0928bcdfd5752e6306f9cb12dd0ab8c8297b8f2a1": "NORTH",
+    "573be3f7b67c91c5ef66dd8ac0c32d8b8cd46976302f61cfacfefecb873e43c2": "SOUTH",
+    "d5f61887051b8079141111c6628784ea85fdd498b9d5dc8f7f5a390bb46145db": "EAST",
+    "3ed111a76d7ed56c62d09f9199f5d9357a0273d9cd00859c85ce8d6c9e71761c": "WEST"
+  },
+  "name": "Creeper Beams",
+  "id": "creeper_beams"
+}

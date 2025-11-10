@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "b250814796bac53f23497e0e4ae60f350bf979fe4fe866668081f80d4e948f8a",
+  "directions": {
+    "19348fc36ec8ded581f542ddd455992dab39d47da82b61f316dec2c1d2ecd8c8": "NORTH",
+    "1986ba8dea8b5308f8610f2aaeb34e8fc8f002a66fb3910f7ff04a9dfa2ff07e": "SOUTH",
+    "5ec5d1784107f10ddf16c3ff187f8bf1156840738acbb8094d88619629736cb3": "EAST",
+    "418ebc255c8849afb018ce12a4daa993c83cee43444b9c50dc9b3a98731bf532": "WEST"
+  },
+  "name": "Mural",
+  "id": "mural"
+}

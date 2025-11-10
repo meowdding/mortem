@@ -1,0 +1,12 @@
+{
+  "secrets": 8,
+  "center": "aad4bc58929de17ea22dbf9502789ab90d0d5d6123073b1de2c66c70cfd904fd",
+  "directions": {
+    "ca480af7af276e4004bce5a07efc93b2a31d5931b06a216b79fb63d22ee093cf": "NORTH",
+    "fb7cb84bf390b5f36cfaef1d0e4fa0e23a52c5b2eb79f1f2e14053ebc5ee9151": "SOUTH",
+    "9a2de5ca8f0f29406a435179da3c12a5eda46cdeeff15d9554519c2c91f0204c": "EAST",
+    "659a05067f5973aeb05acec68a0c3d3f4fd7ce8688b2eb816d7cf4268117aae4": "WEST"
+  },
+  "name": "Waterfall",
+  "id": "waterfall"
+}

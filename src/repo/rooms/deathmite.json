@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "b6546adc79e03bbad4e62d96ab585f1853095c70d0343a38ac9d740fb88257fe",
+  "directions": {
+    "e7905805a5bde415d3988cb7cba064b00aa8c00b973720ad0a71fa2974933ae9": "NORTH",
+    "ed2447bd01dd599c76d42522e4a3be11f0eb08e808334243f04e75d6aec7ad6b": "SOUTH",
+    "b4a40ccbb832d1a1cf7d7e17e3408a2bf7cbb53a464c5bed33e235eab2baeade": "EAST",
+    "04ce64447c76b3c6d8d8fbc370faab01ac3aa240195a79b7630a751893a04662": "WEST"
+  },
+  "name": "Deathmite",
+  "id": "deathmite"
+}

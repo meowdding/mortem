@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "dee960956b80333554a86d3692829a118af9ef75fe5d5a7c7eaa7d8dd8a9927d",
+  "directions": {
+    "7521c93642137995948f7641ca97bdc0654f90f704aa19e5bfbeb827112e3809": "NORTH",
+    "1d0460b7bfe9d66bd29b04c649aaf9ca7061c8c9416658e0d77b202714ae7a02": "SOUTH",
+    "0923610f5f6feb9b4aa8901455ba90c7c9cb2ff8c4d3ee1b2f9400d8def13671": "EAST",
+    "c5e90fa1b7c4dd25116d803ad32ded7a2a2e5e7bff242ccec95ea30ecb2aab73": "WEST"
+  },
+  "name": "Leaves",
+  "id": "leaves"
+}

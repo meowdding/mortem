@@ -1,0 +1,12 @@
+{
+  "secrets": 1,
+  "center": "d24ff166e04579536fb83138105b1f3878403c8373d53c0f5eb2b6bf92b6a6ba",
+  "directions": {
+    "fc145a74ee87851f7740391a9131d1099b38c6b287e811a6062af4d191c6e559": "NORTH",
+    "8d1f9ff8349e3020f48d73e7fc66129a990cddd59a9b8c89b3044ef9c7252a9d": "SOUTH",
+    "6ead8cf9f087e3d49ab101ddb1cdba347c68408d3186dc8d3db2f9420fed097a": "EAST",
+    "e897dbe1c46f5ce29d43a2e26cc4873fae7fa295d269ece96bc8f5cfdc4adf67": "WEST"
+  },
+  "name": "Carpets",
+  "id": "carpets"
+}

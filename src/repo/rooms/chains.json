@@ -1,0 +1,12 @@
+{
+  "secrets": 2,
+  "center": "87179fbdc1ddbfd2ac0e9e6a9f012b94001dcdd4a3e1e4ca6014d464f7be2c9d",
+  "directions": {
+    "e37e1cd0487da1d93890e30c6ddd0f9b22c36ac3c7a079adbac4b69cf31d1549": "NORTH",
+    "e7d3085e2b2fd2913a69f2e327c53ab8b839edc9204f35676d1d91c02e2ee0ea": "SOUTH",
+    "313c1b5d261ccf2f63408ca82d19125743ef2afc5df891e13ab1335e5ab25e98": "EAST",
+    "1f56f1a4db3c9f66bb72d08de771eb63007c0c8d1e5f5048cdb0a269fc8e2ef3": "WEST"
+  },
+  "name": "Chains",
+  "id": "chains"
+}

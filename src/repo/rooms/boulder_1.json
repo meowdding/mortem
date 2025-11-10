@@ -1,0 +1,13 @@
+{
+  "center": "680200f3b43edc672491e682387d9ed014d696c2c5e47ddbc6775a109c9a40a8",
+  "directions": {
+    "9c7c51d0b0d06e835019afa4ee713dcce28862a3ac60439c312d7f18454c8c9c": "EAST",
+    "c38db0d3d676d1800d7ceb952bb83852a6658ee627a6e9d825c20924a0af0b8d": "WEST",
+    "f6d71f22fb36294c62b547b50d437f23c1c883581746fcff5851b72a9bf5aef3": "SOUTH",
+    "35040134f435f1b00745926d5f58f3b06d11e76f472b581f36c9090ed1065bc4": "NORTH"
+  },
+  "extra_rotation_handling": true,
+  "name": "Boulder 1",
+  "id": "boulder_1",
+  "secrets": 0
+}

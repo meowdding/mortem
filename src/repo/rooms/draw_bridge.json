@@ -1,0 +1,12 @@
+{
+  "secrets": 6,
+  "center": "1b69e19b64580dbb44555b3f62c5f2fea7fbae0b694220c7f4a67d0d8ce85ee9",
+  "directions": {
+    "cb8dab948376247bdc388a25daf0cb57843ab4adb73c4fb01dab78ab2169c074": "NORTH",
+    "88d66ca6b7af308494b630d4dab2737056e01da0b0e98afc5e6942221e5f0632": "SOUTH",
+    "ab593f7d2efbe3c877040e5218f1d0d7e589b02a57324b8d8670c645198401ce": "EAST",
+    "e2360f9ccea89ad51d28ee239f131fafaa253fe2b06f45d2ae898791480c2185": "WEST"
+  },
+  "name": "Drawbridge",
+  "id": "draw_bridge"
+}
