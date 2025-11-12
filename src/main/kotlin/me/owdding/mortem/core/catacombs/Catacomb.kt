@@ -15,6 +15,11 @@ import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import java.util.concurrent.ConcurrentHashMap
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
+import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
+import me.owdding.mortem.utils.Utils.post
+import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 
 data class Catacomb(
     val floor: DungeonFloor,
@@ -29,6 +34,10 @@ data class Catacomb(
         }
     var mapRoomAndDoorSize: Int = 0
 
+    var lastNode: CatacombsNode<*>? = null
+    var lastRoom: RoomNode? = null
+    var lastPosition = Vector2i(-1, -1)
+
     val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
@@ -39,6 +48,22 @@ data class Catacomb(
         add(position - Utils.vectorOneZero)
         add(position - Utils.vectorZeroOne)
     }.associateWith { grid[it] as? T }.filterValuesNotNull()
+
+    fun tick() {
+        val player = McPlayer.self ?: return
+        val nextPosition = CatacombsManager.worldPosToGridPos(player.blockPosition())
+        val currentNode = lastNode
+
+        val nextNode = grid[nextPosition] ?: return
+        if (currentNode == nextNode) return
+        lastNode = nextNode
+        lastPosition = nextPosition
+        if (nextNode is RoomNode && nextNode != lastRoom) {
+            CatacombRoomChangeEvent(currentNode as? RoomNode ?: lastRoom, nextNode).post()
+            lastRoom = nextNode
+        }
+        CatacombNodeChangeEvent(currentNode, nextNode).post()
+    }
 
     override val instance: InstanceType get() = InstanceType.CATACOMBS
 }

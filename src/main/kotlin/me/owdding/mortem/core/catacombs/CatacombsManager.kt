@@ -44,6 +44,8 @@ import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
 import kotlin.math.abs
 import kotlin.math.floor
+import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
+import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 
 @Module
 object CatacombsManager {
@@ -296,6 +298,18 @@ object CatacombsManager {
     }
 
     private val defaultPath: Path = McClient.config.resolve("mortem/data")
+
+    @Subscription(TickEvent::class)
+    fun tick() = catacomb?.tick()
+
+    @Subscription
+    fun onNodeSwitch(event: CatacombNodeChangeEvent<*, *>) {
+        Text.of("Room switch, ${event.previous} -> ${event.current}").sendWithPrefix()
+    }
+    @Subscription
+    fun onRoomSwitch(event: CatacombRoomChangeEvent) {
+        Text.of("Room switch, ${event.previous?.backingData?.name} -> ${event.current.backingData?.name}").sendWithPrefix()
+    }
 
     @Subscription(TickEvent::class)
     @TimePassed("5s")
