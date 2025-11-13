@@ -8,7 +8,10 @@ import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.extensions.mutableCopy
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
+import me.owdding.mortem.utils.extensions.toVec3
+import me.owdding.mortem.utils.extensions.toVector3dc
 import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.phys.AABB
 import org.joml.Vector2i
 import org.joml.Vector3d
 import org.joml.Vector3dc
@@ -176,6 +179,22 @@ class RoomNode(
         }
         val origin = getCenter().toVec2d().add(0.5, 0.5)
         return room.add(origin.x, 0.0, origin.y)
+    }
+
+    fun roomToWorld(aabb: AABB): AABB {
+        val min = aabb.minPosition.toVector3dc()
+        val max = aabb.maxPosition.toVector3dc()
+        val rotatedMin = roomToWorld(min)
+        val rotatedMax = roomToWorld(max)
+        return AABB(rotatedMin.toVec3(), rotatedMax.toVec3())
+    }
+
+    fun worldToRoom(aabb: AABB): AABB {
+        val min = aabb.minPosition.toVector3dc()
+        val max = aabb.maxPosition.toVector3dc()
+        val rotatedMin = worldToRoom(min)
+        val rotatedMax = worldToRoom(max)
+        return AABB(rotatedMin.toVec3(), rotatedMax.toVec3())
     }
 }
 

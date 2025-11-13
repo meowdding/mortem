@@ -111,6 +111,10 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+    compilerOptions.freeCompilerArgs.addAll(
+        "-Xcontext-sensitive-resolution",
+        "-Xcontext-parameters"
+    )
     compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
 }
 

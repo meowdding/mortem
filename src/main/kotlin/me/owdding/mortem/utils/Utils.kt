@@ -5,14 +5,20 @@ import com.mojang.serialization.Codec
 import kotlinx.coroutines.runBlocking
 import me.owdding.mortem.Mortem
 import me.owdding.mortem.generated.MortemCodecs
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.entity.SkullBlockEntity
 import org.joml.Vector2i
 import org.joml.times
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.SkyBlockEvent
+import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.utils.json.Json
 import tech.thatgravyboat.skyblockapi.utils.json.Json.readJson
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toDataOrThrow
 import java.nio.file.Files
+import kotlin.jvm.optionals.getOrNull
 import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
@@ -20,8 +26,36 @@ object Utils {
 
     internal fun SkyBlockEvent.post() = this.post(SkyBlockAPI.eventBus)
 
+    fun McLevel.getSkullTexture(pos: BlockPos): String? {
+        return level.getBlockEntity(pos, BlockEntityType.SKULL).getOrNull()?.getTexture()
+    }
+
+    fun SkullBlockEntity.getTexture(): String? {
+        //? >=1.21.10 {
+        return this.ownerProfile?.partialProfile()?.id?.toString()
+        //?} else
+        /*return ownerProfile?.id?.get()?.toString()*/
+    }
+
+    inline fun <T, R : Comparable<R>> Iterable<T>.minByWithOrNull(selector: (T) -> R): Pair<T, R>? {
+        val iterator = iterator()
+        if (!iterator.hasNext()) return null
+        var minElem = iterator.next()
+        var minValue = selector(minElem)
+        if (!iterator.hasNext()) return minElem to minValue
+        do {
+            val e = iterator.next()
+            val v = selector(e)
+            if (minValue > v) {
+                minElem = e
+                minValue = v
+            }
+        } while (iterator.hasNext())
+        return minElem to minValue
+    }
+
     @Suppress("UNCHECKED_CAST")
-    fun <From, To> From.unsafeCast() = (this as To)
+    fun <To> Any.unsafeCast() = (this as To)
 
     val vectorZeroZero = Vector2i(0, 0)
     val vectorZeroOne = Vector2i(0, 1)
