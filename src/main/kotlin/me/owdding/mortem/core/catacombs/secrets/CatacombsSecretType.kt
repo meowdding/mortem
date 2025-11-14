@@ -2,28 +2,41 @@ package me.owdding.mortem.core.catacombs.secrets
 
 import me.owdding.ktcodecs.FieldName
 import me.owdding.ktcodecs.GenerateCodec
+import me.owdding.ktcodecs.GenerateDispatchCodec
+import me.owdding.mortem.core.catacombs.CatacombsColorProvider
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.generated.DispatchHelper
+import me.owdding.mortem.utils.colors.CatppuccinColors
+import me.owdding.mortem.utils.extensions.toVec3
 import net.minecraft.world.phys.AABB
 import org.joml.Vector3ic
+import tech.thatgravyboat.skyblockapi.utils.extentions.valueOfOrNull
 import kotlin.reflect.KClass
 
+// TODO: make colors not be hardcoded
+@GenerateDispatchCodec(CatacombsSecret::class)
 enum class CatacombsSecretType(
     override val type: KClass<out CatacombsSecret>,
     val constructor: (Vector3ic) -> CatacombsSecret,
+    colorProvider: CatacombsColorProvider,
     val isSecret: Boolean = true,
-) : DispatchHelper<CatacombsSecret> {
-    CHEST(ChestSecret::class, ::ChestSecret),
-    ITEM(ItemSecret::class, ::ItemSecret),
-    BAT(BatSecret::class, ::BatSecret),
-    ESSENCE(EssenceSecret::class, ::EssenceSecret),
+) : DispatchHelper<CatacombsSecret>, CatacombsColorProvider by colorProvider {
+    CHEST(ChestSecret::class, ::ChestSecret, CatppuccinColors.Latte::base),
+    ITEM(ItemSecret::class, ::ItemSecret, CatppuccinColors.Mocha::sapphire),
+    BAT(BatSecret::class, ::BatSecret, CatppuccinColors.Frappe::peach),
+    ESSENCE(EssenceSecret::class, ::EssenceSecret, CatppuccinColors.Latte::mauve),
 
-    LEVER(LeverSecret::class, { LeverSecret(it, fullBlockAABB) }, isSecret = false),
-    REDSTONE_KEY(RedstoneKeySecret::class, ::RedstoneKeySecret, isSecret = false),
+    LEVER(LeverSecret::class, { LeverSecret(it, fullBlockAABB) }, { 0xf2da6d }, isSecret = false),
+    REDSTONE_KEY(RedstoneKeySecret::class, ::RedstoneKeySecret, CatppuccinColors.Macchiato::red, isSecret = false),
 
-    NONE(NoSecret::class, ::NoSecret, isSecret = false),
+    NONE(NoSecret::class, ::NoSecret, CatppuccinColors.Mocha::rosewater, isSecret = false),
     ;
 
     val ignore: Boolean get() = this == NONE
+
+    companion object {
+        fun getType(string: String): CatacombsSecretType = valueOfOrNull<CatacombsSecretType>(string.uppercase()) ?: NONE
+    }
 }
 
 sealed class CatacombsSecret(val type: CatacombsSecretType) {
@@ -36,9 +49,13 @@ sealed class CatacombsSecret(val type: CatacombsSecretType) {
     fun click() {
         clicked = true
     }
+
     fun reset() {
         clicked = false
     }
+
+    fun realPos(room: RoomNode): Vector3ic = room.roomToWorld(pos)
+    fun realAABB(room: RoomNode): AABB = aabb.move(realPos(room).toVec3())
 }
 
 sealed class PlayerHeadSecret(type: CatacombsSecretType) : CatacombsSecret(type) {
@@ -92,5 +109,5 @@ data class NoSecret(
 }
 
 private val fullBlockAABB = AABB(0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
-private val chestAABB = AABB(0.0625,0.0,0.0625,0.9375,0.875,0.9375)
+private val chestAABB = AABB(0.0625, 0.0, 0.0625, 0.9375, 0.875, 0.9375)
 private val skullAABB = AABB(0.25, 0.0, 0.25, 0.75, 0.5, 0.75)

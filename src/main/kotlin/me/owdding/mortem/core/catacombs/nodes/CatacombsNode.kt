@@ -6,20 +6,9 @@ import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.extensions.mutableCopy
-import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
-import me.owdding.mortem.utils.extensions.toVec3
-import me.owdding.mortem.utils.extensions.toVector3dc
 import net.minecraft.world.level.block.Rotation
-import net.minecraft.world.phys.AABB
-import org.joml.Vector2i
-import org.joml.Vector3d
-import org.joml.Vector3dc
-import org.joml.Vector3i
-import org.joml.Vector3ic
-import org.joml.component1
-import org.joml.component2
-import tech.thatgravyboat.skyblockapi.utils.text.Text
+import org.joml.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -137,7 +126,6 @@ class RoomNode(
 
     fun worldToRoom(vec3d: Vector3dc): Vector3dc {
         val origin = getCenter().toVec2d().add(0.5, 0.5)
-        Text.of(origin.toString()).sendWithPrefix()
         val original = vec3d.mutableCopy().sub(origin.x, 0.0, origin.y)
         return when (rotation) {
             Rotation.CLOCKWISE_90 -> Vector3d(original.z(), original.y(), -original.x())
@@ -166,7 +154,6 @@ class RoomNode(
             else -> vec3i.mutableCopy()
         }
         val origin = getCenter()
-        Text.of(origin.toString()).sendWithPrefix()
         return room.add(origin.x, 0, origin.y)
     }
 
@@ -179,22 +166,6 @@ class RoomNode(
         }
         val origin = getCenter().toVec2d().add(0.5, 0.5)
         return room.add(origin.x, 0.0, origin.y)
-    }
-
-    fun roomToWorld(aabb: AABB): AABB {
-        val min = aabb.minPosition.toVector3dc()
-        val max = aabb.maxPosition.toVector3dc()
-        val rotatedMin = roomToWorld(min)
-        val rotatedMax = roomToWorld(max)
-        return AABB(rotatedMin.toVec3(), rotatedMax.toVec3())
-    }
-
-    fun worldToRoom(aabb: AABB): AABB {
-        val min = aabb.minPosition.toVector3dc()
-        val max = aabb.maxPosition.toVector3dc()
-        val rotatedMin = worldToRoom(min)
-        val rotatedMax = worldToRoom(max)
-        return AABB(rotatedMin.toVec3(), rotatedMax.toVec3())
     }
 }
 
