@@ -1,6 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -92,6 +91,7 @@ compactingResources {
 
     configureTask(tasks.named<AbstractCopyTask>("processResources").get())
     compactToArray("rooms")
+    compactToArray("secrets")
 }
 
 ksp {
@@ -111,6 +111,10 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+    compilerOptions.freeCompilerArgs.addAll(
+        "-Xcontext-sensitive-resolution",
+        "-Xcontext-parameters"
+    )
     compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
 }
 

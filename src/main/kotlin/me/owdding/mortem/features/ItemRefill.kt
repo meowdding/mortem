@@ -2,6 +2,7 @@ package me.owdding.mortem.features
 
 import me.owdding.ktmodules.Module
 import me.owdding.mortem.config.category.MiscConfig
+import me.owdding.mortem.core.event.MortemRegisterCommandsEvent
 import me.owdding.mortem.utils.GfsQueue
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -18,8 +19,8 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 object ItemRefill {
 
     @Subscription
-    fun onCommand(event: RegisterCommandsEvent) {
-        event.register("mortem refill") {
+    fun onCommand(event: MortemRegisterCommandsEvent) {
+        event.register("refill") {
             thenCallback("item", EnumArgument<RefillItems>()) {
                 refill(argument<RefillItems>("item"))
             }

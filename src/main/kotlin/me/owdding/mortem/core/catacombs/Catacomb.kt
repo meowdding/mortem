@@ -40,6 +40,8 @@ data class Catacomb(
 
     val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
+    operator fun get(position: Vector2i): CatacombsNode<*>? = grid[position]
+
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
 
     inline fun <reified T : CatacombsNode<T>> getNeighbours(position: Vector2i): Map<Vector2i, T> = buildList {
@@ -130,7 +132,7 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
 data class StoredCatacombRoom(
     var name: String,
     var id: String,
-    var secrets: Int,
+    var secrets: Int = 0,
     @FieldName("center") val centerHash: String,
     @FieldName("directions") val directionalHashes: Map<String, Direction>,
     @FieldName("extra_rotation_handling") val extraRotationHandling: Boolean = false,
