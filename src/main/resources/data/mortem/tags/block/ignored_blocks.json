@@ -23,6 +23,7 @@
     "minecraft:smooth_stone_slab", 
     "minecraft:cracked_stone_bricks", 
     "minecraft:tripwire", 
-    "minecraft:oak_log"
+    "minecraft:oak_log",
+    "minecraft:iron_bars"
   ]
 }
