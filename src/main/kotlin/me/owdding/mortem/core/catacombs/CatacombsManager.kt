@@ -47,8 +47,12 @@ import kotlin.math.abs
 import kotlin.math.floor
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
+import net.minecraft.nbt.NbtIo
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterKeysNotNull
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.onClick
+import java.util.concurrent.CompletableFuture
+import kotlin.io.path.createParentDirectories
 
 @Module
 object CatacombsManager {
@@ -325,6 +329,41 @@ object CatacombsManager {
                 color = CatppuccinColors.Mocha.text
                 append(format(playerNode.roomToWorld(roomPos)))
             }.sendWithPrefix()
+        }
+        event.registerWithCallback("mortem dev export_room") {
+            val catacomb = catacomb ?: return@registerWithCallback
+
+            val playerNode = catacomb.grid[worldPosToGridPos(McPlayer.self!!.blockPosition())]
+
+            if (playerNode !is RoomNode) return@registerWithCallback
+
+            CompletableFuture.runAsync {
+                val structureData = playerNode.exportToStructure()
+
+                if (structureData == null) {
+                    Text.of("Failed to export room") {
+                        color = CatppuccinColors.Mocha.red
+                    }.sendWithPrefix()
+
+                    return@runAsync
+                }
+
+                val fileName = "structures/${System.currentTimeMillis()}.nbt"
+
+                val savePath = defaultPath.resolve(fileName)
+
+                savePath.createParentDirectories()
+
+                NbtIo.writeCompressed(structureData, savePath)
+
+                Text.of("Wrote current room to ") {
+                    append(fileName) {
+                        color = CatppuccinColors.Mocha.pink
+                        hover = Text.of(savePath.toString())
+                    }
+                    color = CatppuccinColors.Mocha.lavender
+                }.sendWithPrefix()
+            }
         }
     }
 

@@ -4,18 +4,18 @@ import me.owdding.mortem.core.catacombs.CatacombDoorType
 import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
+import me.owdding.mortem.generated.MortemCodecs
+import me.owdding.mortem.utils.StructureUtils
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.extensions.mutableCopy
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
+import net.minecraft.core.BlockPos
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.world.level.block.Rotation
-import org.joml.Vector2i
-import org.joml.Vector3d
-import org.joml.Vector3dc
-import org.joml.Vector3i
-import org.joml.Vector3ic
-import org.joml.component1
-import org.joml.component2
+import org.joml.*
+import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.max
 import kotlin.math.min
@@ -175,6 +175,59 @@ class RoomNode(
         }
         val origin = getCenter().toVec2d().add(0.5, 0.5)
         return room.add(origin.x, 0.0, origin.y)
+    }
+
+    fun exportToStructure(): CompoundTag? {
+
+        val chunks = buildList {
+            for (first in positions) {
+                add(
+                    Vector2i(
+                        (-12 + first.x * 2) * 16 + 7,
+                        (-12 + first.y * 2) * 16 + 7,
+                    ),
+                )
+                for (second in positions) {
+                    if ((first.x - second.x == 1) != (first.y - second.y == 1)) {
+                        add(
+                            Vector2i(
+                                (-12 + first.x + second.x) * 16 + 7,
+                                (-12 + first.y + second.y) * 16 + 7,
+                            ),
+                        )
+                    }
+                }
+            }
+            if (shape == CatacombRoomShape.TWO_BY_TWO) {
+                val centerX = positions.sumOf { 2 * it.x } / positions.size
+                val centerY = positions.sumOf { 2 * it.y } / positions.size
+
+                add(
+                    Vector2i(
+                        (-12 + centerX) * 16 + 7,
+                        (-12 + centerY) * 16 + 7,
+                    ),
+                )
+            }
+        }
+
+        val roomStructure = StructureUtils.encodeStructureFromRegions(
+            McLevel.level,
+            chunks.map { center ->
+                BlockPos(center.x - 15, 0, center.y - 15) to BlockPos(center.x + 15, 255, center.y + 15)
+            },
+            rotation ?: Rotation.NONE,
+        ) ?: return null
+
+        if (backingData != null) {
+            val storedRoomCodec = MortemCodecs.getCodec<StoredCatacombRoom>()
+
+            val roomData = storedRoomCodec.encodeStart(NbtOps.INSTANCE, backingData).getOrThrow()
+
+            roomStructure.put("backing_room_data", roomData)
+        }
+
+        return roomStructure
     }
 }
 

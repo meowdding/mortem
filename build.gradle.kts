@@ -81,6 +81,7 @@ loom {
     }
 
     val accessWidenerFile = project.file("mortem.accesswidener")
+    println(accessWidenerFile)
     if (accessWidenerFile.exists()) {
         accessWidenerPath.set(accessWidenerFile)
     }
