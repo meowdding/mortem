@@ -40,12 +40,15 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import java.nio.file.Path
+import java.util.LinkedList
 import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
 import kotlin.math.abs
 import kotlin.math.floor
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
+import tech.thatgravyboat.skyblockapi.utils.extentions.filterKeysNotNull
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.onClick
 
 @Module
 object CatacombsManager {
@@ -242,14 +245,42 @@ object CatacombsManager {
     fun command(event: RegisterCommandsEvent) {
         event.registerWithCallback("mortem dev column_hash") {
             val chunkPos = McPlayer.self!!.chunkPosition()
-            val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.z)
-            val hash = CatacombWorldMatcher.hashColumn(chunk, McPlayer.self!!.blockPosition().atY(255))
+            val hash = CatacombWorldMatcher.hashColumn(McPlayer.self!!.blockPosition().atY(255))
             Text.of("Hash for current position is ") {
                 append(hash) {
                     color = CatppuccinColors.Mocha.pink
                 }
                 color = CatppuccinColors.Mocha.lavender
             }.sendWithPrefix()
+        }
+        event.registerWithCallback("mortem dev create_full_hash") {
+            val hashes = LinkedList<Pair<String, List<String>>>()
+
+            val directions = CatacombWorldMatcher.createDirectionalHashes(McPlayer.self!!.blockPosition().atY(255)) { hash, blocks -> hashes.add(hash to blocks) }.filterKeysNotNull().values
+
+            var sinceLastCool = 0
+            hashes.forEach {
+                Text.of("$sinceLastCool ${it.first}") {
+                    color = when (sinceLastCool) {
+                        0 -> CatppuccinColors.Mocha.yellow
+                        1 -> CatppuccinColors.Mocha.green
+                        2 -> CatppuccinColors.Mocha.teal
+                        3 -> CatppuccinColors.Mocha.sky
+                        4 -> CatppuccinColors.Mocha.sapphire
+                        5 -> CatppuccinColors.Mocha.blue
+                        6 -> CatppuccinColors.Mocha.lavender
+                        7 -> CatppuccinColors.Mocha.text
+                        8 -> CatppuccinColors.Mocha.subtext0
+                        9 -> CatppuccinColors.Mocha.subtext1
+                        else -> CatppuccinColors.Frappe.red
+                    }
+                    sinceLastCool++
+                    if (it.first in directions) sinceLastCool = 0
+                    onClick {
+                        McClient.clipboard = it.second.joinToString(separator = "\n")
+                    }
+                }.sendWithPrefix()
+            }
         }
         fun format(coordinate: Vector3dc): Component = Text.of {
             append(coordinate.x().shorten(2)) { color = CatppuccinColors.Mocha.red }
@@ -322,11 +353,13 @@ object CatacombsManager {
         }
     }
 
-    fun worldPosToGridPos(pos: BlockPos): Vector2i {
+    fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(Vector2i(pos.x, pos.z))
+
+    fun worldPosToGridPos(pos: Vector2i): Vector2i {
         val chunkX = floor(pos.x / 16f).toInt()
-        val chunkY = floor(pos.z / 16f).toInt()
+        val chunkY = floor(pos.y / 16f).toInt()
         val chunkRelativeX = pos.x and 15
-        val chunkRelativeY = pos.z and 15
+        val chunkRelativeY = pos.y and 15
 
         val isHallwayX = abs(chunkX) % 2 == 1
         val isHallwayY = abs(chunkY) % 2 == 1

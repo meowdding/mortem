@@ -23,6 +23,7 @@ import org.joml.*
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
+import net.minecraft.client.gui.navigation.ScreenRectangle
 
 @Module
 @Overlay

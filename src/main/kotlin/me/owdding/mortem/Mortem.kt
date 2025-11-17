@@ -2,12 +2,16 @@ package me.owdding.mortem
 
 import me.owdding.ktmodules.Module
 import me.owdding.lib.utils.MeowddingLogger
+import me.owdding.lib.utils.isMeowddingDev
 import me.owdding.mortem.generated.MortemModules
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resources.ResourceLocation
 import org.intellij.lang.annotations.Pattern
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
+import tech.thatgravyboat.skyblockapi.helpers.McPlayer
+
+const val DEBUG_MODE = true
 
 @Module
 object Mortem : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoResolve() {
@@ -24,4 +28,8 @@ object Mortem : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoRes
     }
 
     fun id(@Pattern("[a-z_0-9\\/.-]+") path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
+
+
+    @Suppress("NOTHING_TO_INLINE", "KotlinConstantConditions", "SimplifyBooleanWithConstants")
+    inline fun isDebugEnabled() : Boolean = DEBUG_MODE && McPlayer.uuid.isMeowddingDev()
 }

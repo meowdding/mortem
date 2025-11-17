@@ -163,7 +163,6 @@ class RoomNode(
             else -> vec3i.mutableCopy()
         }
         val origin = getCenter()
-        Text.of(origin.toString()).sendWithPrefix()
         return room.add(origin.x, 0, origin.y)
     }
 

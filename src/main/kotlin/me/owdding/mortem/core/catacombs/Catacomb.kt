@@ -1,25 +1,31 @@
 package me.owdding.mortem.core.catacombs
 
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import me.owdding.ktcodecs.CustomGetterMethod
 import me.owdding.ktcodecs.FieldName
+import me.owdding.ktcodecs.FieldNames
 import me.owdding.ktcodecs.GenerateCodec
+import me.owdding.ktcodecs.OptionalBoolean
+import me.owdding.ktcodecs.OptionalInt
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
+import me.owdding.mortem.core.catacombs.nodes.CatacombRoomShape
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
+import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.Utils
+import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
 import org.joml.Vector2i
 import org.joml.minus
 import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
-import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
-import java.util.concurrent.ConcurrentHashMap
-import me.owdding.mortem.core.catacombs.nodes.RoomNode
-import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
-import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
-import me.owdding.mortem.utils.Utils.post
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
+import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 
 data class Catacomb(
     val floor: DungeonFloor,
@@ -40,7 +46,7 @@ data class Catacomb(
 
     val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
-    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
+    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>): T = grid.getOrPut(position, type.constructor).unsafeCast()
 
     inline fun <reified T : CatacombsNode<T>> getNeighbours(position: Vector2i): Map<Vector2i, T> = buildList {
         add(position + Utils.vectorOneZero)
@@ -109,7 +115,7 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
     PUZZLE({ 0xe060f0 }),
     FAIRY({ 0xf080ff }),
     DEFAULT({ 0x000000 }),
-;
+    ;
 
     companion object {
         fun getByColor(color: CatacombMapColor): CatacombDoorType? = when (color) {
@@ -127,14 +133,42 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
 }
 
 @GenerateCodec
+data class SecretDetails(
+    @OptionalInt @FieldNames("essences", "wither") val essences: Int = 0,
+    @OptionalInt @FieldNames("redstone_keys", "redstone_key") val redstoneKeys: Int = 0,
+    @OptionalInt @FieldNames("bats", "bat") val bats: Int = 0,
+    @OptionalInt @FieldNames("items", "item") val items: Int = 0,
+    @OptionalInt @FieldNames("chests", "chest") val chests: Int = 0,
+) {
+    companion object {
+        val EMPTY = SecretDetails()
+    }
+    val isEmpty get() = this == EMPTY
+}
+
+@GenerateCodec
 data class StoredCatacombRoom(
     var name: String,
     var id: String,
-    var secrets: Int,
+
     @FieldName("center") val centerHash: String,
     @FieldName("directions") val directionalHashes: Map<String, Direction>,
-    @FieldName("extra_rotation_handling") val extraRotationHandling: Boolean = false,
+
+    @OptionalInt val journals: Int = 0,
+    @OptionalInt val crypts: Int = 0,
+
+    @OptionalBoolean(false) val spiders: Boolean = false,
+    @OptionalBoolean(false) @FieldName("extra_rotation_handling")val extraRotationHandling: Boolean = false,
+    @OptionalBoolean(false) @FieldName("fairy_soul")val fairySoul: Boolean = false,
+
+    @CustomGetterMethod @FieldName("secret_details")val secretDetails: SecretDetails = SecretDetails.EMPTY,
+    @CustomGetterMethod val type: CatacombRoomType = CatacombRoomType.NORMAL,
+    @CustomGetterMethod var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE,
 ) {
+    fun serializeType() = Optional.ofNullable(type.takeUnless { it == CatacombRoomType.NORMAL })
+    fun serializeSecretDetails() = Optional.ofNullable(secretDetails.takeUnless { it.isEmpty })
+    fun serializeShape() = Optional.ofNullable(shape.takeUnless { it == CatacombRoomShape.ONE_BY_ONE })
+
     var shouldSerialize = false
 
     fun markChange() {

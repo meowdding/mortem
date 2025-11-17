@@ -24,6 +24,17 @@
     "minecraft:cracked_stone_bricks", 
     "minecraft:tripwire", 
     "minecraft:oak_log",
-    "minecraft:iron_bars"
+    "minecraft:iron_bars",
+    "minecraft:fire",
+    "minecraft:ladder",
+    "minecraft:skeleton_skull",
+    "minecraft:vines",
+    "minecraft:sunflower",
+    "minecraft:stone_button",
+    "minecraft:brown_mushroom",
+    "minecraft:bedrock",
+    "minecraft:melon",
+    "minecraft:redstone_block",
+    "minecraft:wall_torch"
   ]
 }
