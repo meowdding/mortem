@@ -1,5 +1,6 @@
 package me.owdding.mortem.features
 
+import me.owdding.ktmodules.Module
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonAPI
@@ -48,6 +49,7 @@ Puzzles: (3)
 //  Spirit Pet in Death
 //  Prince Kill
 //  Entrace req
+@Module
 object ScoreCalculator {
     // <editor-fold desc="Regex Wall">
     // --Chat--
