@@ -1,5 +1,6 @@
 package me.owdding.mortem.config.category
 
+import com.teamresourceful.resourcefulconfig.api.types.info.Translatable
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.lib.overlays.ConfigPosition
 import me.owdding.mortem.config.separator
@@ -31,6 +32,16 @@ object OverlayConfig  : CategoryKt("overlays") {
     var scoreOverlay by boolean(true) {
         translation = "$translation.score_overlay"
     }
+
+    var displayMode by enum(DisplayMode.DETAILED) {
+        translation = "$translation.score_display_mode"
+    }
+}
+
+enum class DisplayMode : Translatable {
+    DETAILED, COMPACT, SHORT;
+
+    override fun getTranslationKey() = "mortem.config.overlays.display_mode.$name".lowercase()
 }
 
 object OverlayPositions : CategoryKt("overlaysPositions") {
