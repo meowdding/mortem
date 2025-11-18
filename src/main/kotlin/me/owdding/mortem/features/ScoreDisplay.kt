@@ -47,7 +47,7 @@ object ScoreDisplay : MortemOverlay {
         string("TODO MORE INFO")
     }
 
-    private fun getCompact(score: ScoreCalculator.Score) = DisplayFactory.horizontal {
+    private fun getCompact(score: ScoreCalculator.Score) = DisplayFactory.vertical {
         display(getShort(score))
         string(" - Skill: ") {
             color = MortemColors.BASE_TEXT
@@ -67,7 +67,7 @@ object ScoreDisplay : MortemOverlay {
         }
     }
 
-    private fun getShort(score: ScoreCalculator.Score) = DisplayFactory.horizontal {
+    private fun getShort(score: ScoreCalculator.Score) = DisplayFactory.vertical {
         string("Score: ") {
             color = MortemColors.BASE_TEXT
             append("${score.total} ") { color = MortemColors.HIGHLIGHT }
