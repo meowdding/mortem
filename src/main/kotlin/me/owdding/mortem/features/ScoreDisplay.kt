@@ -78,6 +78,6 @@ object ScoreDisplay : MortemOverlay {
     }
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTicks: Float) {
-        display?.render(graphics, mouseX, mouseY, partialTicks)
+        display?.render(graphics)
     }
 }
