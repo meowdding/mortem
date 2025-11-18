@@ -115,7 +115,7 @@ object ScoreCalculator {
 
     private fun getExplorationScore(req: Requirements): Int {
         val roomsScore = floor(60 * clearedPercentage).roundToInt()
-        val secretsScore = floor((40 * secretPercentage / req.secretPercentNeeded)).roundToInt()
+        val secretsScore = floor((40 * (secretPercentage / req.secretPercentNeeded).coerceAtMost(1.0))).roundToInt()
         return roomsScore + secretsScore
     }
 
