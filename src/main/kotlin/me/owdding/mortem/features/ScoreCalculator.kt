@@ -16,6 +16,7 @@ import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.ServerDisconnectEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.utils.extentions.enumMapOf
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFloatValue
 import tech.thatgravyboat.skyblockapi.utils.extentions.toIntValue
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
@@ -62,15 +63,15 @@ object ScoreCalculator {
     private val puzzleRegex = " [\\w\\s]+: \\[[✖✦]](?: \\(.*\\))?".toRegex()
     // </editor-fold>
 
-    private val requirements = mapOf(
-        DungeonFloor.E to Requirements(0.3,600),
-        DungeonFloor.F1 to Requirements(0.3,600),
-        DungeonFloor.F2 to Requirements(0.4,600),
-        DungeonFloor.F3 to Requirements(0.5,600),
-        DungeonFloor.F4 to Requirements(0.6,720),
-        DungeonFloor.F5 to Requirements(0.7,600),
-        DungeonFloor.F6 to Requirements(0.85,720),
-        DungeonFloor.F7 to Requirements(1.0,840),
+    private val requirements = enumMapOf(
+        DungeonFloor.E to Requirements(0.3, 600),
+        DungeonFloor.F1 to Requirements(0.3, 600),
+        DungeonFloor.F2 to Requirements(0.4, 600),
+        DungeonFloor.F3 to Requirements(0.5, 600),
+        DungeonFloor.F4 to Requirements(0.6, 720),
+        DungeonFloor.F5 to Requirements(0.7, 600),
+        DungeonFloor.F6 to Requirements(0.85, 720),
+        DungeonFloor.F7 to Requirements(1.0, 840),
         DungeonFloor.M1 to Requirements(1.0, 480),
         DungeonFloor.M2 to Requirements(1.0, 480),
         DungeonFloor.M3 to Requirements(1.0, 480),
@@ -89,7 +90,7 @@ object ScoreCalculator {
 
     private var deaths = 0
     private var secretPercentage = 0f
-    private var clearedPercentage = 0f
+    private var roomsClearedPercentage = 0f
     private var mimicKilled = false
     private var cryptsKilled = 0
     private var failedPuzzles = 0
@@ -106,7 +107,7 @@ object ScoreCalculator {
     }
 
     private fun getSkillScore(): Int {
-        val roomsScore = floor((80 * clearedPercentage)).roundToInt()
+        val roomsScore = floor((80 * roomsClearedPercentage)).roundToInt()
         val puzzlePenalty = 10 * failedPuzzles
         val deathPenalty = 2 * deaths
 
@@ -114,7 +115,7 @@ object ScoreCalculator {
     }
 
     private fun getExplorationScore(req: Requirements): Int {
-        val roomsScore = floor(60 * clearedPercentage).roundToInt()
+        val roomsScore = floor(60 * roomsClearedPercentage).roundToInt()
         val secretsScore = floor((40 * (secretPercentage / req.secretPercentNeeded).coerceAtMost(1.0))).roundToInt()
         return roomsScore + secretsScore
     }
@@ -175,7 +176,7 @@ object ScoreCalculator {
     fun reset() {
         deaths = 0
         secretPercentage = 0f
-        clearedPercentage = 0f
+        roomsClearedPercentage = 0f
         mimicKilled = false
         cryptsKilled = 0
         failedPuzzles = 0
@@ -194,7 +195,7 @@ object ScoreCalculator {
     @Subscription
     fun onScoreboard(event: ScoreboardUpdateEvent) {
         clearedPercentageRegex.anyMatch(event.new, "percentage") { (percentage) ->
-            clearedPercentage = percentage.toFloatValue() / 100f
+            roomsClearedPercentage = percentage.toFloatValue() / 100f
         }
     }
 
