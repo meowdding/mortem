@@ -7,6 +7,7 @@ import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyWidget
 import tech.thatgravyboat.skyblockapi.api.events.chat.ChatReceivedEvent
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.ServerDisconnectEvent
@@ -21,17 +22,6 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /*
-
-// --- SKILL --- max 100
-The Skill score ranges from 20 to 100, with 20 being the lowest score achievable. The Skill Score is calculated as such:
-Skill=20+⌊80*(CompletedRoomsTotalRooms)⌋−(10*FailedPuzzles)−DeathPenalty
-Each death 2, except first death with spirit pet
-
-// --- EXPLORATION --- max 100
-The Exploration Score depends on the percentage of dungeon completed, along with the percentage of secrets achieved. It is calculated as such:
-Explore=⌊60*(CompletedRooms/TotalRooms)⌋+⌊(40*SecretPercentFound/SecretPercentNeeded)⌋
-
-
 Discoveries: 4
  Secrets Found: 4
  Crypts: 0
@@ -46,20 +36,27 @@ Puzzles: (3)
  Quiz: [✖] ()
  Three Weirdos: [✔]
  ???: [✦]
-
  */
 
+// TODO
+//  Killing Mimic
+//  Spirit Pet in Death
+//  Prince Kill
+//  Entrace req
 object ScoreCalculator {
     // <editor-fold desc="Regex Wall">
     // --Chat--
     private val mimicKilledRegex = ".*(\$SKYTILS-DUNGEON-SCORE-MIMIC\$|Mimic [Dd]ead!|Mimic Killed!)$".toRegex()
+    // --Scoreboard--
+    private val clearedPercentageRegex = "\\s*Cleared: (?<percentage>[\\d,.]+)% \\((?<score>[\\d.]+)\\)".toRegex()
     // -- Tab--
     private val cryptsRegex = " Crypts: (?<amount>\\d+)".toRegex()
     private val secretPercentageRegex = " Secrets Found: (?<percentage>[\\d.]+)%".toRegex()
+    private val puzzleRegex = " [\\w\\s]+: \\[[✖✦]](?: \\(.*\\))?".toRegex()
     // </editor-fold>
 
     private val requirements = mapOf(
-        DungeonFloor.E to Requirements(0.3,600), // TODO
+        DungeonFloor.E to Requirements(0.3,600),
         DungeonFloor.F1 to Requirements(0.3,600),
         DungeonFloor.F2 to Requirements(0.4,600),
         DungeonFloor.F3 to Requirements(0.5,600),
@@ -83,9 +80,12 @@ object ScoreCalculator {
         0.6..Double.MAX_VALUE to 0.07,
     )
 
+    private var deaths = 0
+    private var secretPercentage = 0f
+    private var clearedPercentage = 0f
     private var mimicKilled = false
     private var cryptsKilled = 0
-    private var secretPercentage = 0f
+    private var failedPuzzles = 0
 
     fun getScore(time: Duration, floor: DungeonFloor): Int {
         val req = requirements[floor] ?: return 0
@@ -98,11 +98,15 @@ object ScoreCalculator {
     }
 
     private fun getSkillScore(): Int {
-        return 0
+        val roomsScore = floor((80 * clearedPercentage)).roundToInt()
+        val puzzlePenalty = 10 * failedPuzzles
+        val deathPenalty = 2 * deaths
+
+        return 20 + roomsScore - puzzlePenalty - deathPenalty
     }
 
     private fun getExplorationScore(req: Requirements): Int {
-        val roomsScore = 0
+        val roomsScore = floor(60 * clearedPercentage).roundToInt()
         val secretsScore = floor((40 * secretPercentage / req.secretPercentNeeded)).roundToInt()
         return roomsScore + secretsScore
     }
@@ -120,7 +124,6 @@ object ScoreCalculator {
     }
 
     private fun getBonusScore(): Int = buildList {
-        // TODO: prince maybe
         if (Perk.EZPZ.active) add(10)
         if (mimicKilled) add(2)
         add(cryptsKilled.coerceAtMost(5))
@@ -135,8 +138,12 @@ object ScoreCalculator {
 
     @Subscription(ServerChangeEvent::class, ServerDisconnectEvent::class)
     fun reset() {
+        deaths = 0
+        secretPercentage = 0f
+        clearedPercentage = 0f
         mimicKilled = false
         cryptsKilled = 0
+        failedPuzzles = 0
     }
 
     @Subscription
@@ -146,6 +153,13 @@ object ScoreCalculator {
             case(mimicKilledRegex) {
                 mimicKilled = true
             }
+        }
+    }
+
+    @Subscription
+    fun onScoreboard(event: ScoreboardUpdateEvent) {
+        clearedPercentageRegex.anyMatch(event.new, "percentage") { (percentage) ->
+            clearedPercentage = percentage.toFloatValue() / 100f
         }
     }
 
@@ -161,13 +175,21 @@ object ScoreCalculator {
     @OnlyWidget(TabWidget.AREA)
     fun onAreaWidget(event: TabWidgetChangeEvent) {
         secretPercentageRegex.anyMatch(event.new, "percentage") { (percentage) ->
-            this.secretPercentage == percentage.toFloatValue() / 100f
+            this.secretPercentage = percentage.toFloatValue() / 100f
         }
     }
 
     @Subscription
     @OnlyWidget(TabWidget.PUZZLES)
     fun onPuzzlesWidget(event: TabWidgetChangeEvent) {
+        failedPuzzles = event.new.count { puzzleRegex.matches(it) }
+    }
 
+    @Subscription
+    @OnlyWidget(TabWidget.TEAM_DEATHS)
+    fun onTeamDeathsWidget(event: TabWidgetChangeEvent) {
+        TabWidget.TEAM_DEATHS.regex.anyMatch(event.new, "amount") { (amount) ->
+            this.deaths = amount.toIntValue()
+        }
     }
 }
