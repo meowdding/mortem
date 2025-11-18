@@ -1,5 +1,8 @@
 package me.owdding.mortem.features
 
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
+import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonAPI
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 import tech.thatgravyboat.skyblockapi.api.data.Perk
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
@@ -16,6 +19,8 @@ import tech.thatgravyboat.skyblockapi.utils.extentions.toFloatValue
 import tech.thatgravyboat.skyblockapi.utils.extentions.toIntValue
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
 import tech.thatgravyboat.skyblockapi.utils.regex.matchWhen
+import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import kotlin.math.floor
 import kotlin.math.roundToInt
 import kotlin.time.Duration
@@ -87,14 +92,15 @@ object ScoreCalculator {
     private var cryptsKilled = 0
     private var failedPuzzles = 0
 
-    fun getScore(time: Duration, floor: DungeonFloor): Int {
-        val req = requirements[floor] ?: return 0
-        return listOf(
+    fun getScore() = DungeonAPI.dungeonFloor?.let { getScore(DungeonAPI.time, it) }
+    fun getScore(time: Duration, floor: DungeonFloor): Score {
+        val req = requirements[floor] ?: return Score.ZERO
+        return Score(
             getSkillScore(),
             getExplorationScore(req),
             getSpeedScore(time, req),
             getBonusScore(),
-        ).sum()
+        )
     }
 
     private fun getSkillScore(): Int {
@@ -129,11 +135,38 @@ object ScoreCalculator {
         add(cryptsKilled.coerceAtMost(5))
     }.sum()
 
-    data class Requirements(
+    data class Score(
+        val skill: Int,
+        val exploration: Int,
+        val speed: Int,
+        val bonus: Int,
+    ) {
+        val total = skill + exploration + speed + bonus
+        val rank = Rank.getRank(total)
+
+        companion object {
+            val ZERO = Score(0,0,0,0)
+        }
+    }
+
+    private data class Requirements(
         val secretPercentNeeded: Double,
         val speedTime: Duration,
     ) {
         constructor(secretPercentNeeded: Double, speedTime: Int) : this(secretPercentNeeded, speedTime.seconds)
+    }
+
+    enum class Rank(val minScore: Int, val component: Component) {
+        D(0, Text.of("D").withColor(TextColor.RED)),
+        C(100, Text.of("C").withColor(TextColor.BLUE)),
+        B(160, Text.of("B").withColor(TextColor.GREEN)),
+        A(230, Text.of("A").withColor(TextColor.DARK_PURPLE)),
+        S(270, Text.of("S").withColor(TextColor.YELLOW)),
+        S_PLUS(300, Text.of("S+").withColor(TextColor.GOLD).withStyle(ChatFormatting.BOLD));
+
+        companion object {
+            fun getRank(score: Int) = entries.lastOrNull { score >= it.minScore } ?: D
+        }
     }
 
     @Subscription(ServerChangeEvent::class, ServerDisconnectEvent::class)

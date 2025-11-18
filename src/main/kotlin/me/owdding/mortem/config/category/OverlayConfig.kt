@@ -23,10 +23,19 @@ object OverlayConfig  : CategoryKt("overlays") {
     var dungeonBreakerShowWhenHolding by boolean(false) {
         translation = "$translation.dungeonbreaker_show_when_holding"
     }
+
+    init {
+        separator("$translation.score_separator")
+    }
+
+    var scoreOverlay by boolean(true) {
+        translation = "$translation.score_overlay"
+    }
 }
 
 object OverlayPositions : CategoryKt("overlaysPositions") {
     override val hidden: Boolean = true
 
     val dungeonBreaker by obj(ConfigPosition(100, 200))
+    val score by obj(ConfigPosition(10, 500) )
 }
