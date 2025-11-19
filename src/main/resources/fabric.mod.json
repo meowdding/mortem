@@ -20,6 +20,7 @@
   "mixins": [
     "mortem.mixins.json"
   ],
+  "accessWidener": "mortem.accesswidener",
   "depends": {
     "fabricloader": ">=0.16",
     "minecraft": ">=${minecraft}"
