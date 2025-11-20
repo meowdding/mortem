@@ -1,8 +1,10 @@
 package me.owdding.mortem.features
 
 import me.owdding.ktmodules.Module
+import me.owdding.mortem.events.EntityDeathEvent
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.monster.Zombie
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonAPI
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 import tech.thatgravyboat.skyblockapi.api.data.Perk
@@ -16,12 +18,14 @@ import tech.thatgravyboat.skyblockapi.api.events.info.TabWidget
 import tech.thatgravyboat.skyblockapi.api.events.info.TabWidgetChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.ServerDisconnectEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
+import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.utils.extentions.enumMapOf
 import tech.thatgravyboat.skyblockapi.utils.extentions.toFloatValue
 import tech.thatgravyboat.skyblockapi.utils.extentions.toIntValue
 import tech.thatgravyboat.skyblockapi.utils.regex.RegexUtils.anyMatch
 import tech.thatgravyboat.skyblockapi.utils.regex.matchWhen
 import tech.thatgravyboat.skyblockapi.utils.text.Text
+import tech.thatgravyboat.skyblockapi.utils.text.Text.send
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -180,6 +184,19 @@ object ScoreCalculator {
         mimicKilled = false
         cryptsKilled = 0
         failedPuzzles = 0
+    }
+
+    @Subscription
+    @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
+    fun onEntityDeath(event: EntityDeathEvent) {
+        if (event.entity !is Zombie && !event.entity.isBaby) return
+
+        Text.of("mmic died yippie").send()
+        McClient.runNextTick {
+            if (!mimicKilled) return@runNextTick
+            McClient.sendCommand("pc Mimic Killed!")
+            mimicKilled = true
+        }
     }
 
     @Subscription
