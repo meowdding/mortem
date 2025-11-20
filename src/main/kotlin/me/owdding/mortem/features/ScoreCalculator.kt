@@ -190,8 +190,7 @@ object ScoreCalculator {
     @Subscription
     @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
     fun onEntityDeath(event: EntityDeathEvent) {
-        if (event.entity !is Zombie && !event.entity.isBaby && !isMimicFloor()) return
-
+        if (event.entity !is Zombie || !event.entity.isBaby || !isMimicFloor()) return
         Text.of("mmic died yippie").send()
         McClient.runNextTick {
             if (!mimicKilled) return@runNextTick
