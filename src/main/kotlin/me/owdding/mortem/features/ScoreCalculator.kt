@@ -50,7 +50,6 @@ Puzzles: (3)
  */
 
 // TODO
-//  Killing Mimic
 //  Spirit Pet in Death
 //  Prince Kill
 //  Entrace req
@@ -176,6 +175,8 @@ object ScoreCalculator {
         }
     }
 
+    private fun isMimicFloor() = DungeonAPI.dungeonFloor in listOf(DungeonFloor.F6, DungeonFloor.F7, DungeonFloor.M6, DungeonFloor.M7)
+
     @Subscription(ServerChangeEvent::class, ServerDisconnectEvent::class)
     fun reset() {
         deaths = 0
@@ -189,7 +190,7 @@ object ScoreCalculator {
     @Subscription
     @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
     fun onEntityDeath(event: EntityDeathEvent) {
-        if (event.entity !is Zombie && !event.entity.isBaby) return
+        if (event.entity !is Zombie && !event.entity.isBaby && !isMimicFloor()) return
 
         Text.of("mmic died yippie").send()
         McClient.runNextTick {
@@ -204,7 +205,7 @@ object ScoreCalculator {
     fun onChat(event: ChatReceivedEvent.Pre) {
         matchWhen(event.text) {
             case(mimicKilledRegex) {
-                mimicKilled = true
+                if (isMimicFloor()) mimicKilled = true
             }
         }
     }
