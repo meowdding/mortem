@@ -73,6 +73,7 @@ fun DependencyHandler.includeImplementation(dep: Any) {
 }
 
 val mcVersion = stonecutter.current.version.replace(".", "")
+val accessWidenerFile = rootProject.file("src/mortem.accesswidener")
 loom {
     runConfigs["client"].apply {
         ideConfigGenerated(true)
@@ -80,7 +81,6 @@ loom {
         vmArg("-Dfabric.modsFolder=" + '"' + rootProject.projectDir.resolve("run/${mcVersion}Mods").absolutePath + '"')
     }
 
-    val accessWidenerFile = project.file("mortem.accesswidener")
     if (accessWidenerFile.exists()) {
         accessWidenerPath.set(accessWidenerFile)
     }
@@ -132,4 +132,13 @@ idea {
 
         excludeDirs.add(file("run"))
     }
+}
+tasks.withType<ProcessResources>().configureEach {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    with(copySpec {
+        from(rootProject.file("src/lang")).include("*.json").into("assets/mortem/lang")
+    })
+    with(copySpec {
+        from(accessWidenerFile)
+    })
 }

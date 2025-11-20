@@ -1,11 +1,13 @@
 package me.owdding.mortem.core.catacombs.roommatching
 
+import kotlin.math.min
 import me.owdding.ktmodules.Module
 import me.owdding.lib.overlays.ConfigPosition
 import me.owdding.lib.overlays.Position
 import me.owdding.mortem.core.catacombs.*
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.utils.MortemDevUtils
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
 import me.owdding.mortem.utils.Utils.vectorOneOne
@@ -22,8 +24,6 @@ import net.minecraft.world.level.block.Rotation
 import org.joml.*
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.utils.text.Text
-import kotlin.math.min
-import net.minecraft.client.gui.navigation.ScreenRectangle
 
 @Module
 @Overlay
@@ -128,6 +128,9 @@ object CatacombMapMatcher : MortemOverlay {
         }
 
         CatacombWorldMatcher.matchData(rooms)
+        if (MortemDevUtils.getDebugBoolean("hypixel_rotation")) {
+            CatacombsManager.scanAllChunks()
+        }
     }
 
     fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
@@ -145,9 +148,8 @@ object CatacombMapMatcher : MortemOverlay {
         val catacomb = CatacombsManager.catacomb ?: return
 
         catacomb.grid.forEach { (pos, node) ->
-
-            val isVerticalDoor = (pos.y % 2 == 1)
-            val isHorizontalDoor = (pos.x % 2 == 1)
+            val isVerticalDoor = (pos.y() % 2 == 1)
+            val isHorizontalDoor = (pos.x() % 2 == 1)
             val isDoor = isVerticalDoor xor isHorizontalDoor
             val isMiddle = isHorizontalDoor && isVerticalDoor
             val isRoom = !isDoor && !isMiddle
@@ -166,21 +168,26 @@ object CatacombMapMatcher : MortemOverlay {
                 xOffset + width,
                 yOffset + height,
                 if (roomNode?.backingData != null) ARGB.opaque(node.getColor())
-                else if (isRoom) ARGB.greyscale(ARGB.color(255, node.getColor()))
+                else if (isRoom) ARGB.color(255, node.getColor())
                 else ARGB.greyscale(ARGB.color(125, node.getColor())),
             )
 
             val data = roomNode?.backingData
             if (data != null) {
                 graphics.drawString(McFont.self, data.name, xOffset, yOffset, -1)
-                graphics.drawString(McFont.self, when (roomNode.rotation) {
-                    Rotation.NONE -> "0°"
-                    Rotation.CLOCKWISE_90 -> "90°"
-                    Rotation.CLOCKWISE_180 -> "180°"
-                    Rotation.COUNTERCLOCKWISE_90 -> "270°"
-                    else -> "null"
-                }, xOffset, yOffset + 10, -1)
             }
+            if (isRoom)
+                graphics.drawString(
+                    McFont.self,
+                    when (roomNode?.rotation) {
+                        Rotation.NONE -> "0°"
+                        Rotation.CLOCKWISE_90 -> "90°"
+                        Rotation.CLOCKWISE_180 -> "180°"
+                        Rotation.COUNTERCLOCKWISE_90 -> "270°"
+                        else -> "null"
+                    },
+                    xOffset, yOffset, -1,
+                )
         }
 
         super.render(graphics, mouseX, mouseY)

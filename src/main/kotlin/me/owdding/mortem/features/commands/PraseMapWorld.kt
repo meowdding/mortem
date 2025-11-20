@@ -2,6 +2,7 @@ package me.owdding.mortem.features.commands
 
 import kotlin.collections.joinToString
 import me.owdding.ktmodules.Module
+import me.owdding.mortem.Mortem
 import me.owdding.mortem.core.catacombs.CatacombsManager.backingRooms
 import me.owdding.mortem.core.catacombs.SecretDetails
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
@@ -36,6 +37,10 @@ import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.onClick
 @Module
 object PraseMapWorld {
     val roomData: List<RoomData> = Utils.loadRepoData<RoomData, List<RoomData>>("import_data") { it.listOf() }
+
+    init {
+        Mortem.warn(roomData.filter { it.shape == Shape.`1x3` || it.shape == Shape.`1x4` }.flatMap { it.id }.joinToString(" | "))
+    }
 
     var iterator: Iterator<Pair<Pair<String, Int>, RoomData>>? = null
     var total: Int = 0

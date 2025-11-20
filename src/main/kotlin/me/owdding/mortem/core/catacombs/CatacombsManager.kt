@@ -1,5 +1,9 @@
 package me.owdding.mortem.core.catacombs
 
+import com.google.common.hash.Hashing
+import com.google.common.hash.HashingOutputStream
+import java.io.ByteArrayOutputStream
+import java.io.DataOutputStream
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.shorten
 import me.owdding.mortem.Mortem
@@ -40,6 +44,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextBuilder.append
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.util.LinkedList
 import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
@@ -48,11 +53,15 @@ import kotlin.math.floor
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import net.minecraft.nbt.NbtIo
+import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonAPI
+import tech.thatgravyboat.skyblockapi.api.events.info.ScoreboardUpdateEvent
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterKeysNotNull
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.hover
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.onClick
 import java.util.concurrent.CompletableFuture
 import kotlin.io.path.createParentDirectories
+import kotlin.io.path.writeBytes
+import org.joml.Vector2ic
 
 @Module
 object CatacombsManager {
@@ -212,6 +221,12 @@ object CatacombsManager {
         val catacomb = Catacomb(floor)
         this@CatacombsManager.catacomb = catacomb
 
+
+        CatacombJoinEvent(catacomb).post()
+    }
+
+    fun scanAllChunks() {
+        val catacomb = catacomb ?: return
         val maxChunkX = -12 + (catacomb.size.boundaryX * 2)
         val maxChunkZ = -12 + (catacomb.size.boundaryY * 2)
         McClient.runNextTick {
@@ -222,8 +237,6 @@ object CatacombsManager {
                 }
             }
         }
-
-        CatacombJoinEvent(catacomb).post()
     }
 
     @Subscription
@@ -381,6 +394,24 @@ object CatacombsManager {
         Text.of("Room switch, ${event.previous?.backingData?.name} -> ${event.current.backingData?.name}").sendWithPrefix()
     }
 
+    @Subscription(priority = Subscription.LOWEST)
+    @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
+    fun onScoreboardUpdate(event: ScoreboardUpdateEvent) = runCatching {
+        val catacomb = catacomb ?: return@runCatching
+        if (DungeonAPI.roomId != catacomb.roomId) {
+            catacomb.roomId = DungeonAPI.roomId
+            val structure = catacomb.lastRoom?.exportToStructure() ?: return@runCatching
+            val roomFolder = defaultPath.resolve("room_structures").resolve("${catacomb.roomId}")
+            roomFolder.createDirectories()
+            val outputStream = ByteArrayOutputStream()
+            val hashingOutputStream = HashingOutputStream(Hashing.sha256(), outputStream)
+            val dataOutputStream = DataOutputStream(hashingOutputStream)
+            NbtIo.write(structure, dataOutputStream)
+            val hex = hashingOutputStream.hash().asBytes().toHexString()
+            roomFolder.resolve("$hex.nbt").writeBytes(outputStream.toByteArray(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        }
+    }
+
     @Subscription(TickEvent::class)
     @TimePassed("5s")
     fun saveAll() {
@@ -394,11 +425,11 @@ object CatacombsManager {
 
     fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(Vector2i(pos.x, pos.z))
 
-    fun worldPosToGridPos(pos: Vector2i): Vector2i {
-        val chunkX = floor(pos.x / 16f).toInt()
-        val chunkY = floor(pos.y / 16f).toInt()
-        val chunkRelativeX = pos.x and 15
-        val chunkRelativeY = pos.y and 15
+    fun worldPosToGridPos(pos: Vector2ic): Vector2i {
+        val chunkX = floor(pos.x() / 16f).toInt()
+        val chunkY = floor(pos.y() / 16f).toInt()
+        val chunkRelativeX = pos.x() and 15
+        val chunkRelativeY = pos.y() and 15
 
         val isHallwayX = abs(chunkX) % 2 == 1
         val isHallwayY = abs(chunkY) % 2 == 1

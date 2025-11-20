@@ -21,6 +21,7 @@ import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
 import org.joml.Vector2i
+import org.joml.Vector2ic
 import org.joml.minus
 import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
@@ -38,13 +39,14 @@ data class Catacomb(
             mapRoomAndDoorSize = value + DOOR_WIDTH
             field = value
         }
+    var roomId: String? = null
     var mapRoomAndDoorSize: Int = 0
 
     var lastNode: CatacombsNode<*>? = null
     var lastRoom: RoomNode? = null
     var lastPosition = Vector2i(-1, -1)
 
-    val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
+    val grid: MutableMap<Vector2ic, CatacombsNode<*>> = ConcurrentHashMap()
 
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>): T = grid.getOrPut(position, type.constructor).unsafeCast()
 

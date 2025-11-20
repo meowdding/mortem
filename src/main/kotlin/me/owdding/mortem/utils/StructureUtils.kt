@@ -14,7 +14,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.level.storage.TagValueOutput
 import tech.thatgravyboat.skyblockapi.utils.extentions.minus
 import tech.thatgravyboat.skyblockapi.utils.extentions.plus
-import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
 
@@ -190,7 +189,7 @@ object StructureUtils {
         nbt.putString("source_rotation", rotation.serializedName)
         nbt.put("source_min_corner", encodedMinPos)
         nbt.put("source_max_corner", encodedMaxPos)
-        nbt.putLong("export_time", System.currentTimeMillis())
+        //nbt.putLong("export_time", System.currentTimeMillis())
 
         return nbt
     }
