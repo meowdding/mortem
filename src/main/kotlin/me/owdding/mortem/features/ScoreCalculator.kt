@@ -63,7 +63,7 @@ object ScoreCalculator {
     // -- Tab--
     private val cryptsRegex = " Crypts: (?<amount>\\d+)".toRegex()
     private val secretPercentageRegex = " Secrets Found: (?<percentage>[\\d.]+)%".toRegex()
-    private val puzzleRegex = " [\\w\\s]+: \\[[✖✦]](?: \\(.*\\))?".toRegex()
+    private val puzzleRegex = " [\\w\\s?]+: \\[[✖✦]](?: \\(.*\\))?".toRegex()
     // </editor-fold>
 
     private val requirements = enumMapOf(
@@ -191,7 +191,6 @@ object ScoreCalculator {
     @OnlyIn(SkyBlockIsland.THE_CATACOMBS)
     fun onEntityDeath(event: EntityDeathEvent) {
         if (event.entity !is Zombie || !event.entity.isBaby || !isMimicFloor()) return
-        Text.of("mmic died yippie").send()
         McClient.runNextTick {
             if (mimicKilled) return@runNextTick
             McClient.sendCommand("pc Mimic Killed!")
