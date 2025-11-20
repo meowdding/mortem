@@ -114,7 +114,7 @@ object ScoreCalculator {
         val puzzlePenalty = 10 * failedPuzzles
         val deathPenalty = 2 * deaths
 
-        return 20 + roomsScore - puzzlePenalty - deathPenalty
+        return 20 + (roomsScore - puzzlePenalty - deathPenalty).coerceAtLeast(0)
     }
 
     private fun getExplorationScore(req: Requirements): Int {
