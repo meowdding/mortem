@@ -110,7 +110,7 @@ object ScoreCalculator {
     }
 
     private fun getSkillScore(): Int {
-        val roomsScore = floor((80 * roomsClearedPercentage)).roundToInt()
+        val roomsScore = floor((80 * roomsClearedPercentage)).toInt()
         val puzzlePenalty = 10 * failedPuzzles
         val deathPenalty = 2 * deaths
 
@@ -118,8 +118,8 @@ object ScoreCalculator {
     }
 
     private fun getExplorationScore(req: Requirements): Int {
-        val roomsScore = floor(60 * roomsClearedPercentage).roundToInt()
-        val secretsScore = floor((40 * (secretPercentage / req.secretPercentNeeded).coerceAtMost(1.0))).roundToInt()
+        val roomsScore = floor(60 * roomsClearedPercentage).toInt()
+        val secretsScore = floor((40 * (secretPercentage / req.secretPercentNeeded).coerceAtMost(1.0))).toInt()
         return roomsScore + secretsScore
     }
 
@@ -132,7 +132,7 @@ object ScoreCalculator {
             val delta = (percentOver - range.start).coerceAtMost(range.endInclusive - range.start)
             delta / step
         }
-        return 100 - floor(lost.sum()).roundToInt()
+        return 100 - floor(lost.sum()).toInt()
     }
 
     private fun getBonusScore(): Int = buildList {
