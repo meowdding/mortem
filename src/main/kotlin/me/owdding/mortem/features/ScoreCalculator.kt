@@ -193,7 +193,7 @@ object ScoreCalculator {
         if (event.entity !is Zombie || !event.entity.isBaby || !isMimicFloor()) return
         Text.of("mmic died yippie").send()
         McClient.runNextTick {
-            if (!mimicKilled) return@runNextTick
+            if (mimicKilled) return@runNextTick
             McClient.sendCommand("pc Mimic Killed!")
             mimicKilled = true
         }
