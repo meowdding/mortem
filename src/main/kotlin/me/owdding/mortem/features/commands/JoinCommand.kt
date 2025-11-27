@@ -1,4 +1,4 @@
-package me.owdding.mortem.features.comands
+package me.owdding.mortem.features.commands
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
