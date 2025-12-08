@@ -8,6 +8,7 @@ import me.owdding.mortem.core.catacombs.roommatching.CatacombMapMatcher
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.core.event.CatacombJoinEvent
 import me.owdding.mortem.core.event.CatacombLeaveEvent
+import me.owdding.mortem.core.event.MortemRegisterCommandsEvent
 import me.owdding.mortem.generated.CodecUtils
 import me.owdding.mortem.generated.MortemCodecs
 import me.owdding.mortem.utils.Utils
@@ -239,8 +240,8 @@ object CatacombsManager {
 
 
     @Subscription
-    fun command(event: RegisterCommandsEvent) {
-        event.registerWithCallback("mortem dev column_hash") {
+    fun command(event: MortemRegisterCommandsEvent) {
+        event.registerWithCallback("dev column_hash") {
             val chunkPos = McPlayer.self!!.chunkPosition()
             val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.z)
             val hash = CatacombWorldMatcher.hashColumn(chunk, McPlayer.self!!.blockPosition().atY(255))
@@ -258,7 +259,7 @@ object CatacombsManager {
             append(" ")
             append(coordinate.z().shorten(2)) { color = CatppuccinColors.Mocha.blue }
         }
-        event.registerWithCallback("mortem dev room_pos") {
+        event.registerWithCallback("dev room_pos") {
             val catacomb = catacomb ?: return@registerWithCallback
             val playerNode = catacomb.grid[worldPosToGridPos(McPlayer.self!!.blockPosition())]
             if (playerNode !is RoomNode) {
@@ -272,7 +273,7 @@ object CatacombsManager {
                 append(format(roomPos))
             }.sendWithPrefix()
         }
-        event.registerWithCallback("mortem dev room_pos_test") {
+        event.registerWithCallback("dev room_pos_test") {
             val catacomb = catacomb ?: return@registerWithCallback
             val playerNode = catacomb.grid[worldPosToGridPos(McPlayer.self!!.blockPosition())]
             val pos = McPlayer.position!!.toVector3dc()
@@ -323,8 +324,8 @@ object CatacombsManager {
     }
 
     fun worldPosToGridPos(pos: BlockPos): Vector2i {
-        val chunkX = floor(pos.x / 16f).toInt()
-        val chunkY = floor(pos.z / 16f).toInt()
+        val chunkX = pos.x shr 4
+        val chunkY = pos.z shr 4
         val chunkRelativeX = pos.x and 15
         val chunkRelativeY = pos.z and 15
 
