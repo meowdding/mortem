@@ -27,5 +27,5 @@ object Config : ConfigKt("mortem/config") {
 
 
     override val patches: Map<Int, UnaryOperator<JsonObject>> = emptyMap()
-    override val version: Int = patches.size + 1
+    override val version: Int = patches.size
 }
