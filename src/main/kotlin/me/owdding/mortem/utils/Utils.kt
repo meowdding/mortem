@@ -5,14 +5,20 @@ import com.mojang.serialization.Codec
 import kotlinx.coroutines.runBlocking
 import me.owdding.mortem.Mortem
 import me.owdding.mortem.generated.MortemCodecs
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.entity.SkullBlockEntity
 import org.joml.Vector2i
+import org.joml.Vector2ic
 import org.joml.times
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.SkyBlockEvent
+import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.utils.json.Json
 import tech.thatgravyboat.skyblockapi.utils.json.Json.readJson
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toDataOrThrow
 import java.nio.file.Files
+import kotlin.jvm.optionals.getOrNull
 import kotlin.reflect.jvm.javaType
 import kotlin.reflect.typeOf
 
@@ -20,16 +26,44 @@ object Utils {
 
     internal fun SkyBlockEvent.post() = this.post(SkyBlockAPI.eventBus)
 
-    @Suppress("UNCHECKED_CAST")
-    fun <From, To> From.unsafeCast() = (this as To)
+    fun McLevel.getSkullTexture(pos: BlockPos): String? {
+        return level.getBlockEntity(pos, BlockEntityType.SKULL).getOrNull()?.getTexture()
+    }
 
-    val vectorZeroZero = Vector2i(0, 0)
-    val vectorZeroOne = Vector2i(0, 1)
-    val vectorOneZero = Vector2i(1, 0)
-    val vectorOneOne = Vector2i(1, 1)
-    val vectorZeroTwo = vectorZeroOne * 2
-    val vectorTwoZero = vectorOneZero * 2
-    val vectorTwoTwo = vectorOneOne * 2
+    fun SkullBlockEntity.getTexture(): String? {
+        //? >=1.21.10 {
+        return this.ownerProfile?.partialProfile()?.id?.toString()
+        //?} else
+        /*return ownerProfile?.id?.get()?.toString()*/
+    }
+
+    inline fun <T, R : Comparable<R>> Iterable<T>.minByWithOrNull(selector: (T) -> R): Pair<T, R>? {
+        val iterator = iterator()
+        if (!iterator.hasNext()) return null
+        var minElem = iterator.next()
+        var minValue = selector(minElem)
+        if (!iterator.hasNext()) return minElem to minValue
+        do {
+            val e = iterator.next()
+            val v = selector(e)
+            if (minValue > v) {
+                minElem = e
+                minValue = v
+            }
+        } while (iterator.hasNext())
+        return minElem to minValue
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <To> Any.unsafeCast() = (this as To)
+
+    val vectorZeroZero: Vector2ic = Vector2i(0, 0)
+    val vectorZeroOne: Vector2ic = Vector2i(0, 1)
+    val vectorOneZero: Vector2ic = Vector2i(1, 0)
+    val vectorOneOne: Vector2ic = Vector2i(1, 1)
+    val vectorZeroTwo: Vector2ic = vectorZeroOne * 2
+    val vectorTwoZero: Vector2ic = vectorOneZero * 2
+    val vectorTwoTwo: Vector2ic = vectorOneOne * 2
 
     @OptIn(ExperimentalStdlibApi::class)
     inline fun <reified T : Any> loadFromRepo(file: String): T? = runBlocking {

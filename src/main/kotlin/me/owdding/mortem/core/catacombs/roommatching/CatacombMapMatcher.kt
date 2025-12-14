@@ -129,7 +129,7 @@ object CatacombMapMatcher : MortemOverlay {
         CatacombWorldMatcher.matchData(rooms)
     }
 
-    fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
+    fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2ic, twoOffset: Vector2ic) {
         val room = getOrCreateNode(position - twoOffset, CatacombNodeType.Room)
         grid[position] = room
         grid[position - oneOffset] = room
@@ -137,7 +137,7 @@ object CatacombMapMatcher : MortemOverlay {
     }
 
     override val name: Component = Text.of("Debug")
-    override val position: Position = ConfigPosition(0, 0)
+    override val position: Position = ConfigPosition(-300, 0)
     override val bounds: Pair<Int, Int> = 20 to 20
 
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {

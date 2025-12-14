@@ -6,17 +6,9 @@ import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.extensions.mutableCopy
-import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
 import net.minecraft.world.level.block.Rotation
-import org.joml.Vector2i
-import org.joml.Vector3d
-import org.joml.Vector3dc
-import org.joml.Vector3i
-import org.joml.Vector3ic
-import org.joml.component1
-import org.joml.component2
-import tech.thatgravyboat.skyblockapi.utils.text.Text
+import org.joml.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -45,7 +37,7 @@ object VoidNode : CatacombsNode<VoidNode>(CatacombNodeType.Void, 0) {
 class DoorNode(
     var doorType: CatacombDoorType = CatacombDoorType.DEFAULT,
 ) : CatacombsNode<DoorNode>(CatacombNodeType.Door, 10) {
-    override fun toString() = "Door"
+    override fun toString() = "Door[type=$doorType]"
     fun mutateType(type: CatacombDoorType) {
         doorType = when (doorType) {
             CatacombDoorType.DEFAULT -> type
@@ -63,6 +55,7 @@ class RoomNode(
     val positions: MutableSet<Vector2i> = mutableSetOf()
     var backingData: StoredCatacombRoom? = null
     var rotation: Rotation? = null
+    var secrets: Int = 0 // TODO: implement
 
     override fun toString() = "Room[type=$roomType]"
     fun addPosition(position: Vector2i) {
@@ -114,7 +107,7 @@ class RoomNode(
                     else -> null
                 }
             }
-        }
+        }?.mutableCopy()
     }
 
     fun minMiddleChunkPos(): Vector2i = Vector2i(
@@ -134,7 +127,6 @@ class RoomNode(
 
     fun worldToRoom(vec3d: Vector3dc): Vector3dc {
         val origin = getCenter().toVec2d().add(0.5, 0.5)
-        Text.of(origin.toString()).sendWithPrefix()
         val original = vec3d.mutableCopy().sub(origin.x, 0.0, origin.y)
         return when (rotation) {
             Rotation.CLOCKWISE_90 -> Vector3d(original.z(), original.y(), -original.x())
@@ -163,7 +155,6 @@ class RoomNode(
             else -> vec3i.mutableCopy()
         }
         val origin = getCenter()
-        Text.of(origin.toString()).sendWithPrefix()
         return room.add(origin.x, 0, origin.y)
     }
 
