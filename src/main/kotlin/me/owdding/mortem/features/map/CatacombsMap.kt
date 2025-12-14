@@ -18,7 +18,6 @@ import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.level.block.Rotation
 import org.joml.Vector2i
 import org.joml.Vector3d
 import org.joml.component1
@@ -28,6 +27,7 @@ import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.platform.rotate
 import tech.thatgravyboat.skyblockapi.platform.skin
 import tech.thatgravyboat.skyblockapi.utils.extentions.isRealPlayer
+import tech.thatgravyboat.skyblockapi.utils.extentions.scaled
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.TextColor
@@ -78,12 +78,19 @@ object CatacombsMap : MortemOverlay {
                 if (temp.x == 0) temp.add(1, 0)
                 else temp.sub(1, 0)
             }
+
             else -> getMiddleChunkOffset() ?: Utils.vectorZeroZero
         }
 
         val drawPos = min.add(offset).drawPos(this)
         val center = drawPos.center()
         return center
+    }
+
+    private fun RoomNode.maxWidth(): Int {
+        val positions = positions.groupBy { it.y }.values.maxOf { it.size }
+        return (positions * ROOM_WIDTH) +
+            ((positions - 1) / SPACING)
     }
 
     private fun Vector2i.drawPos(node: CatacombsNode<*>): DrawData {
@@ -147,7 +154,9 @@ object CatacombsMap : MortemOverlay {
                 minY,
                 maxX,
                 maxY,
-                ARGB.color(180, ARGB.opaque(node.getColor())),
+                ARGB.color(180, ARGB.opaque(node.getColor())).let {
+                    if (node is RoomNode && node.backingData == null) ARGB.scaleRGB(it, 0.8f) else it
+                },
             )
         }
 
@@ -155,27 +164,44 @@ object CatacombsMap : MortemOverlay {
 
         for (room in roomNodes) {
             val (x, y) = room.getCenterStringDrawPos()
-            // TODO: draw only one string per room
-            fun drawString(string: String, yOffset: Int = 0) {
+            val backingData = room.backingData
+            if (backingData == null) {
                 graphics.drawCenteredString(
                     McFont.self,
-                    string,
+                    "Unknown",
                     x,
-                    y - (McFont.self.lineHeight / 2) + yOffset,
-                    -1
+                    y - (McFont.height / 2),
+                    ARGB.opaque(TextColor.RED),
                 )
+                continue
             }
-            drawString(room.backingData?.name ?: "Unknown")
-            drawString(
-                when (room.rotation) {
-                    Rotation.NONE -> "0°"
-                    Rotation.CLOCKWISE_90 -> "90°"
-                    Rotation.CLOCKWISE_180 -> "180°"
-                    Rotation.COUNTERCLOCKWISE_90 -> "270°"
-                    else -> "null"
-                },
-                10
-            )
+
+            val secretString = if (backingData.secrets > 0) ""
+            else " (${room.secrets}/${backingData.secrets})"
+
+            val split = (backingData.name + secretString).split(" ")
+
+            var yOffset = -(split.size * McFont.height / 2)
+            val maxWidth = room.maxWidth()
+
+            split.forEach { string ->
+                val width = McFont.width(string)
+                fun drawString() = graphics.drawString(
+                    McFont.self,
+                    string,
+                    x - (width / 2),
+                    y + yOffset,
+                    -1, // TODO: proper color depending on completion
+                    true
+                )
+                if (width > maxWidth) {
+                    graphics.scaled(maxWidth / width.toFloat()) {
+                        drawString()
+                    }
+                } else drawString()
+
+                yOffset += McFont.height
+            }
         }
 
         fun renderRealPlayer(player: Player) {
@@ -189,7 +215,7 @@ object CatacombsMap : MortemOverlay {
                         McFont.self,
                         player.name.stripped,
                         0,
-                        McFont.self.lineHeight,
+                        McFont.height,
                         -1,
                     )
                 }
@@ -199,7 +225,7 @@ object CatacombsMap : MortemOverlay {
                     -(HEAD_SIZE * 1.2).toInt(),
                     (HEAD_SIZE * 1.2).toInt(),
                     (HEAD_SIZE * 1.2).toInt(),
-                    ARGB.opaque(TextColor.GREEN)
+                    ARGB.opaque(TextColor.GREEN),
                 )
                 PlayerFaceRenderer.draw(
                     graphics,

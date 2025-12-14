@@ -55,6 +55,7 @@ class RoomNode(
     val positions: MutableSet<Vector2i> = mutableSetOf()
     var backingData: StoredCatacombRoom? = null
     var rotation: Rotation? = null
+    var secrets: Int = 0 // TODO: implement
 
     override fun toString() = "Room[type=$roomType]"
     fun addPosition(position: Vector2i) {
