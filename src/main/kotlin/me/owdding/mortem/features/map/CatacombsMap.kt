@@ -154,7 +154,7 @@ object CatacombsMap : MortemOverlay {
                 minY,
                 maxX,
                 maxY,
-                ARGB.color(180, ARGB.opaque(node.getColor())).let {
+                ARGB.color(180, node.getColor()).let {
                     if (node is RoomNode && node.backingData == null) ARGB.scaleRGB(it, 0.8f) else it
                 },
             )
