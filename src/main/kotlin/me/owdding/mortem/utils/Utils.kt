@@ -6,10 +6,10 @@ import kotlinx.coroutines.runBlocking
 import me.owdding.mortem.Mortem
 import me.owdding.mortem.generated.MortemCodecs
 import net.minecraft.core.BlockPos
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.entity.SkullBlockEntity
 import org.joml.Vector2i
+import org.joml.Vector2ic
 import org.joml.times
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.SkyBlockEvent
@@ -57,13 +57,13 @@ object Utils {
     @Suppress("UNCHECKED_CAST")
     fun <To> Any.unsafeCast() = (this as To)
 
-    val vectorZeroZero = Vector2i(0, 0)
-    val vectorZeroOne = Vector2i(0, 1)
-    val vectorOneZero = Vector2i(1, 0)
-    val vectorOneOne = Vector2i(1, 1)
-    val vectorZeroTwo = vectorZeroOne * 2
-    val vectorTwoZero = vectorOneZero * 2
-    val vectorTwoTwo = vectorOneOne * 2
+    val vectorZeroZero: Vector2ic = Vector2i(0, 0)
+    val vectorZeroOne: Vector2ic = Vector2i(0, 1)
+    val vectorOneZero: Vector2ic = Vector2i(1, 0)
+    val vectorOneOne: Vector2ic = Vector2i(1, 1)
+    val vectorZeroTwo: Vector2ic = vectorZeroOne * 2
+    val vectorTwoZero: Vector2ic = vectorOneZero * 2
+    val vectorTwoTwo: Vector2ic = vectorOneOne * 2
 
     @OptIn(ExperimentalStdlibApi::class)
     inline fun <reified T : Any> loadFromRepo(file: String): T? = runBlocking {

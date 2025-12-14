@@ -37,7 +37,7 @@ object VoidNode : CatacombsNode<VoidNode>(CatacombNodeType.Void, 0) {
 class DoorNode(
     var doorType: CatacombDoorType = CatacombDoorType.DEFAULT,
 ) : CatacombsNode<DoorNode>(CatacombNodeType.Door, 10) {
-    override fun toString() = "Door"
+    override fun toString() = "Door[type=$doorType]"
     fun mutateType(type: CatacombDoorType) {
         doorType = when (doorType) {
             CatacombDoorType.DEFAULT -> type
@@ -106,7 +106,7 @@ class RoomNode(
                     else -> null
                 }
             }
-        }
+        }?.mutableCopy()
     }
 
     fun minMiddleChunkPos(): Vector2i = Vector2i(

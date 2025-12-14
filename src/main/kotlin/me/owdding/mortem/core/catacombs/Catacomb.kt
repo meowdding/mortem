@@ -6,20 +6,20 @@ import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
+import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
+import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.Utils
+import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.Utils.unsafeCast
 import net.minecraft.core.Direction
 import org.joml.Vector2i
 import org.joml.minus
 import org.joml.plus
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
+import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import java.util.concurrent.ConcurrentHashMap
-import me.owdding.mortem.core.catacombs.nodes.RoomNode
-import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
-import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
-import me.owdding.mortem.utils.Utils.post
-import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 
 data class Catacomb(
     val floor: DungeonFloor,
@@ -74,17 +74,19 @@ fun interface CatacombsColorProvider {
     fun getColor(): Int
 }
 
-enum class CatacombRoomType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
-    NORMAL({ 0xAb6b00 }),
-    TRAP({ 0xFF7F0F }),
-    FAIRY({ 0xF080FF }),
-    PUZZLE({ 0xe050F0 }),
-    MINIBOSS({ 0xFFFF00 }),
-    BLOOD({ 0xFF0000 }),
-    START({ 0x00FF00 }),
-    UNKNOWN({ 0xababab }),
-    DEFAULT({ 0x000000 }),
+enum class CatacombRoomType(provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
+    NORMAL(0xAb6b00),
+    TRAP(0xFF7F0F),
+    FAIRY(0xF080FF),
+    PUZZLE(0xe050F0),
+    MINIBOSS(0xFFFF00),
+    BLOOD(0xFF0000),
+    START(0x00FF00),
+    UNKNOWN(0xababab),
+    DEFAULT(0x000000),
     ;
+
+    constructor(color: Int) : this({ color })
 
     companion object {
         fun getByColor(color: CatacombMapColor): CatacombRoomType? = when (color) {
@@ -103,14 +105,14 @@ enum class CatacombRoomType(val provider: CatacombsColorProvider) : CatacombsCol
 }
 
 enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
-    WITHER({ 0x4f4f4f }),
+    WITHER({ 0x000000 }),
     BLOOD({ 0xFF0000 }),
     NORMAL({ 0xab6b00 }),
     TRAP({ 0xff7f0f }),
     MINIBOSS({ 0xFFFF00 }),
     PUZZLE({ 0xe060f0 }),
     FAIRY({ 0xf080ff }),
-    DEFAULT({ 0x000000 }),
+    DEFAULT({ 0x4f4f4f }),
 ;
 
     companion object {

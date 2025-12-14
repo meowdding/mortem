@@ -9,8 +9,11 @@ import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.core.event.CatacombJoinEvent
 import me.owdding.mortem.core.event.CatacombLeaveEvent
 import me.owdding.mortem.core.event.MortemRegisterCommandsEvent
+import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
+import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.generated.CodecUtils
 import me.owdding.mortem.generated.MortemCodecs
+import me.owdding.mortem.utils.CommandExceptions.getCatacomb
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.colors.CatppuccinColors
@@ -29,7 +32,6 @@ import tech.thatgravyboat.skyblockapi.api.events.dungeon.DungeonEnterEvent
 import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.level.PacketReceivedEvent
 import tech.thatgravyboat.skyblockapi.api.events.location.ServerDisconnectEvent
-import tech.thatgravyboat.skyblockapi.api.events.misc.RegisterCommandsEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
 import tech.thatgravyboat.skyblockapi.helpers.McClient
@@ -44,9 +46,6 @@ import java.nio.file.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
 import kotlin.math.abs
-import kotlin.math.floor
-import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
-import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 
 @Module
 object CatacombsManager {
@@ -241,6 +240,10 @@ object CatacombsManager {
 
     @Subscription
     fun command(event: MortemRegisterCommandsEvent) {
+        event.registerWithCallback("dev copy grid") {
+            McClient.clipboard = getCatacomb().grid.toString()
+            Text.of("Copied catacomb grid to clipboard!").sendWithPrefix()
+        }
         event.registerWithCallback("dev column_hash") {
             val chunkPos = McPlayer.self!!.chunkPosition()
             val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.z)
