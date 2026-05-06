@@ -109,7 +109,7 @@ object CatacombWorldMatcher {
         val gridPosition = positions.first()
         val doors = catacomb.getNeighbours<DoorNode>(gridPosition)
         if (doors.size == 1) {
-            val (position) = doors.entries.first()
+            val [position] = doors.entries.first()
             return when {
                 (gridPosition.x - position.x).sign == 1 -> Direction.WEST
                 (gridPosition.x - position.x).sign == -1 -> Direction.EAST

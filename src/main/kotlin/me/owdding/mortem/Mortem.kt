@@ -5,7 +5,7 @@ import me.owdding.lib.utils.MeowddingLogger
 import me.owdding.mortem.generated.MortemModules
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import org.intellij.lang.annotations.Pattern
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 
@@ -23,5 +23,5 @@ object Mortem : ClientModInitializer, MeowddingLogger by MeowddingLogger.autoRes
         MortemModules.init { SkyBlockAPI.eventBus.register(it) }
     }
 
-    fun id(@Pattern("[a-z_0-9\\/.-]+") path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
+    fun id(@Pattern("[a-z_0-9\\/.-]+") path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
 }

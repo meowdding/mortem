@@ -6,8 +6,8 @@ import tech.thatgravyboat.skyblockapi.api.events.hypixel.ServerChangeEvent
 import tech.thatgravyboat.skyblockapi.api.events.time.TickEvent
 import tech.thatgravyboat.skyblockapi.api.remote.api.SkyBlockId
 import tech.thatgravyboat.skyblockapi.helpers.McClient
-import tech.thatgravyboat.skyblockapi.utils.time.currentInstant
-import tech.thatgravyboat.skyblockapi.utils.time.since
+import tech.thatgravyboat.skyblockapi.utils.extentions.currentInstant
+import tech.thatgravyboat.skyblockapi.utils.extentions.since
 import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
@@ -19,11 +19,12 @@ import kotlin.time.Duration.Companion.seconds
 //  last server switch
 object GfsQueue {
 
-    private val queue: Queue<Pair<SkyBlockId, Int>> = LinkedList()
+    data class QueueEntry(val id: SkyBlockId, val amount: Int)
+    private val queue: Queue<QueueEntry> = LinkedList()
     private var lastFetch = currentInstant()
 
     fun add(id: SkyBlockId, amount: Int) {
-        queue.add(Pair(id, amount))
+        queue.add(QueueEntry(id, amount))
     }
 
     @Subscription(ServerChangeEvent::class)

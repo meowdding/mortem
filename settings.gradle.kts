@@ -4,6 +4,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         gradlePluginPortal()
         maven("https://maven.teamresourceful.com/repository/maven-public/")
+        mavenLocal()
     }
 }
 
@@ -13,7 +14,7 @@ plugins {
 }
 rootProject.name = "mortem"
 
-val versions = listOf("1.21.10", "1.21.8")
+val versions = listOf("26.1")
 
 stonecutter {
     create(rootProject) {

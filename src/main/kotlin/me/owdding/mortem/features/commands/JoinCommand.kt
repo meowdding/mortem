@@ -49,7 +49,7 @@ object JoinCommand {
     fun onCommand(event: RegisterCommandsEvent) {
         if (!CommandsConfig.join) return
 
-        dungeonsCommands.forEach { (dungeon, command) ->
+        dungeonsCommands.forEach { [dungeon, command] ->
             event.registerWithCallback("join${dungeon.name.lowercase()}") {
                 McClient.sendCommand("joininstance $command")
             }

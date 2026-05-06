@@ -15,7 +15,7 @@ import me.owdding.mortem.utils.Utils.vectorTwoZero
 import me.owdding.mortem.utils.Utils.vectorZeroOne
 import me.owdding.mortem.utils.Utils.vectorZeroTwo
 import me.owdding.mortem.utils.extensions.copy
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import net.minecraft.world.level.block.Rotation
@@ -140,10 +140,10 @@ object CatacombMapMatcher : MortemOverlay {
     override val position: Position = ConfigPosition(0, 0)
     override val bounds: Pair<Int, Int> = 20 to 20
 
-    override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+    override fun extract(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
         val catacomb = CatacombsManager.catacomb ?: return
 
-        catacomb.grid.forEach { (pos, node) ->
+        catacomb.grid.forEach { [pos, node] ->
 
             val isVerticalDoor = (pos.y % 2 == 1)
             val isHorizontalDoor = (pos.x % 2 == 1)
@@ -171,8 +171,8 @@ object CatacombMapMatcher : MortemOverlay {
 
             val data = roomNode?.backingData
             if (data != null) {
-                graphics.drawString(McFont.self, data.name, xOffset, yOffset, -1)
-                graphics.drawString(McFont.self, when (roomNode.rotation) {
+                graphics.text(McFont.self, data.name, xOffset, yOffset, -1)
+                graphics.text(McFont.self, when (roomNode.rotation) {
                     Rotation.NONE -> "0°"
                     Rotation.CLOCKWISE_90 -> "90°"
                     Rotation.CLOCKWISE_180 -> "180°"
@@ -182,7 +182,7 @@ object CatacombMapMatcher : MortemOverlay {
             }
         }
 
-        super.render(graphics, mouseX, mouseY)
+        super.extract(graphics, mouseX, mouseY)
     }
 
 }

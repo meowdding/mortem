@@ -31,7 +31,7 @@ object MaxSecretsNotifier {
     @OnlyWidget(TabWidget.AREA)
     fun onTabWidget(event: TabWidgetChangeEvent) {
         if (!NotifierConfig.maxSecretsNotifier || announced) return
-        regex.anyMatch(event.newComponents, "found") { (found) ->
+        regex.anyMatch(event.newComponents, "found") { [found] ->
             if (found.color == TextColor.GREEN) {
                 announced = true
                 val text = Text.of("Max Secrets Reached!", MortemColors.HIGHLIGHT)

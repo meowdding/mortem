@@ -7,7 +7,7 @@ import me.owdding.mortem.utils.CachedValue
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
 import me.owdding.mortem.utils.ticks
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import tech.thatgravyboat.skyblockapi.api.datatype.DataTypes
 import tech.thatgravyboat.skyblockapi.api.datatype.getData
@@ -29,7 +29,7 @@ object DungeonBreakerDisplay : MortemOverlay {
     override val bounds: Pair<Int, Int> get() = display.getValue()?.let { McFont.width(it) to McFont.height } ?: (0 to 0)
 
     private val display = CachedValue(1.ticks) {
-        val (current, max) = if (OverlayConfig.dungeonBreakerShowWhenHolding) {
+        val [current, max] = if (OverlayConfig.dungeonBreakerShowWhenHolding) {
             McPlayer.heldItem.getData(DataTypes.DUNGEONBREAKER_CHARGES)
         } else {
             McPlayer.inventory.firstNotNullOfOrNull { it.getData(DataTypes.DUNGEONBREAKER_CHARGES) }
@@ -48,7 +48,7 @@ object DungeonBreakerDisplay : MortemOverlay {
         }
     }
 
-    override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+    override fun extract(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
         val display = display.getValue() ?: return
         graphics.drawString(display, 0, 0, shadow = true)
     }

@@ -94,7 +94,7 @@ class RoomNode(
     fun getMiddleChunkOffset(): Vector2i? {
         val xSize = positions.distinctBy { it.x }.count()
         val minX = positions.minBy { (x) -> x }.x
-        val minY = positions.minBy { (_, y) -> y }.y
+        val minY = positions.minBy { (y) -> y }.y
 
         return when (shape) {
             CatacombRoomShape.ONE_BY_ONE -> Utils.vectorZeroZero
@@ -104,7 +104,7 @@ class RoomNode(
             CatacombRoomShape.TWO_BY_TWO -> Utils.vectorOneOne
             CatacombRoomShape.STAIR -> {
                 val xNodes = positions.count { (x) -> x == minX }
-                val yNodes = positions.count { (_, y) -> y == minY }
+                val yNodes = positions.count { (y) -> y == minY }
 
                 when {
                     xNodes == 2 && yNodes == 2 -> Utils.vectorZeroZero
@@ -119,7 +119,7 @@ class RoomNode(
 
     fun minMiddleChunkPos(): Vector2i = Vector2i(
         -12 + positions.minBy { (x) -> x }.x * 2,
-        -12 + positions.minBy { (_, y) -> y }.y * 2,
+        -12 + positions.minBy { (y) -> y }.y * 2,
     )
 
     override fun getColor() = roomType.getColor()

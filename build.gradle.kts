@@ -1,15 +1,16 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.gradle.kotlin.dsl.modImplementation
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 
 plugins {
     idea
-    id("fabric-loom")
-    kotlin("jvm") version "2.2.20"
+    id("net.fabricmc.fabric-loom")
+    id("org.jetbrains.kotlinx.kover") version "0.9.8"
+    kotlin("jvm") version "2.3.20"
     alias(libs.plugins.ksp)
+    alias(libs.plugins.meowdding.auto.mixins)
     `versioned-catalogues`
     alias(libs.plugins.meowdding.resources)
 }
@@ -24,38 +25,33 @@ repositories {
     scopedMaven("https://maven.teamresourceful.com/repository/maven-public/", "earth.terrarium", "com.teamresourceful", "tech.thatgravyboat", "me.owdding")
     scopedMaven("https://maven.nucleoid.xyz/", "eu.pb4")
     mavenCentral()
-}
-
-configurations {
-    modImplementation {
-        attributes.attribute(Attribute.of("earth.terrarium.cloche.modLoader", String::class.java), "fabric")
-    }
+    mavenLocal()
 }
 
 dependencies {
-    attributesSchema {
-        attribute(Attribute.of("earth.terrarium.cloche.minecraftVersion", String::class.java)) {
-            disambiguationRules.add(ClocheDisambiguationRule::class) {
-                params(versionedCatalog.versions.getOrFallback("sbapi-mc-version", "minecraft").toString())
-            }
-        }
-    }
 
     minecraft(versionedCatalog["minecraft"])
-    mappings(loom.layered {
-        officialMojangMappings()
-        parchment(variantOf(versionedCatalog["parchment"]) {
-            artifactType("zip")
-        })
-    })
-    includeImplementation(libs.skyblockapi)
-    includeImplementation(libs.meowdding.lib)
+
+    api(libs.skyblockapi) {
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
+    }
+    include(libs.skyblockapi) {
+        capabilities { requireCapability("tech.thatgravyboat:skyblock-api-${stonecutter.current.version}") }
+    }
+    api(libs.meowdding.lib) {
+        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
+    }
+    include(libs.meowdding.lib) {
+        capabilities { requireCapability("me.owdding.meowdding-lib:meowdding-lib-${stonecutter.current.version}") }
+    }
+
+
     includeImplementation(libs.meowdding.remote.repo)
     includeImplementation(versionedCatalog["placeholders"])
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.repo.lib)
-    modImplementation(libs.fabric.language.kotlin)
-    modImplementation(versionedCatalog["fabric.api"])
+    implementation(libs.fabric.loader)
+    implementation(libs.repo.lib)
+    implementation(libs.fabric.language.kotlin)
+    implementation(versionedCatalog["fabric.api"])
     includeImplementation(versionedCatalog["resourceful.lib"])
     includeImplementation(versionedCatalog["resourceful.config"])
     includeImplementation(libs.resourceful.config.kotlin)
@@ -64,12 +60,12 @@ dependencies {
     ksp(libs.meowdding.ktmodules)
     ksp(libs.meowdding.ktcodecs)
 
-    modRuntimeOnly(libs.devauth)
+    runtimeOnly(libs.devauth)
 }
 
-fun DependencyHandler.includeImplementation(dep: Any) {
+fun DependencyHandlerScope.includeImplementation(dep: Any) {
     include(dep)
-    modImplementation(dep)
+    implementation(dep)
 }
 
 val mcVersion = stonecutter.current.version.replace(".", "")
@@ -100,18 +96,26 @@ ksp {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
 }
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
-    options.release.set(21)
+    options.release.set(25)
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
-    compilerOptions.optIn.add("kotlin.time.ExperimentalTime")
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_25)
+        optIn.add("kotlin.time.ExperimentalTime")
+
+        freeCompilerArgs.add("-Xname-based-destructuring=complete")
+        freeCompilerArgs.add("-Xcontext-parameters")
+        freeCompilerArgs.add("-Xnullability-annotations=@org.jspecify.annotations:warn")
+    }
+
+    incremental = false
 }
 
 tasks.processResources {
@@ -131,5 +135,30 @@ idea {
         isDownloadSources = true
 
         excludeDirs.add(file("run"))
+    }
+}
+
+autoMixins {
+    mixinPackage = "me.owdding.mortem.mixins"
+    projectName = "mortem"
+    //mixinExtrasVersion = "0.5.0"
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                packages("me.owdding.mortem.generated")
+                annotatedBy("me.owdding.mortem.IgnoreCoverage")
+            }
+        }
+        total {
+            html {
+                title = "Mortem coverage"
+                onCheck = false
+                charset = "UTF-8"
+                htmlDir = project.layout.buildDirectory.dir("coverage")
+            }
+        }
     }
 }

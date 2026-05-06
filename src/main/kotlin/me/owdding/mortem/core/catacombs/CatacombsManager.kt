@@ -204,13 +204,14 @@ object CatacombsManager {
         if (catacomb != null) reset()
         val catacomb = Catacomb(floor)
         this@CatacombsManager.catacomb = catacomb
+        val level = McLevel.self ?: return reset()
 
         val maxChunkX = -12 + (catacomb.size.boundaryX * 2)
         val maxChunkZ = -12 + (catacomb.size.boundaryY * 2)
         McClient.runNextTick {
             for (x in -12..maxChunkX) {
                 for (y in -12..maxChunkZ) {
-                    val chunk = McLevel.level.getChunk(x, y, ChunkStatus.FULL, false) ?: continue
+                    val chunk = level.getChunk(x, y, ChunkStatus.FULL, false) ?: continue
                     CatacombWorldMatcher.scanChunk(chunk)
                 }
             }
@@ -242,7 +243,7 @@ object CatacombsManager {
     fun command(event: RegisterCommandsEvent) {
         event.registerWithCallback("mortem dev column_hash") {
             val chunkPos = McPlayer.self!!.chunkPosition()
-            val chunk = McLevel.self.getChunk(chunkPos.x, chunkPos.z)
+            val chunk = McLevel.self!!.getChunk(chunkPos.x, chunkPos.z)
             val hash = CatacombWorldMatcher.hashColumn(chunk, McPlayer.self!!.blockPosition().atY(255))
             Text.of("Hash for current position is ") {
                 append(hash) {

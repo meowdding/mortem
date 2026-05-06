@@ -8,10 +8,12 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket
 import net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacket
 import net.minecraft.world.level.ChunkPos
+import org.spongepowered.asm.mixin.Mixin
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.level.PacketEvent
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
+import kotlin.reflect.KClass
 
 @Module
 object FmlHandler {
@@ -28,14 +30,15 @@ object FmlHandler {
                 chunkPos = packet.sectionPos.chunk()
             }
             is ClientboundBlockUpdatePacket -> {
-                chunkPos = ChunkPos(packet.pos)
+                chunkPos = ChunkPos(packet.pos.x, packet.pos.y)
             }
             else -> return
         }
 
         runCatching {
-            val chunk = McLevel.level.getChunk(chunkPos.x, chunkPos.z)
-            ChunkEvent.ChunkUpdateEvent(McLevel.level, chunk).post()
+            val level = McLevel.self ?: return
+            val chunk = level.getChunk(chunkPos.x, chunkPos.z)
+            ChunkEvent.ChunkUpdateEvent(level, chunk).post()
         }
     }
 }
