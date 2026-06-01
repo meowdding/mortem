@@ -19,6 +19,7 @@ import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.Utils.post
+import org.joml.Vector3dc
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 
 data class Catacomb(
@@ -40,7 +41,10 @@ data class Catacomb(
 
     val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
 
-    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position, type.constructor).unsafeCast()
+    fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position) {
+        type.constructor.invoke(this)
+    }.unsafeCast()
+    inline fun <reified T : CatacombsNode<T>> getNodeOrNull(position: Vector2i) : T? = grid[position] as? T
 
     inline fun <reified T : CatacombsNode<T>> getNeighbours(position: Vector2i): Map<Vector2i, T> = buildList {
         add(position + Utils.vectorOneZero)
@@ -74,6 +78,7 @@ fun interface CatacombsColorProvider {
 
 enum class CatacombRoomType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
     NORMAL({ 0xAb6b00 }),
+    RARE({ 0xAb6b00 }),
     TRAP({ 0xFF7F0F }),
     FAIRY({ 0xF080FF }),
     PUZZLE({ 0xe050F0 }),
@@ -128,12 +133,12 @@ enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsCol
 
 @GenerateCodec
 data class StoredCatacombRoom(
-    var name: String,
-    var id: String,
-    var secrets: Int,
-    @FieldName("center") val centerHash: String,
-    @FieldName("directions") val directionalHashes: Map<String, Direction>,
-    @FieldName("extra_rotation_handling") val extraRotationHandling: Boolean = false,
+    val name: String,
+    val hashes: List<Int>,
+    @FieldName("room_type") val roomType: CatacombRoomType?,
+    @FieldName("secret_count") val secretCount: Int = 0,
+    @FieldName("trapped_chests") val trappedChests: Int = 0,
+    @FieldName("dungeon_room_mod_id") val dungeonRoomModId: String?,
 ) {
     var shouldSerialize = false
 

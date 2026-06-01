@@ -1,0 +1,11 @@
+{
+  "name": "Sarcophagus",
+  "id": "Sarcophagus-3",
+  "hashes": [
+    510493302,
+    -1260449691
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3
+}

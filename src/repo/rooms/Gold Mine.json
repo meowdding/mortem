@@ -1,0 +1,12 @@
+{
+  "name": "Gold Mine",
+  "hashes": [
+    360806752,
+    -195740619,
+    -1511002692
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1,
+  "id": "Gold-1"
+}

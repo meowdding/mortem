@@ -1,0 +1,11 @@
+{
+  "name": "Dueces",
+  "id": "Dueces-3",
+  "hashes": [
+    -531721685
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3,
+  "trapped_chests": 1
+}

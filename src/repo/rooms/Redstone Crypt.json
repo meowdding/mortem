@@ -1,0 +1,12 @@
+{
+  "name": "Redstone Crypt",
+  "hashes": [
+    1070029005,
+    1056524557,
+    -1107191255
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3,
+  "id": "Redstone-Crypt-3"
+}

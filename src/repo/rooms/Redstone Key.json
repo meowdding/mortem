@@ -1,0 +1,11 @@
+{
+  "name": "Redstone Key",
+  "hashes": [
+    1507996962
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3,
+  "trapped_chests": 1,
+  "id": "Redstone-Key-3"
+}

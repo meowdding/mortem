@@ -1,0 +1,10 @@
+{
+  "name": "Prison Cell",
+  "id": "Prison-Cell-1",
+  "hashes": [
+    -1728096098
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1
+}

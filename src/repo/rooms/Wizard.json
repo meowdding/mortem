@@ -1,0 +1,14 @@
+{
+  "name": "Wizard",
+  "id": "Wizard-4",
+  "hashes": [
+    1999973596,
+    707707332,
+    -434320600,
+    -446539229,
+    -1395660638
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 4
+}

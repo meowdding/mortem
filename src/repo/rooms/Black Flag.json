@@ -1,0 +1,10 @@
+{
+  "name": "Black Flag",
+  "id": "Black-Flag-3",
+  "hashes": [
+    1293678540
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3
+}

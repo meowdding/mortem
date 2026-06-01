@@ -1,0 +1,10 @@
+{
+  "name": "Lava Skulls",
+  "id": "Lava-Skulls-3",
+  "hashes": [
+    -1806737300
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3
+}

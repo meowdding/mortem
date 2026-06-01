@@ -1,0 +1,10 @@
+{
+  "name": "Sword",
+  "id": "Silvers-Sword-1",
+  "hashes": [
+    197286180
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1
+}

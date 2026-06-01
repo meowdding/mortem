@@ -1,0 +1,10 @@
+{
+  "name": "Cobble Wall Pillar",
+  "hashes": [
+    -421640238
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2,
+  "id": "Cobble-Wall-Pillar-2"
+}

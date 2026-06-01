@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec
 import kotlinx.coroutines.runBlocking
 import me.owdding.mortem.Mortem
 import me.owdding.mortem.generated.MortemCodecs
+import net.minecraft.util.ARGB
 import org.joml.Vector2i
 import org.joml.times
 import tech.thatgravyboat.skyblockapi.api.SkyBlockAPI
@@ -60,3 +61,5 @@ object Utils {
         return loadFromRepo<JsonElement>(file).toDataOrThrow(codec)
     }
 }
+
+fun Int.opaque(): Int = ARGB.opaque(this)

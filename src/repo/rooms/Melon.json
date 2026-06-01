@@ -1,0 +1,14 @@
+{
+  "name": "Melon",
+  "id": "Melon-7",
+  "hashes": [
+    2066580085,
+    1075434866,
+    -622558373,
+    -1692756662,
+    -1984711678
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 7
+}

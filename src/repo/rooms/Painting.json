@@ -1,0 +1,10 @@
+{
+  "name": "Painting",
+  "hashes": [
+    1574049966
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2,
+  "id": "Painting-2"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Purple Flags",
+  "hashes": [
+    998805431,
+    834698346,
+    -520616182
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5,
+  "id": "Purple-Flags-5"
+}

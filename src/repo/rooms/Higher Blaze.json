@@ -1,0 +1,10 @@
+{
+  "name": "Higher Blaze",
+  "id": "Blaze-Room-1-Low",
+  "hashes": [
+    982923490
+  ],
+  "type": "ROOM",
+  "room_type": "PUZZLE",
+  "secret_count": 1
+}

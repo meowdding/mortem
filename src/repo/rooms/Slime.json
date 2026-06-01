@@ -1,0 +1,15 @@
+{
+  "name": "Slime",
+  "hashes": [
+    -100555426,
+    -507233727,
+    -683449065,
+    -720726071,
+    -2074102589
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5,
+  "trapped_chests": 1,
+  "id": "Slime-5"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Gravel",
+  "id": "Gravel-6",
+  "hashes": [
+    1371950404,
+    1347577085,
+    1133529083,
+    830029823,
+    -219846176
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 6
+}

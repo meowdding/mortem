@@ -1,0 +1,14 @@
+{
+  "name": "Chambers",
+  "id": "Chambers-5",
+  "hashes": [
+    1548271463,
+    1137430615,
+    938984921,
+    372786844,
+    82751253
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5
+}

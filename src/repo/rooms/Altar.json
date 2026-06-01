@@ -1,0 +1,14 @@
+{
+  "name": "Altar",
+  "hashes": [
+    1510686370,
+    93700238,
+    -1375692594,
+    -1401213663,
+    -1708268267
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 6,
+  "id": "Altar-6"
+}

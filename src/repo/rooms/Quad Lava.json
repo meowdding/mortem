@@ -1,0 +1,10 @@
+{
+  "name": "Quad Lava",
+  "id": "Quad-Lava-2",
+  "hashes": [
+    -781830670
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2
+}

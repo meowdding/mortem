@@ -15,6 +15,8 @@ import me.owdding.mortem.utils.Utils.vectorTwoZero
 import me.owdding.mortem.utils.Utils.vectorZeroOne
 import me.owdding.mortem.utils.Utils.vectorZeroTwo
 import me.owdding.mortem.utils.extensions.copy
+import me.owdding.mortem.utils.extensions.isHorizontalHallway
+import me.owdding.mortem.utils.extensions.isVerticalHallway
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
@@ -145,8 +147,8 @@ object CatacombMapMatcher : MortemOverlay {
 
         catacomb.grid.forEach { [pos, node] ->
 
-            val isVerticalDoor = (pos.y % 2 == 1)
-            val isHorizontalDoor = (pos.x % 2 == 1)
+            val isVerticalDoor = pos.isVerticalHallway
+            val isHorizontalDoor = pos.isHorizontalHallway
             val isDoor = isVerticalDoor xor isHorizontalDoor
             val isMiddle = isHorizontalDoor && isVerticalDoor
             val isRoom = !isDoor && !isMiddle

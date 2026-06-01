@@ -46,154 +46,20 @@ import kotlin.math.abs
 import kotlin.math.floor
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
+import me.owdding.mortem.utils.extensions.isCrossHallway
+import me.owdding.mortem.utils.extensions.isHorizontalHallway
+import org.joml.Vector2ic
 
 @Module
 object CatacombsManager {
 
-    val backingRooms: MutableMap<String, StoredCatacombRoom> = mutableMapOf()
+    val backingRooms: MutableMap<Int, StoredCatacombRoom> = mutableMapOf()
 
     init {
         val list: List<StoredCatacombRoom> = Utils.loadRepoData("rooms", CodecUtils::list)
-        backingRooms.putAll(list.associateBy { it.centerHash })
-
-        val actualRooms = setOf(
-            "Entry",
-            "Blood Room",
-            "Fairy Room",
-            "Ice Path",
-            "Teleport Maze",
-            "Ice Fill",
-            "Creeper Beams",
-            "Old Trap",
-            "New Trap",
-            "Midas",
-            "Shadow Assassin",
-            "Higher Blaze",
-            "Lower Blaze",
-            "Tic Tac Toe",
-            "Tic Tac Toe",
-            "Three Weirdos",
-            "Boulder",
-            "Water Board",
-            "Quiz",
-            "Dragon Miniboss",
-            "Default",
-            "Zodd",
-            "Diagonal",
-            "Quartz Knight",
-            "Doors",
-            "Cages",
-            "Long Hall",
-            "Grand Library",
-            "Arrow Trap",
-            "Skull",
-            "Scaffolding",
-            "Red Green",
-            "Jumping Skulls",
-            "Redstone Warrior",
-            "Perch",
-            "Sloth",
-            "Purple Flags",
-            "Painting",
-            "Altar",
-            "Grass Ruin",
-            "Cathedral",
-            "Basement",
-            "Chambers",
-            "Double Diamond",
-            "Gravel",
-            "Raccoon",
-            "Hallway",
-            "Golden Oasis",
-            "Stairs",
-            "Balcony",
-            "Dip",
-            "Dino Site",
-            "Hall",
-            "Mural",
-            "Banners",
-            "Pressure Plates",
-            "Big Red Flag",
-            "Melon",
-            "Beams",
-            "Red Blue",
-            "Redstone Crypt",
-            "Museum",
-            "Redstone Key",
-            "Market",
-            "Steps",
-            "Overgrown Chains",
-            "Drawbridge",
-            "Drop",
-            "Chains",
-            "Cage",
-            "Spider",
-            "Leaves",
-            "Mines",
-            "Spikes",
-            "Double Stair",
-            "Layers",
-            "Crypt",
-            "Flags",
-            "Cell",
-            "Catwalk",
-            "Overgrown",
-            "Sewer",
-            "Admin",
-            "Mossy",
-            "Pedestal",
-            "Mushroom",
-            "Duncan",
-            "Bridges",
-            "Andesite",
-            "Mage",
-            "Small Waterfall",
-            "Supertall",
-            "Blue Skulls",
-            "Temple",
-            "Lava Skulls",
-            "Well",
-            "Knight",
-            "Buttons",
-            "Dome",
-            "Deathmite",
-            "Archway",
-            "Lava Ravine",
-            "Tomioka",
-            "Rails",
-            "Locked Away",
-            "Sword",
-            "Gold Mine",
-            "Granite",
-            "End",
-            "Atlas",
-            "Wizard",
-            "Slime",
-            "Waterfall",
-            "Prison Cell",
-            "Small Stairs",
-            "Slabs",
-            "Water",
-            "Lots of Floors",
-            "Carpets",
-            "Withermancer",
-            "Pit",
-            "1x1 skulls",
-            "Dueces",
-            "Mirror",
-            "Sarcophagus",
-            "Logs",
-            "Cobble Wall Pillar",
-            "Criss Cross",
-            "Black Flag",
-            "Multicolored",
-            "Quad Lava",
-            "Admin 2",
-            "Four Banner",
-        )
-
-        val rooms = backingRooms.map { it.value.name.lowercase() }
-        actualRooms.filterNot { rooms.contains(it.lowercase()) }.forEach { Mortem.error("Missing room $it") }
+        list.forEach { room ->
+            backingRooms.putAll(room.hashes.associateWith { room })
+        }
     }
 
     var catacomb: Catacomb? = null
@@ -319,7 +185,7 @@ object CatacombsManager {
         this.backingRooms.values.forEach {
             if (!it.shouldSerialize) return@forEach
             it.shouldSerialize = false
-            rooms.resolve("${it.id}.json").writeText(it.toJsonOrThrow(MortemCodecs.getCodec()).toPrettyString())
+            rooms.resolve("${it.name}.json").writeText(it.toJsonOrThrow(MortemCodecs.getCodec()).toPrettyString())
         }
     }
 
@@ -347,6 +213,13 @@ object CatacombsManager {
         }
 
         return Vector2i(gridPosX, gridPosY)
+    }
+
+    fun gridPosToWorldPos(pos: Vector2ic): BlockPos {
+        val baseX = (pos.x() - 12) * 16 + 7
+        val baseY = (pos.y() - 12) * 16 + 7
+
+        return BlockPos(baseX, 0, baseY)
     }
 
 }

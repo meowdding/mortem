@@ -1,0 +1,10 @@
+{
+  "name": "Mirror",
+  "id": "Mirror-1",
+  "hashes": [
+    1170242739
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1
+}

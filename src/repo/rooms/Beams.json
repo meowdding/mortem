@@ -1,0 +1,10 @@
+{
+  "name": "Beams",
+  "id": "Beams-2",
+  "hashes": [
+    819045485
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2
+}

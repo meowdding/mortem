@@ -1,0 +1,10 @@
+{
+  "name": "Knight",
+  "id": "Knight-3",
+  "hashes": [
+    1642903864
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3
+}

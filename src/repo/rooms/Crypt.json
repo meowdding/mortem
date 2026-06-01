@@ -1,0 +1,13 @@
+{
+  "name": "Crypt",
+  "hashes": [
+    1330599429,
+    449197302,
+    295792538,
+    82144693
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5,
+  "id": "Crypt-5"
+}

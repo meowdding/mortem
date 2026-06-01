@@ -1,0 +1,10 @@
+{
+  "name": "Arrow Trap",
+  "id": "Arrow-Trap-1",
+  "hashes": [
+    -441762871
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Grass Ruin",
+  "id": "Grass-Ruin-3",
+  "hashes": [
+    2065462956,
+    1975981581,
+    1230183980,
+    865507119,
+    -120156745,
+    -916640893
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 3
+}

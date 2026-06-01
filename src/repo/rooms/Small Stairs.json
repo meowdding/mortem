@@ -1,0 +1,10 @@
+{
+  "name": "Small Stairs",
+  "id": "Small-Stairs-2",
+  "hashes": [
+    -1355332091
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2
+}

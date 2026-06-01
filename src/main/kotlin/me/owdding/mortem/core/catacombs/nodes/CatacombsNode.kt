@@ -1,26 +1,42 @@
 package me.owdding.mortem.core.catacombs.nodes
 
+import me.owdding.mortem.core.catacombs.Catacomb
 import me.owdding.mortem.core.catacombs.CatacombDoorType
 import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsColorProvider
+import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
+import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.utils.Utils
+import me.owdding.mortem.utils.colors.CatppuccinColors
+import me.owdding.mortem.utils.extensions.isAnyHallway
+import me.owdding.mortem.utils.extensions.maxOfNotNullOrNull
 import me.owdding.mortem.utils.extensions.mutableCopy
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
+import me.owdding.mortem.utils.extensions.toVector3d
+import me.owdding.mortem.utils.opaque
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.gizmos.GizmoStyle
+import net.minecraft.gizmos.Gizmos
+import net.minecraft.util.ARGB
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.phys.AABB
 import org.joml.Vector2i
 import org.joml.Vector3d
 import org.joml.Vector3dc
 import org.joml.Vector3i
 import org.joml.Vector3ic
-import org.joml.component1
-import org.joml.component2
+import org.joml.times
+import tech.thatgravyboat.skyblockapi.helpers.McClient
+import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.max
 import kotlin.math.min
 
-sealed class CatacombNodeType<T : CatacombsNode<T>>(val constructor: () -> T) {
+sealed class CatacombNodeType<T : CatacombsNode<T>>(val constructor: (Catacomb) -> T) {
     object Unknown : CatacombNodeType<UnknownNode>({ UnknownNode })
     object Void : CatacombNodeType<VoidNode>({ VoidNode })
     object Door : CatacombNodeType<DoorNode>(::DoorNode)
@@ -43,6 +59,7 @@ object VoidNode : CatacombsNode<VoidNode>(CatacombNodeType.Void, 0) {
 }
 
 class DoorNode(
+    var catacomb: Catacomb,
     var doorType: CatacombDoorType = CatacombDoorType.DEFAULT,
 ) : CatacombsNode<DoorNode>(CatacombNodeType.Door, 10) {
     override fun toString() = "Door"
@@ -57,6 +74,7 @@ class DoorNode(
 }
 
 class RoomNode(
+    var catacomb: Catacomb,
     var roomType: CatacombRoomType = CatacombRoomType.DEFAULT,
 ) : CatacombsNode<RoomNode>(CatacombNodeType.Room, 50) {
     var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE
@@ -68,6 +86,12 @@ class RoomNode(
     fun addPosition(position: Vector2i) {
         positions.add(position)
         calculateShape()
+        calculateRotation()
+    }
+
+    private fun calculateRotation() {
+        val height = positions.maxOfNotNullOrNull { CatacombWorldMatcher.heightmap[it * 2] } ?: return
+        updateRotation(height)
     }
 
     fun calculateShape() {
@@ -176,6 +200,79 @@ class RoomNode(
         }
         val origin = getCenter().toVec2d().add(0.5, 0.5)
         return room.add(origin.x, 0.0, origin.y)
+    }
+
+    fun updateRotation(highest: Int) {
+        val level = McLevel.self ?: return
+        if (rotation != null) return
+
+        if (backingData?.roomType == CatacombRoomType.FAIRY) {
+            rotation = Rotation.NONE
+            return
+        }
+
+        for (node in positions) {
+            val node = CatacombsManager.gridPosToWorldPos(node * 2)
+            McClient.runNextTick {
+                Gizmos.cuboid(
+                    AABB(node).setMaxY(255.0),
+                    GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.mauve.opaque(), 1f, CatppuccinColors.Mocha.pink.opaque())
+                ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
+            }
+
+            for (clayRotation in ClayRotations.availableRotations) {
+
+                val pos = BlockPos(
+                    node.x + clayRotation.clayX,
+                    highest,
+                    node.z + clayRotation.clayZ,
+                )
+
+                McClient.runNextTick {
+                    Gizmos.cuboid(
+                        AABB(pos),
+                        GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.green.opaque(), 1f, CatppuccinColors.Mocha.teal.opaque())
+                    ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
+                }
+
+                val blockState = level.getBlockState(pos)
+
+                when (blockState.block) {
+                    Blocks.BLUE_TERRACOTTA -> {
+                        if (airNeighbours(pos) < 2) continue
+
+                        rotation = clayRotation.rotation
+
+                        return
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    // The correct clay block will always neighbour 2 air blocks 🥺
+    private fun airNeighbours(pos: BlockPos): Int = Direction.Plane.HORIZONTAL.count {
+        McClient.runNextTick {
+            Gizmos.cuboid(
+                AABB(pos.relative(it)),
+                GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.red.opaque(), 1f, CatppuccinColors.Mocha.maroon.opaque())
+            ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
+        }
+        McLevel[pos.relative(it)].isAir
+    }
+}
+
+enum class ClayRotations(val clayX: Int, val clayZ: Int, val rotation: Rotation) {
+    NORTH(15, 15, Rotation.CLOCKWISE_180),
+    EAST(-15, 15, Rotation.COUNTERCLOCKWISE_90),
+    SOUTH(-15, -15, Rotation.NONE),
+    WEST(15, -15, Rotation.CLOCKWISE_90),
+    ;
+
+    companion object{
+        val availableRotations = listOf(NORTH, EAST, SOUTH, WEST)
     }
 }
 

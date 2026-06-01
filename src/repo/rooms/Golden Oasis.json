@@ -1,0 +1,10 @@
+{
+  "name": "Golden Oasis",
+  "id": "Golden-Oasis-1",
+  "hashes": [
+    1775861886
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1
+}

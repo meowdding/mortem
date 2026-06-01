@@ -1,0 +1,12 @@
+{
+  "name": "Mage",
+  "hashes": [
+    152180082,
+    -749555903,
+    -1781525125
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 4,
+  "id": "Mage-4"
+}

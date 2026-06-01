@@ -1,0 +1,10 @@
+{
+  "name": "Old Trap",
+  "id": "Trap-Hard-4",
+  "hashes": [
+    -640748800
+  ],
+  "type": "ROOM",
+  "room_type": "TRAP",
+  "secret_count": 4
+}

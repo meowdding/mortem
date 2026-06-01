@@ -1,0 +1,10 @@
+{
+  "name": "Cell",
+  "hashes": [
+    518690806
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 1,
+  "id": "Cell-1"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Drawbridge",
+  "hashes": [
+    584557920,
+    -63957978,
+    -1433617975,
+    -1608918064,
+    -1967221131
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 6,
+  "id": "Draw-Bridge-6"
+}

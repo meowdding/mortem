@@ -1,0 +1,14 @@
+{
+  "name": "New Trap",
+  "id": "Trap-Very-Hard-3",
+  "hashes": [
+    1717398053,
+    958760904,
+    896164149,
+    -396192552
+  ],
+  "type": "ROOM",
+  "room_type": "TRAP",
+  "secret_count": 3,
+  "trapped_chests": 2
+}

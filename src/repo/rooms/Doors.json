@@ -1,0 +1,13 @@
+{
+  "name": "Doors",
+  "id": "Doors-5",
+  "hashes": [
+    2013837392,
+    756543096,
+    -1174904043,
+    -1897487075
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Dip",
+  "id": "Dip-2",
+  "hashes": [
+    546446220
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 2
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Lava Ravine",
+  "hashes": [
+    1091840180,
+    300597132,
+    111960447,
+    -1483784409,
+    -1957223557
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 6,
+  "id": "Lava-Ravine-6"
+}

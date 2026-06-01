@@ -1,0 +1,12 @@
+{
+  "name": "Balcony",
+  "hashes": [
+    -466325452,
+    -1847662234,
+    -2142469624
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 4,
+  "id": "Balcony-4"
+}

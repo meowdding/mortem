@@ -1,0 +1,15 @@
+{
+  "name": "Market",
+  "id": "Market-5",
+  "hashes": [
+    764922195,
+    608611051,
+    515253167,
+    332475968,
+    307318192,
+    -1815982470
+  ],
+  "type": "ROOM",
+  "room_type": "NORMAL",
+  "secret_count": 5
+}
