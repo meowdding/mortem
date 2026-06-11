@@ -189,11 +189,14 @@ object CatacombsManager {
         }
     }
 
-    fun worldPosToGridPos(pos: BlockPos): Vector2i {
-        val chunkX = floor(pos.x / 16f).toInt()
-        val chunkY = floor(pos.z / 16f).toInt()
-        val chunkRelativeX = pos.x and 15
-        val chunkRelativeY = pos.z and 15
+    fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(pos.x, pos.z)
+    fun worldPosToGridPos(pos: Vector2ic): Vector2i = worldPosToGridPos(pos.x(), pos.y())
+
+    fun worldPosToGridPos(x: Int, y: Int): Vector2i {
+        val chunkX = floor(x / 16f).toInt()
+        val chunkY = floor(y / 16f).toInt()
+        val chunkRelativeX = x and 15
+        val chunkRelativeY = y and 15
 
         val isHallwayX = abs(chunkX) % 2 == 1
         val isHallwayY = abs(chunkY) % 2 == 1

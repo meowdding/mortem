@@ -29,4 +29,5 @@ object OverlayPositions : CategoryKt("overlaysPositions") {
     override val hidden: Boolean = true
 
     val dungeonBreaker by obj(ConfigPosition(100, 200))
+    val dungeonMap by obj(ConfigPosition(0, 0))
 }

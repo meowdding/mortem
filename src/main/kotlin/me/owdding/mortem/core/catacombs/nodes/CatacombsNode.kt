@@ -7,6 +7,8 @@ import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
+import me.owdding.mortem.utils.GizmoUtils
+import me.owdding.mortem.utils.GizmoUtils.cuboid
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.extensions.isAnyHallway
@@ -213,8 +215,9 @@ class RoomNode(
 
         for (node in positions) {
             val node = CatacombsManager.gridPosToWorldPos(node * 2)
-            McClient.runNextTick {
-                Gizmos.cuboid(
+
+            GizmoUtils.debugGizmo {
+                cuboid(
                     AABB(node).setMaxY(255.0),
                     GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.mauve.opaque(), 1f, CatppuccinColors.Mocha.pink.opaque())
                 ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
@@ -228,8 +231,8 @@ class RoomNode(
                     node.z + clayRotation.clayZ,
                 )
 
-                McClient.runNextTick {
-                    Gizmos.cuboid(
+                GizmoUtils.debugGizmo {
+                    cuboid(
                         AABB(pos),
                         GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.green.opaque(), 1f, CatppuccinColors.Mocha.teal.opaque())
                     ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
@@ -254,8 +257,8 @@ class RoomNode(
 
     // The correct clay block will always neighbour 2 air blocks 🥺
     private fun airNeighbours(pos: BlockPos): Int = Direction.Plane.HORIZONTAL.count {
-        McClient.runNextTick {
-            Gizmos.cuboid(
+        GizmoUtils.debugGizmo {
+            cuboid(
                 AABB(pos.relative(it)),
                 GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.red.opaque(), 1f, CatppuccinColors.Mocha.maroon.opaque())
             ).setAlwaysOnTop().persistForMillis(10000).fadeOut()

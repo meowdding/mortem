@@ -10,6 +10,7 @@ import me.owdding.mortem.core.catacombs.nodes.DoorNode
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.event.CatacombLeaveEvent
 import me.owdding.mortem.core.event.ChunkEvent
+import me.owdding.mortem.utils.GizmoUtils
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.opaque
 import me.owdding.mortem.utils.tag.BlockTagKey
@@ -109,8 +110,8 @@ object CatacombWorldMatcher {
         val maxChunkZ = -12 + (catacomb.size.boundaryY * 2)
         if (chunkPos.x !in -12..maxChunkX || chunkPos.z !in -12..maxChunkZ) return
         val chunkCenter = chunkPos.getBlockAt(7, 0, 7)
-        McClient.runNextTick {
-            Gizmos.cuboid(
+        GizmoUtils.debugGizmo {
+            cuboid(
                 AABB(chunkCenter).setMaxY(255.0),
                 GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.green.opaque(), 1f, CatppuccinColors.Mocha.teal.opaque())
             ).setAlwaysOnTop().persistForMillis(5000).fadeOut()

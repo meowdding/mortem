@@ -27,7 +27,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
 
 @Module
-@Overlay
 object CatacombMapMatcher : MortemOverlay {
 
     operator fun ByteArray.get(x: Int, y: Int) = this.getOrNull(y * 128 + x)
