@@ -2,6 +2,7 @@ package me.owdding.mortem.core.catacombs.nodes
 
 import me.owdding.mortem.core.catacombs.Catacomb
 import me.owdding.mortem.core.catacombs.CatacombDoorType
+import me.owdding.mortem.core.catacombs.CatacombRoomCheckmark
 import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.CatacombsManager
@@ -81,6 +82,7 @@ class RoomNode(
 ) : CatacombsNode<RoomNode>(CatacombNodeType.Room, 50) {
     var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE
     val positions: MutableSet<Vector2i> = mutableSetOf()
+    private var checkmark: CatacombRoomCheckmark = CatacombRoomCheckmark.NONE
     var backingData: StoredCatacombRoom? = null
     var rotation: Rotation? = null
 
@@ -90,6 +92,8 @@ class RoomNode(
         calculateShape()
         calculateRotation()
     }
+
+    fun checkmark(): CatacombRoomCheckmark? = checkmark.takeIf { roomType.canHaveCheckmarks }
 
     private fun calculateRotation() {
         val height = positions.maxOfNotNullOrNull { CatacombWorldMatcher.heightmap[it * 2] } ?: return
@@ -264,6 +268,15 @@ class RoomNode(
             ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
         }
         McLevel[pos.relative(it)].isAir
+    }
+
+    fun mutateCheckmark(checkmark: CatacombRoomCheckmark) {
+        when {
+            roomType != CatacombRoomType.PUZZLE && checkmark.puzzleOnly -> return
+            !roomType.canHaveCheckmarks -> return
+            !this.checkmark.canMutateTo(checkmark) -> return
+            else -> this.checkmark = checkmark
+        }
     }
 }
 

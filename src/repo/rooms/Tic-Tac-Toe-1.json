@@ -1,0 +1,10 @@
+{
+  "name": "Tic Tac Toe",
+  "hashes": [
+    -520320221
+  ],
+  "type": "ROOM",
+  "room_type": "PUZZLE",
+  "secret_count": 1,
+  "id": "Tic-Tac-Toe-1"
+}

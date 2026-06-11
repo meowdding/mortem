@@ -4,6 +4,14 @@ import me.owdding.ktcodecs.FieldName
 import me.owdding.ktcodecs.GenerateCodec
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
+import me.owdding.mortem.core.catacombs.CatacombRoomType.BLOOD
+import me.owdding.mortem.core.catacombs.CatacombRoomType.FAIRY
+import me.owdding.mortem.core.catacombs.CatacombRoomType.MINIBOSS
+import me.owdding.mortem.core.catacombs.CatacombRoomType.NORMAL
+import me.owdding.mortem.core.catacombs.CatacombRoomType.PUZZLE
+import me.owdding.mortem.core.catacombs.CatacombRoomType.START
+import me.owdding.mortem.core.catacombs.CatacombRoomType.TRAP
+import me.owdding.mortem.core.catacombs.CatacombRoomType.UNKNOWN
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
 import me.owdding.mortem.utils.Utils
@@ -76,17 +84,44 @@ fun interface CatacombsColorProvider {
     fun getColor(): Int
 }
 
-enum class CatacombRoomType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
+
+enum class CatacombRoomCheckmark(val provider: CatacombsColorProvider, val puzzleOnly: Boolean = false): CatacombsColorProvider by provider {
+    CLEARED({ 0xffffff }),
+    COMPLETE({ 0x00ff00}),
+    FAILED({ 0xff0000 }, true),
+    NONE({ 0xababab }),
+    ;
+
+    fun canMutateTo(other: CatacombRoomCheckmark) = when (this) {
+        CLEARED if other == COMPLETE -> true
+        COMPLETE -> false
+        FAILED if other == NONE -> true
+        NONE -> true
+        else -> false
+    }
+
+
+    companion object {
+        fun getByColor(color: CatacombMapColor): CatacombRoomCheckmark = when (color) {
+            CatacombMapColor.COMPLETE -> COMPLETE
+            CatacombMapColor.FAILED -> FAILED
+            CatacombMapColor.CLEARED -> CLEARED
+            else -> NONE
+        }
+    }
+}
+
+enum class CatacombRoomType(val provider: CatacombsColorProvider, val canHaveCheckmarks: Boolean = true) : CatacombsColorProvider by provider {
     NORMAL({ 0xAb6b00 }),
     RARE({ 0xAb6b00 }),
     TRAP({ 0xFF7F0F }),
-    FAIRY({ 0xF080FF }),
+    FAIRY({ 0xF080FF }, false),
     PUZZLE({ 0xe050F0 }),
     MINIBOSS({ 0xFFFF00 }),
     BLOOD({ 0xFF0000 }),
-    START({ 0x00FF00 }),
+    START({ 0x00FF00 }, false),
     UNKNOWN({ 0xababab }),
-    DEFAULT({ 0x000000 }),
+    DEFAULT({ 0x000000 }, false),
     ;
 
     companion object {

@@ -10,6 +10,7 @@ import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
 import me.owdding.mortem.utils.extensions.isHorizontalHallway
 import me.owdding.mortem.utils.extensions.isVerticalHallway
+import me.owdding.mortem.utils.opaque
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
@@ -23,6 +24,7 @@ import tech.thatgravyboat.skyblockapi.utils.extentions.scaled
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
+import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.math.min
@@ -128,7 +130,15 @@ object CatacombMapOverlay : MortemOverlay {
                         textWidth = roomWidth
                     }
                 }
-                renderScaledOrNormal(x, y, data.name.asComponent(), textWidth)
+                val name = data.name.asComponent {
+                    this.color = roomNode.checkmark()?.getColor()?.opaque() ?: -1
+                }
+                if (data.secretCount != 0) {
+                    renderScaledOrNormal(x, y - McFont.height / 2, name, textWidth)
+                    renderScaledOrNormal(x, y + McFont.height / 2, "0 / ${data.secretCount}".asComponent(), textWidth)
+                } else {
+                    renderScaledOrNormal(x, y, name, textWidth)
+                }
             }
         }
 

@@ -124,22 +124,6 @@ object CatacombWorldMatcher {
         todo.removeIf { it.rotation != null }
     }
 
-    @Suppress("UnstableApiUsage")
-    fun hashColumn(chunkAccess: ChunkAccess, top: BlockPos): String {
-        val hasher = Hashing.sha256().newHasher()
-        BlockPos.betweenClosed(top, top.below(255)).forEach {
-            val state: BlockState = chunkAccess.getBlockState(it)
-
-            hasher.putString(
-                BuiltInRegistries.BLOCK.getKey(
-                    if (state.isAir || state in BlockTagKey.IGNORED_BLOCKS) Blocks.AIR else state.block,
-                ).toString(),
-                Charsets.UTF_8,
-            )
-        }
-        return hasher.hash().asBytes().toHexString()
-    }
-
     fun matchData(rooms: MutableSet<RoomNode>) {
         rooms.filter { it.roomType != CatacombRoomType.UNKNOWN }.forEach {
             val center = it.getCenter()

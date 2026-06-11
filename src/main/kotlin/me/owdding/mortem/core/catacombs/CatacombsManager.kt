@@ -107,10 +107,10 @@ object CatacombsManager {
 
     @Subscription
     fun command(event: RegisterCommandsEvent) {
-        event.registerWithCallback("mortem dev column_hash") {
+        event.registerWithCallback("mortem dev chunk_hash") {
             val chunkPos = McPlayer.self!!.chunkPosition()
             val chunk = McLevel.self!!.getChunk(chunkPos.x, chunkPos.z)
-            val hash = CatacombWorldMatcher.hashColumn(chunk, McPlayer.self!!.blockPosition().atY(255))
+            val hash = CatacombWorldMatcher.hashChunk(chunk)
             Text.of("Hash for current position is ") {
                 append(hash) {
                     color = CatppuccinColors.Mocha.pink

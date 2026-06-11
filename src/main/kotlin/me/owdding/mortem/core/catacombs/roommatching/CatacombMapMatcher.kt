@@ -27,7 +27,7 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.min
 
 @Module
-object CatacombMapMatcher : MortemOverlay {
+object CatacombMapMatcher {
 
     operator fun ByteArray.get(x: Int, y: Int) = this.getOrNull(y * 128 + x)
     operator fun ByteArray.get(vector2i: Vector2i) = this.getOrNull(vector2i.y * 128 + vector2i.x)
@@ -109,6 +109,9 @@ object CatacombMapMatcher : MortemOverlay {
                 room.addPosition(roomCoordinate)
                 rooms.add(room)
 
+                val checkmark = CatacombRoomCheckmark.getByColor( CatacombMapColor.getByPackedId(mapColors[mapPosition + halfRoom]))
+                room.mutateCheckmark(checkmark)
+
                 val rightDoorColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + rightDoor])
                 val rightColor = CatacombMapColor.getByPackedId(mapColors[mapPosition + Vector2i(roomSize + 1, 0)])
                 val rightDoor = CatacombDoorType.getByColor(rightDoorColor)
@@ -136,54 +139,4 @@ object CatacombMapMatcher : MortemOverlay {
         grid[position - oneOffset] = room
         room.addPosition(position.copy() / 2)
     }
-
-    override val name: Component = Text.of("Debug")
-    override val position: Position = ConfigPosition(0, 0)
-    override val bounds: Pair<Int, Int> = 20 to 20
-
-    override fun extract(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
-        val catacomb = CatacombsManager.catacomb ?: return
-
-        catacomb.grid.forEach { [pos, node] ->
-
-            val isVerticalDoor = pos.isVerticalHallway
-            val isHorizontalDoor = pos.isHorizontalHallway
-            val isDoor = isVerticalDoor xor isHorizontalDoor
-            val isMiddle = isHorizontalDoor && isVerticalDoor
-            val isRoom = !isDoor && !isMiddle
-            val (x, y) = pos
-
-            val width = min(if (isHorizontalDoor) 4 else 50, node.dimensions)
-            val height = min(if (isVerticalDoor) 4 else 50, node.dimensions)
-
-            val xOffset = (x / 2) * 54 + if (isHorizontalDoor) 50 else (50 - width) / 2
-            val yOffset = (y / 2) * 54 + if (isVerticalDoor) 50 else (50 - height) / 2
-
-            val roomNode = node as? RoomNode
-            graphics.fill(
-                xOffset,
-                yOffset,
-                xOffset + width,
-                yOffset + height,
-                if (roomNode?.backingData != null) ARGB.opaque(node.getColor())
-                else if (isRoom) ARGB.greyscale(ARGB.color(255, node.getColor()))
-                else ARGB.greyscale(ARGB.color(125, node.getColor())),
-            )
-
-            val data = roomNode?.backingData
-            if (data != null) {
-                graphics.text(McFont.self, data.name, xOffset, yOffset, -1)
-                graphics.text(McFont.self, when (roomNode.rotation) {
-                    Rotation.NONE -> "0°"
-                    Rotation.CLOCKWISE_90 -> "90°"
-                    Rotation.CLOCKWISE_180 -> "180°"
-                    Rotation.COUNTERCLOCKWISE_90 -> "270°"
-                    else -> "null"
-                }, xOffset, yOffset + 10, -1)
-            }
-        }
-
-        super.extract(graphics, mouseX, mouseY)
-    }
-
 }
