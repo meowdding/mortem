@@ -4,5 +4,6 @@
     -771537497
   ],
   "type": "ROOM",
-  "room_type": "PUZZLE"
+  "room_type": "PUZZLE",
+  "puzzle_type": "TELEPORT_MAZE"
 }

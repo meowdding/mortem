@@ -4,5 +4,6 @@
     932256052
   ],
   "type": "ROOM",
-  "room_type": "PUZZLE"
+  "room_type": "PUZZLE",
+  "puzzle_type": "ICE_PATH"
 }

@@ -1,7 +1,7 @@
-package me.owdding.mortem.core.catacombs
+package me.owdding.mortem.core.catacombs.types
 
+import me.owdding.mortem.core.catacombs.MapSize
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
-import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor.*
 
 enum class CatacombSize(
     val xRooms: Int,
@@ -22,20 +22,12 @@ enum class CatacombSize(
     companion object {
 
         fun forFloor(floor: DungeonFloor): CatacombSize = when (floor) {
-            E -> TINY
-            F1, M1 -> SMALL
-            F2, M2, F3, M3 -> NORMAL
-            F4, M4 -> LARGE
-            F5, M5, F6, M6 -> GIGANTIC
+            DungeonFloor.E -> TINY
+            DungeonFloor.F1, DungeonFloor.M1 -> SMALL
+            DungeonFloor.F2, DungeonFloor.M2, DungeonFloor.F3, DungeonFloor.M3 -> NORMAL
+            DungeonFloor.F4, DungeonFloor.M4 -> LARGE
+            DungeonFloor.F5, DungeonFloor.M5, DungeonFloor.F6, DungeonFloor.M6 -> GIGANTIC
             else -> COLOSSAL
         }
     }
-}
-
-enum class MapSize(
-    val roomWidth: Int,
-    val offset: Int,
-) {
-    SMALL(22, 0),
-    LARGE(20, 1)
 }

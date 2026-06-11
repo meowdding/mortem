@@ -1,22 +1,11 @@
 package me.owdding.mortem.core.catacombs
 
-import me.owdding.ktcodecs.FieldName
-import me.owdding.ktcodecs.GenerateCodec
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
-import me.owdding.mortem.core.catacombs.CatacombRoomType.BLOOD
-import me.owdding.mortem.core.catacombs.CatacombRoomType.FAIRY
-import me.owdding.mortem.core.catacombs.CatacombRoomType.MINIBOSS
-import me.owdding.mortem.core.catacombs.CatacombRoomType.NORMAL
-import me.owdding.mortem.core.catacombs.CatacombRoomType.PUZZLE
-import me.owdding.mortem.core.catacombs.CatacombRoomType.START
-import me.owdding.mortem.core.catacombs.CatacombRoomType.TRAP
-import me.owdding.mortem.core.catacombs.CatacombRoomType.UNKNOWN
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.CatacombsNode
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.Utils.unsafeCast
-import net.minecraft.core.Direction
 import org.joml.Vector2i
 import org.joml.minus
 import org.joml.plus
@@ -24,10 +13,10 @@ import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 import tech.thatgravyboat.skyblockapi.utils.extentions.filterValuesNotNull
 import java.util.concurrent.ConcurrentHashMap
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.core.catacombs.types.CatacombSize
 import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.Utils.post
-import org.joml.Vector3dc
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 
 data class Catacomb(
@@ -80,104 +69,4 @@ data class Catacomb(
     override val instance: InstanceType get() = InstanceType.CATACOMBS
 }
 
-fun interface CatacombsColorProvider {
-    fun getColor(): Int
-}
 
-
-enum class CatacombRoomCheckmark(val provider: CatacombsColorProvider, val puzzleOnly: Boolean = false): CatacombsColorProvider by provider {
-    CLEARED({ 0xffffff }),
-    COMPLETE({ 0x00ff00}),
-    FAILED({ 0xff0000 }, true),
-    NONE({ 0xababab }),
-    ;
-
-    fun canMutateTo(other: CatacombRoomCheckmark) = when (this) {
-        CLEARED if other == COMPLETE -> true
-        COMPLETE -> false
-        FAILED if other == NONE -> true
-        NONE -> true
-        else -> false
-    }
-
-
-    companion object {
-        fun getByColor(color: CatacombMapColor): CatacombRoomCheckmark = when (color) {
-            CatacombMapColor.COMPLETE -> COMPLETE
-            CatacombMapColor.FAILED -> FAILED
-            CatacombMapColor.CLEARED -> CLEARED
-            else -> NONE
-        }
-    }
-}
-
-enum class CatacombRoomType(val provider: CatacombsColorProvider, val canHaveCheckmarks: Boolean = true) : CatacombsColorProvider by provider {
-    NORMAL({ 0xAb6b00 }),
-    RARE({ 0xAb6b00 }),
-    TRAP({ 0xFF7F0F }),
-    FAIRY({ 0xF080FF }, false),
-    PUZZLE({ 0xe050F0 }),
-    MINIBOSS({ 0xFFFF00 }),
-    BLOOD({ 0xFF0000 }),
-    START({ 0x00FF00 }, false),
-    UNKNOWN({ 0xababab }),
-    DEFAULT({ 0x000000 }, false),
-    ;
-
-    companion object {
-        fun getByColor(color: CatacombMapColor): CatacombRoomType? = when (color) {
-            CatacombMapColor.COMPLETE -> START
-            CatacombMapColor.UNKNOWN -> UNKNOWN
-            CatacombMapColor.FAILED -> BLOOD
-            CatacombMapColor.PUZZLE -> PUZZLE
-            CatacombMapColor.TRAP -> TRAP
-            CatacombMapColor.MINIBOSS -> MINIBOSS
-            CatacombMapColor.FAIRY -> FAIRY
-            CatacombMapColor.NORMAL -> NORMAL
-            else -> null
-        }
-    }
-
-}
-
-enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
-    WITHER({ 0x4f4f4f }),
-    BLOOD({ 0xFF0000 }),
-    NORMAL({ 0xab6b00 }),
-    TRAP({ 0xff7f0f }),
-    MINIBOSS({ 0xFFFF00 }),
-    PUZZLE({ 0xe060f0 }),
-    FAIRY({ 0xf080ff }),
-    DEFAULT({ 0x000000 }),
-;
-
-    companion object {
-        fun getByColor(color: CatacombMapColor): CatacombDoorType? = when (color) {
-            CatacombMapColor.FAILED -> BLOOD
-            CatacombMapColor.NORMAL -> NORMAL
-            CatacombMapColor.WITHER -> WITHER
-            CatacombMapColor.FAIRY -> FAIRY
-            CatacombMapColor.PUZZLE -> PUZZLE
-            CatacombMapColor.TRAP -> TRAP
-            CatacombMapColor.MINIBOSS -> MINIBOSS
-            CatacombMapColor.UNKNOWN -> DEFAULT
-            else -> null
-        }
-    }
-}
-
-@GenerateCodec
-data class StoredCatacombRoom(
-    val name: String,
-    val hashes: List<Int>,
-    @FieldName("room_type") val roomType: CatacombRoomType?,
-    @FieldName("secret_count") val secretCount: Int = 0,
-    @FieldName("trapped_chests") val trappedChests: Int = 0,
-    @FieldName("dungeon_room_mod_id") val dungeonRoomModId: String?,
-) {
-    var shouldSerialize = false
-
-    fun markChange() {
-        shouldSerialize = true
-    }
-}

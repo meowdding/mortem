@@ -9,5 +9,6 @@
     -1385048913
   ],
   "type": "ROOM",
-  "room_type": "PUZZLE"
+  "room_type": "PUZZLE",
+  "puzzle_type": "BOULDER"
 }

@@ -6,6 +6,7 @@ import me.owdding.mortem.Mortem
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.catacombs.roommatching.CatacombMapMatcher
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
+import me.owdding.mortem.core.catacombs.types.StoredCatacombRoom
 import me.owdding.mortem.core.event.CatacombJoinEvent
 import me.owdding.mortem.core.event.CatacombLeaveEvent
 import me.owdding.mortem.generated.CodecUtils

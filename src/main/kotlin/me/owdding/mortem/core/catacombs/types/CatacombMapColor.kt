@@ -1,4 +1,4 @@
-package me.owdding.mortem.core.catacombs
+package me.owdding.mortem.core.catacombs.types
 
 import net.minecraft.world.level.material.MapColor
 

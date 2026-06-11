@@ -6,5 +6,6 @@
   "type": "ROOM",
   "room_type": "PUZZLE",
   "secret_count": 1,
-  "id": "Tic-Tac-Toe-1"
+  "id": "Tic-Tac-Toe-1",
+  "puzzle_type": "TIC_TAC_TOE"
 }

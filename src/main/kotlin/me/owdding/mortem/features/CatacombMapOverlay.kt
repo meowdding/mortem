@@ -15,12 +15,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import net.minecraft.world.level.block.Rotation
-import org.joml.Vector2i
 import tech.thatgravyboat.skyblockapi.helpers.McFont
-import tech.thatgravyboat.skyblockapi.platform.pushPop
 import tech.thatgravyboat.skyblockapi.platform.scale
-import tech.thatgravyboat.skyblockapi.platform.translate
-import tech.thatgravyboat.skyblockapi.utils.extentions.scaled
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
@@ -48,9 +44,6 @@ object CatacombMapOverlay : MortemOverlay {
 
             val isVerticalDoor = pos.isVerticalHallway
             val isHorizontalDoor = pos.isHorizontalHallway
-            val isDoor = isVerticalDoor xor isHorizontalDoor
-            val isMiddle = isHorizontalDoor && isVerticalDoor
-            val isRoom = !isDoor && !isMiddle
             val (x, y) = pos
 
             val width = min(if (isHorizontalDoor) hallwayWidth else roomWidth, node.dimensions)
@@ -65,9 +58,7 @@ object CatacombMapOverlay : MortemOverlay {
                 yOffset,
                 xOffset + width,
                 yOffset + height,
-                if (roomNode?.backingData != null) ARGB.opaque(node.getColor())
-                else if (isRoom) ARGB.greyscale(ARGB.color(255, node.getColor()))
-                else ARGB.greyscale(ARGB.color(125, node.getColor())),
+                ARGB.opaque(node.getColor())
             )
 
             val data = roomNode?.backingData

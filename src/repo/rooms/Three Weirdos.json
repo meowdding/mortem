@@ -4,5 +4,6 @@
     -463487031
   ],
   "type": "ROOM",
-  "room_type": "PUZZLE"
+  "room_type": "PUZZLE",
+  "puzzle_type": "THREE_WEIRDOS"
 }

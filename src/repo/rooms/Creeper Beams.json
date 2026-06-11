@@ -6,5 +6,6 @@
     -152716781
   ],
   "type": "ROOM",
-  "room_type": "PUZZLE"
+  "room_type": "PUZZLE",
+  "puzzle_type": "CREEPER_BEAM"
 }

@@ -1,39 +1,28 @@
 package me.owdding.mortem.core.catacombs.nodes
 
 import me.owdding.mortem.core.catacombs.Catacomb
-import me.owdding.mortem.core.catacombs.CatacombDoorType
-import me.owdding.mortem.core.catacombs.CatacombRoomCheckmark
 import me.owdding.mortem.core.catacombs.CatacombRoomType
-import me.owdding.mortem.core.catacombs.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.CatacombsManager
-import me.owdding.mortem.core.catacombs.StoredCatacombRoom
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
+import me.owdding.mortem.core.catacombs.types.CatacombDoorType
+import me.owdding.mortem.core.catacombs.types.CatacombRoomCheckmark
+import me.owdding.mortem.core.catacombs.types.CatacombsColorProvider
+import me.owdding.mortem.core.catacombs.types.StoredCatacombRoom
 import me.owdding.mortem.utils.GizmoUtils
-import me.owdding.mortem.utils.GizmoUtils.cuboid
 import me.owdding.mortem.utils.Utils
 import me.owdding.mortem.utils.colors.CatppuccinColors
-import me.owdding.mortem.utils.extensions.isAnyHallway
 import me.owdding.mortem.utils.extensions.maxOfNotNullOrNull
 import me.owdding.mortem.utils.extensions.mutableCopy
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVec2d
-import me.owdding.mortem.utils.extensions.toVector3d
 import me.owdding.mortem.utils.opaque
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.gizmos.GizmoStyle
-import net.minecraft.gizmos.Gizmos
-import net.minecraft.util.ARGB
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.Rotation
 import net.minecraft.world.phys.AABB
-import org.joml.Vector2i
-import org.joml.Vector3d
-import org.joml.Vector3dc
-import org.joml.Vector3i
-import org.joml.Vector3ic
-import org.joml.times
-import tech.thatgravyboat.skyblockapi.helpers.McClient
+import org.joml.*
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import kotlin.math.max
@@ -152,7 +141,13 @@ class RoomNode(
         -12 + positions.minBy { (y) -> y }.y * 2,
     )
 
-    override fun getColor() = roomType.getColor()
+    override fun getColor(): Int {
+        if (backingData?.roomType == CatacombRoomType.RARE) {
+            return CatacombRoomType.RARE.getColor()
+        }
+        return roomType.getColor()
+    }
+
     fun mutateType(type: CatacombRoomType) {
         roomType = when (roomType) {
             CatacombRoomType.DEFAULT, CatacombRoomType.UNKNOWN -> type
@@ -223,7 +218,7 @@ class RoomNode(
             GizmoUtils.debugGizmo {
                 cuboid(
                     AABB(node).setMaxY(255.0),
-                    GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.mauve.opaque(), 1f, CatppuccinColors.Mocha.pink.opaque())
+                    GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.mauve.opaque(), 1f, CatppuccinColors.Mocha.pink.opaque()),
                 ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
             }
 
@@ -238,7 +233,7 @@ class RoomNode(
                 GizmoUtils.debugGizmo {
                     cuboid(
                         AABB(pos),
-                        GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.green.opaque(), 1f, CatppuccinColors.Mocha.teal.opaque())
+                        GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.green.opaque(), 1f, CatppuccinColors.Mocha.teal.opaque()),
                     ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
                 }
 
@@ -264,7 +259,7 @@ class RoomNode(
         GizmoUtils.debugGizmo {
             cuboid(
                 AABB(pos.relative(it)),
-                GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.red.opaque(), 1f, CatppuccinColors.Mocha.maroon.opaque())
+                GizmoStyle.strokeAndFill(CatppuccinColors.Mocha.red.opaque(), 1f, CatppuccinColors.Mocha.maroon.opaque()),
             ).setAlwaysOnTop().persistForMillis(10000).fadeOut()
         }
         McLevel[pos.relative(it)].isAir
@@ -287,7 +282,7 @@ enum class ClayRotations(val clayX: Int, val clayZ: Int, val rotation: Rotation)
     WEST(15, -15, Rotation.CLOCKWISE_90),
     ;
 
-    companion object{
+    companion object {
         val availableRotations = listOf(NORTH, EAST, SOUTH, WEST)
     }
 }
