@@ -203,7 +203,7 @@ object CatacombMapOverlay : MortemOverlay {
             scalarY = (((pos.toFloat() % 31) / 31f))
         }
 
-        extractPlayer(gridPos.x, gridPos.y, scalarX, scalarY, 0f, player)
+        extractPlayer(gridPos.x, gridPos.y, scalarX, scalarY, ((player.realRotation ?: 0f) % 360f) / 360f, player)
     }
 
     private fun GuiGraphicsExtractor.extractPlayerFromMapData(player: CatacombPlayer, pos: Vector2i) {
@@ -238,29 +238,12 @@ object CatacombMapOverlay : MortemOverlay {
             relativeY / (roomWidth + 1).toFloat()
         }
 
-        extractPlayer(xCellOffset + extraCellOffsetX, yCellOffset + extraCellOffsetY, scalarX, scalarY, 0f, player)
+        extractPlayer(xCellOffset + extraCellOffsetX, yCellOffset + extraCellOffsetY, scalarX, scalarY, (player.mapRotation ?: 0) / 16f, player)
     }
 
     private fun GuiGraphicsExtractor.extractPlayer(gridX: Int, gridY: Int, scalarX: Float, scalarY: Float, rotation: Float, player: CatacombPlayer) {
         val baseOffsetX = (gridX / 2) * combinedWidth + if (gridX.isHallway) roomWidth else 0
         val baseOffsetY = (gridY / 2) * combinedHeight + if (gridY.isHallway) roomHeight else 0
-
-        if (!player.isSelf) {
-            centeredText(
-                McClient.self.font,
-                "$baseOffsetX - $baseOffsetY",
-                100,
-                100,
-                0xFFFFFFFF.toInt(),
-            )
-            centeredText(
-                McClient.self.font,
-                "$scalarX - $scalarY",
-                100,
-                109,
-                0xFFFFFFFF.toInt(),
-            )
-        }
 
         val x = baseOffsetX + (roomWidth * scalarX).roundToInt()
         val y = baseOffsetY + (roomHeight * scalarY).roundToInt()
@@ -280,7 +263,7 @@ object CatacombMapOverlay : MortemOverlay {
                 (headSize * 1.2).toInt(),
                 player.dungeonClass?.getColor()?.opaque() ?: -1,
             )
-            PlayerFaceExtractor.extractRenderState(this, player.skin ?: return, headSize / -2, headSize / -2, headSize)
+            PlayerFaceExtractor.extractRenderState(this, player.skin ?: return, -headSize, -headSize, headSize * 2)
         }
     }
 }
