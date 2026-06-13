@@ -1,13 +1,14 @@
 package me.owdding.mortem.core.catacombs.roommatching
 
 import me.owdding.ktmodules.Module
-import me.owdding.lib.overlays.ConfigPosition
-import me.owdding.lib.overlays.Position
 import me.owdding.mortem.core.catacombs.*
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
-import me.owdding.mortem.utils.MortemOverlay
-import me.owdding.mortem.utils.Overlay
+import me.owdding.mortem.core.catacombs.types.CatacombDoorType
+import me.owdding.mortem.core.catacombs.types.CatacombMapColor
+import me.owdding.mortem.core.catacombs.types.CatacombRoomCheckmark
+import me.owdding.mortem.core.catacombs.types.CatacombRoomType
+import me.owdding.mortem.core.catacombs.types.CatacombSize
 import me.owdding.mortem.utils.Utils.vectorOneOne
 import me.owdding.mortem.utils.Utils.vectorOneZero
 import me.owdding.mortem.utils.Utils.vectorTwoTwo
@@ -15,16 +16,9 @@ import me.owdding.mortem.utils.Utils.vectorTwoZero
 import me.owdding.mortem.utils.Utils.vectorZeroOne
 import me.owdding.mortem.utils.Utils.vectorZeroTwo
 import me.owdding.mortem.utils.extensions.copy
-import me.owdding.mortem.utils.extensions.isHorizontalHallway
-import me.owdding.mortem.utils.extensions.isVerticalHallway
-import net.minecraft.client.gui.GuiGraphicsExtractor
-import net.minecraft.network.chat.Component
-import net.minecraft.util.ARGB
-import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.saveddata.maps.MapDecoration
 import org.joml.*
-import tech.thatgravyboat.skyblockapi.helpers.McFont
-import tech.thatgravyboat.skyblockapi.utils.text.Text
-import kotlin.math.min
+import java.util.Optional
 
 @Module
 object CatacombMapMatcher {
@@ -138,5 +132,14 @@ object CatacombMapMatcher {
         grid[position] = room
         grid[position - oneOffset] = room
         room.addPosition(position.copy() / 2)
+    }
+
+    fun updateDecorations(catacomb: Catacomb, decorations: MutableList<MapDecoration>) {
+        val players = catacomb.playerList
+        val alivePlayers = players.sumOf { 1.takeUnless { _ -> it == null } ?: 0 }
+        if (alivePlayers != decorations.size) return
+        players.forEachIndexed { index, player ->
+            player?.updateDecoration(decorations.getOrNull(index) ?: return@forEachIndexed)
+        }
     }
 }

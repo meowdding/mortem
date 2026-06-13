@@ -10,4 +10,6 @@ enum class CatacombPuzzleType {
     ICE_FILL,
     ICE_PATH,
     BOULDER,
+    TELEPORT_MAZE,
+    THREE_WEIRDOS,
 }

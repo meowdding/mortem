@@ -1,11 +1,11 @@
 package me.owdding.mortem.core.catacombs.nodes
 
 import me.owdding.mortem.core.catacombs.Catacomb
-import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
 import me.owdding.mortem.core.catacombs.types.CatacombDoorType
 import me.owdding.mortem.core.catacombs.types.CatacombRoomCheckmark
+import me.owdding.mortem.core.catacombs.types.CatacombRoomType
 import me.owdding.mortem.core.catacombs.types.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.types.StoredCatacombRoom
 import me.owdding.mortem.utils.GizmoUtils

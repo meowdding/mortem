@@ -3,27 +3,38 @@ package me.owdding.mortem.features
 import me.owdding.ktmodules.Module
 import me.owdding.lib.overlays.Position
 import me.owdding.mortem.config.category.OverlayPositions
+import me.owdding.mortem.core.catacombs.Catacomb
+import me.owdding.mortem.core.catacombs.CatacombPlayer
 import me.owdding.mortem.core.catacombs.CatacombsManager
+import me.owdding.mortem.core.catacombs.DOOR_WIDTH
 import me.owdding.mortem.core.catacombs.nodes.CatacombRoomShape.*
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
+import me.owdding.mortem.utils.extensions.isHallway
 import me.owdding.mortem.utils.extensions.isHorizontalHallway
 import me.owdding.mortem.utils.extensions.isVerticalHallway
 import me.owdding.mortem.utils.opaque
 import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.gui.components.PlayerFaceExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
 import net.minecraft.world.level.block.Rotation
+import org.joml.Vector2i
+import org.joml.Vector3d
+import org.joml.minus
+import org.joml.times
+import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
+import tech.thatgravyboat.skyblockapi.platform.rotate
 import tech.thatgravyboat.skyblockapi.platform.scale
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
-import kotlin.collections.component1
-import kotlin.collections.component2
+import kotlin.math.absoluteValue
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 @Overlay
 @Module
@@ -32,25 +43,32 @@ object CatacombMapOverlay : MortemOverlay {
     override val position: Position get() = OverlayPositions.dungeonMap
     override val bounds: Pair<Int, Int> = 20 to 20
 
+    inline val roomWidth get() = 50
+    inline val roomHeight get() = 50
+    inline val horizontalHallwayWidth get() = 4
+    inline val verticalHallwayWidth get() = 4
+    inline val doorWidth get() = 4
+    inline val headSize get() = 8
+
+    inline val combinedWidth get() = roomWidth + verticalHallwayWidth
+    inline val combinedHeight get() = roomHeight + horizontalHallwayWidth
+
+
     override fun extract(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
         val catacomb = CatacombsManager.catacomb ?: return
 
-        val roomWidth = 50
-        val hallwayWidth = 4
-        val combinedWidth = roomWidth + hallwayWidth
-
-        val text= mutableListOf<() -> Unit>()
+        val text = mutableListOf<() -> Unit>()
         catacomb.grid.forEach { [pos, node] ->
 
-            val isVerticalDoor = pos.isVerticalHallway
-            val isHorizontalDoor = pos.isHorizontalHallway
+            val isVerticalDoor = pos.isHorizontalHallway
+            val isHorizontalDoor = pos.isVerticalHallway
             val (x, y) = pos
 
-            val width = min(if (isHorizontalDoor) hallwayWidth else roomWidth, node.dimensions)
-            val height = min(if (isVerticalDoor) hallwayWidth else roomWidth, node.dimensions)
+            val width = min(if (isHorizontalDoor) doorWidth else roomWidth, node.dimensions)
+            val height = min(if (isVerticalDoor) doorWidth else roomWidth, node.dimensions)
 
             val xOffset = (x / 2) * combinedWidth + if (isHorizontalDoor) roomWidth else (roomWidth - width) / 2
-            val yOffset = (y / 2) * combinedWidth + if (isVerticalDoor) roomWidth else (roomWidth - height) / 2
+            val yOffset = (y / 2) * combinedHeight + if (isVerticalDoor) roomHeight else (roomHeight - height) / 2
 
             val roomNode = node as? RoomNode
             graphics.fill(
@@ -58,7 +76,7 @@ object CatacombMapOverlay : MortemOverlay {
                 yOffset,
                 xOffset + width,
                 yOffset + height,
-                ARGB.opaque(node.getColor())
+                ARGB.opaque(node.getColor()),
             )
 
             val data = roomNode?.backingData
@@ -84,19 +102,21 @@ object CatacombMapOverlay : MortemOverlay {
                         y = yOffset + height / 2 - McFont.height / 2
                         textWidth = roomWidth
                     }
+
                     ONE_BY_TWO, ONE_BY_FOUR -> {
                         val isHorizontal = roomNode.rotation == Rotation.NONE || roomNode.rotation == Rotation.CLOCKWISE_180
 
                         if (isHorizontal) {
                             textWidth = combinedWidth + roomWidth
-                            x = xOffset- hallwayWidth / 2
-                            y = yOffset+ height / 2 - McFont.height / 2
+                            x = xOffset - verticalHallwayWidth / 2
+                            y = yOffset + height / 2 - McFont.height / 2
                         } else {
                             x = xOffset + width / 2
                             textWidth = roomWidth
-                            y = yOffset - hallwayWidth / 2 - McFont.height / 2
+                            y = yOffset - horizontalHallwayWidth / 2 - McFont.height / 2
                         }
                     }
+
                     ONE_BY_THREE -> {
                         val isHorizontal = roomNode.rotation == Rotation.NONE || roomNode.rotation == Rotation.CLOCKWISE_180
 
@@ -105,19 +125,21 @@ object CatacombMapOverlay : MortemOverlay {
                             x = xOffset + roomWidth / 2
                             y = yOffset + height / 2 - McFont.height / 2
                         } else {
-                            x = xOffset + roomWidth / 2
                             textWidth = roomWidth
-                            y = yOffset - hallwayWidth / 2 - McFont.height / 2
+                            x = xOffset + roomWidth / 2
+                            y = yOffset - horizontalHallwayWidth / 2 - McFont.height / 2
                         }
                     }
+
                     TWO_BY_TWO -> {
-                        x = xOffset + hallwayWidth / 2
-                        y = yOffset + hallwayWidth / 2 - McFont.height / 2
+                        x = xOffset + verticalHallwayWidth / 2
+                        y = yOffset + horizontalHallwayWidth / 2 - McFont.height / 2
                         textWidth = combinedWidth + roomWidth
                     }
+
                     STAIR -> {
-                        x = xOffset + roomWidth/ 2
-                        y = yOffset + roomWidth/ 2 - McFont.height / 2
+                        x = xOffset + roomWidth / 2
+                        y = yOffset + roomWidth / 2 - McFont.height / 2
                         textWidth = roomWidth
                     }
                 }
@@ -137,6 +159,128 @@ object CatacombMapOverlay : MortemOverlay {
             runnable()
         }
 
+        graphics.extractPlayers(catacomb)
+
         super.extract(graphics, mouseX, mouseY)
+    }
+
+    private fun GuiGraphicsExtractor.extractPlayers(catacomb: Catacomb) {
+        val players = catacomb.playerList.filterNotNull()
+
+        for (player in players) {
+            val realPosition = player.realPosition
+            if (player.realDataUpToDate && realPosition != null) {
+                extractPlayerFromLevelData(player, realPosition)
+                continue
+            }
+            val mapPosition = player.mapPosition
+            if (mapPosition != null) {
+                extractPlayerFromMapData(player, mapPosition)
+            }
+        }
+
+    }
+
+    private fun GuiGraphicsExtractor.extractPlayerFromLevelData(player: CatacombPlayer, pos: Vector3d) {
+        val gridPos = CatacombsManager.worldPosToGridPos(pos)
+
+        val scalarX: Float
+        val scalarY: Float
+        if (gridPos.isVerticalHallway) {
+            scalarX = 0.5f
+        } else {
+            val roomCenterX = CatacombsManager.gridPosToWorldPos(gridPos.x)
+            val roomStartX = roomCenterX - 15
+            val pos = (pos.x - roomStartX).absoluteValue
+            scalarX = (((pos.toFloat() % 31) / 31f))
+        }
+        if (gridPos.isHorizontalHallway) {
+            scalarY = 0.5f
+        } else {
+            val roomCenterY = CatacombsManager.gridPosToWorldPos(gridPos.y)
+            val roomStartY = roomCenterY - 15
+            val pos = (pos.z - roomStartY).absoluteValue
+            scalarY = (((pos.toFloat() % 31) / 31f))
+        }
+
+        extractPlayer(gridPos.x, gridPos.y, scalarX, scalarY, 0f, player)
+    }
+
+    private fun GuiGraphicsExtractor.extractPlayerFromMapData(player: CatacombPlayer, pos: Vector2i) {
+        val catacomb = player.catacomb
+
+        val roomDoorWidth = catacomb.mapRoomAndDoorSize * 2
+        val roomWidth = catacomb.mapRoomSize * 2
+        val doorWith = roomDoorWidth - roomWidth
+
+        val topLeft = (catacomb.mapTopLeft ?: return) * 2
+        val catacombPosition = pos - topLeft
+        val xCellOffset = (catacombPosition.x / roomDoorWidth) * 2
+        val yCellOffset = (catacombPosition.y / roomDoorWidth) * 2
+
+        val relativeX = catacombPosition.x % roomDoorWidth
+        val extraCellOffsetX: Int
+        val scalarX = if (relativeX > (roomWidth + 1)) {
+            extraCellOffsetX = 1
+            (relativeX - roomWidth - 1) / (doorWith - 1).toFloat()
+        } else {
+            extraCellOffsetX = 0
+            relativeX / (roomWidth + 1).toFloat()
+        }
+
+        val relativeY = catacombPosition.y % roomDoorWidth
+        val extraCellOffsetY: Int
+        val scalarY = if (relativeY > (roomWidth + 1)) {
+            extraCellOffsetY = 1
+            (relativeY - roomWidth - 1) / (doorWith - 1).toFloat()
+        } else {
+            extraCellOffsetY = 0
+            relativeY / (roomWidth + 1).toFloat()
+        }
+
+        extractPlayer(xCellOffset + extraCellOffsetX, yCellOffset + extraCellOffsetY, scalarX, scalarY, 0f, player)
+    }
+
+    private fun GuiGraphicsExtractor.extractPlayer(gridX: Int, gridY: Int, scalarX: Float, scalarY: Float, rotation: Float, player: CatacombPlayer) {
+        val baseOffsetX = (gridX / 2) * combinedWidth + if (gridX.isHallway) roomWidth else 0
+        val baseOffsetY = (gridY / 2) * combinedHeight + if (gridY.isHallway) roomHeight else 0
+
+        if (!player.isSelf) {
+            centeredText(
+                McClient.self.font,
+                "$baseOffsetX - $baseOffsetY",
+                100,
+                100,
+                0xFFFFFFFF.toInt(),
+            )
+            centeredText(
+                McClient.self.font,
+                "$scalarX - $scalarY",
+                100,
+                109,
+                0xFFFFFFFF.toInt(),
+            )
+        }
+
+        val x = baseOffsetX + (roomWidth * scalarX).roundToInt()
+        val y = baseOffsetY + (roomHeight * scalarY).roundToInt()
+        translated(x, y) {
+            centeredText(
+                McClient.self.font,
+                player.name,
+                0,
+                McClient.self.font.lineHeight,
+                0xFFFFFFFF.toInt(),
+            )
+            rotate(180f + rotation * 360f)
+            fill(
+                -(headSize * 1.2).toInt(),
+                -(headSize * 1.2).toInt(),
+                (headSize * 1.2).toInt(),
+                (headSize * 1.2).toInt(),
+                player.dungeonClass?.getColor()?.opaque() ?: -1,
+            )
+            PlayerFaceExtractor.extractRenderState(this, player.skin ?: return, headSize / -2, headSize / -2, headSize)
+        }
     }
 }

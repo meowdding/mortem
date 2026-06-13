@@ -1,6 +1,5 @@
 package me.owdding.mortem.core.catacombs.types
 
-import me.owdding.mortem.core.catacombs.MapSize
 import tech.thatgravyboat.skyblockapi.api.area.dungeon.DungeonFloor
 
 enum class CatacombSize(

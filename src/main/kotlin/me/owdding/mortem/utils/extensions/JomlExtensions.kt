@@ -51,7 +51,8 @@ fun Vector3dc.toWorldPos(roomNode: RoomNode) = roomNode.roomToWorld(this)
 fun Vector3ic.toRoomPos(roomNode: RoomNode) = roomNode.worldToRoom(this)
 fun Vector3ic.toWorldPos(roomNode: RoomNode) = roomNode.roomToWorld(this)
 
-val Vector2ic.isVerticalHallway get() = (y() % 2 == 1)
-val Vector2ic.isHorizontalHallway get() = (x() % 2 == 1)
+val Vector2ic.isVerticalHallway get() = (x() % 2 == 1)
+val Vector2ic.isHorizontalHallway get() = (y() % 2 == 1)
+val Int.isHallway get() = (this % 2 == 1)
 val Vector2ic.isAnyHallway get() = isVerticalHallway || isHorizontalHallway
 val Vector2ic.isCrossHallway get() = isVerticalHallway && isHorizontalHallway

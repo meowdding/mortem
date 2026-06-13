@@ -1,5 +1,6 @@
 package me.owdding.mortem.core.catacombs
 
+import kotlinx.coroutines.flow.asFlow
 import me.owdding.mortem.core.Instance
 import me.owdding.mortem.core.InstanceType
 import me.owdding.mortem.core.catacombs.nodes.CatacombNodeType
@@ -18,6 +19,7 @@ import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
 import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.Utils.post
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
+import java.util.UUID
 
 data class Catacomb(
     val floor: DungeonFloor,
@@ -37,6 +39,18 @@ data class Catacomb(
     var lastPosition = Vector2i(-1, -1)
 
     val grid: MutableMap<Vector2i, CatacombsNode<*>> = ConcurrentHashMap()
+    val playerList = arrayOfNulls<CatacombPlayer>(5)
+    // use uuid or name as key
+    val playerMap: MutableMap<Any, CatacombPlayer> = mutableMapOf()
+
+    fun registerPlayer(player: CatacombPlayer) {
+        this.playerMap[player.name] = player
+        this.playerMap[player.uuid ?: return] = player
+    }
+
+    fun getOrRegisterPlayer(name: String, playerFuture: () -> CatacombPlayer) = getOrRegisterPlayer0(name, playerFuture)
+    fun getOrRegisterPlayer(uuid: UUID, playerFuture: () -> CatacombPlayer) = getOrRegisterPlayer0(uuid, playerFuture)
+    private fun getOrRegisterPlayer0(key: Any, playerFuture: () -> CatacombPlayer): CatacombPlayer = playerMap.getOrPut(key) { playerFuture().apply(::registerPlayer) }
 
     fun <T : CatacombsNode<T>> getOrCreateNode(position: Vector2i, type: CatacombNodeType<T>) : T = grid.getOrPut(position) {
         type.constructor.invoke(this)

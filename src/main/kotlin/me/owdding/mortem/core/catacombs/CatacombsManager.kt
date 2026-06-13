@@ -1,6 +1,7 @@
 package me.owdding.mortem.core.catacombs
 
 import me.owdding.ktmodules.Module
+import me.owdding.lib.extensions.floor
 import me.owdding.lib.extensions.shorten
 import me.owdding.mortem.Mortem
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
@@ -50,6 +51,7 @@ import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
 import me.owdding.mortem.utils.extensions.isCrossHallway
 import me.owdding.mortem.utils.extensions.isHorizontalHallway
 import org.joml.Vector2ic
+import org.joml.Vector3d
 
 @Module
 object CatacombsManager {
@@ -95,6 +97,9 @@ object CatacombsManager {
 
         map.colorPatch.ifPresent {
             CatacombMapMatcher.updateInstance(catacomb, it.mapColors)
+        }
+        map.decorations().ifPresent {
+            CatacombMapMatcher.updateDecorations(catacomb, it)
         }
     }
 
@@ -192,38 +197,29 @@ object CatacombsManager {
 
     fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(pos.x, pos.z)
     fun worldPosToGridPos(pos: Vector2ic): Vector2i = worldPosToGridPos(pos.x(), pos.y())
+    fun worldPosToGridPos(pos: Vector3d): Vector2i = worldPosToGridPos(pos.x().floor(), pos.z().floor())
 
+
+    fun worldPosToGridPos(scalar: Int): Int {
+        val chunk = floor(scalar / 16f).toInt()
+        val chunkRelative = scalar and 15
+
+        val isHallway = abs(chunk) % 2 == 1
+        val baseGridPos = chunk + 12
+
+        return when {
+            isHallway && chunkRelative > 7 -> baseGridPos + 1
+            isHallway && chunkRelative < 7 -> baseGridPos - 1
+            else -> baseGridPos
+        }
+    }
     fun worldPosToGridPos(x: Int, y: Int): Vector2i {
-        val chunkX = floor(x / 16f).toInt()
-        val chunkY = floor(y / 16f).toInt()
-        val chunkRelativeX = x and 15
-        val chunkRelativeY = y and 15
-
-        val isHallwayX = abs(chunkX) % 2 == 1
-        val isHallwayY = abs(chunkY) % 2 == 1
-        val baseGridPosX = chunkX + 12
-        val baseGridPosY = chunkY + 12
-
-        val gridPosX = when {
-            isHallwayX && chunkRelativeX > 7 -> baseGridPosX + 1
-            isHallwayX && chunkRelativeX < 7 -> baseGridPosX - 1
-            else -> baseGridPosX
-        }
-
-        val gridPosY = when {
-            isHallwayY && chunkRelativeY > 7 -> baseGridPosY + 1
-            isHallwayY && chunkRelativeY < 7 -> baseGridPosY - 1
-            else -> baseGridPosY
-        }
-
-        return Vector2i(gridPosX, gridPosY)
+        return Vector2i(worldPosToGridPos(x), worldPosToGridPos(y))
     }
 
+    fun gridPosToWorldPos(scalar: Int): Int = (scalar - 12) * 16 + 7
     fun gridPosToWorldPos(pos: Vector2ic): BlockPos {
-        val baseX = (pos.x() - 12) * 16 + 7
-        val baseY = (pos.y() - 12) * 16 + 7
-
-        return BlockPos(baseX, 0, baseY)
+        return BlockPos(gridPosToWorldPos(pos.x()), 0, gridPosToWorldPos(pos.y()))
     }
 
 }

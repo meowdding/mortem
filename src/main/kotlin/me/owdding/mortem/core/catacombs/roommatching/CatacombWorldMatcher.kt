@@ -2,34 +2,25 @@ package me.owdding.mortem.core.catacombs.roommatching
 
 import com.google.common.collect.Multimap
 import com.google.common.collect.MultimapBuilder
-import com.google.common.hash.Hashing
 import me.owdding.ktmodules.Module
-import me.owdding.mortem.core.catacombs.CatacombRoomType
 import me.owdding.mortem.core.catacombs.CatacombsManager
-import me.owdding.mortem.core.catacombs.nodes.DoorNode
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
+import me.owdding.mortem.core.catacombs.types.CatacombRoomType
 import me.owdding.mortem.core.event.CatacombLeaveEvent
 import me.owdding.mortem.core.event.ChunkEvent
 import me.owdding.mortem.utils.GizmoUtils
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.opaque
-import me.owdding.mortem.utils.tag.BlockTagKey
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.gizmos.GizmoStyle
-import net.minecraft.gizmos.Gizmos
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.phys.AABB
 import org.joml.Vector2i
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
 import tech.thatgravyboat.skyblockapi.api.location.SkyBlockIsland
-import tech.thatgravyboat.skyblockapi.helpers.McClient
-import kotlin.math.sign
 
 @Module
 object CatacombWorldMatcher {
