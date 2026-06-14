@@ -6,7 +6,6 @@ import me.owdding.mortem.config.category.OverlayPositions
 import me.owdding.mortem.core.catacombs.Catacomb
 import me.owdding.mortem.core.catacombs.CatacombPlayer
 import me.owdding.mortem.core.catacombs.CatacombsManager
-import me.owdding.mortem.core.catacombs.DOOR_WIDTH
 import me.owdding.mortem.core.catacombs.nodes.CatacombRoomShape.*
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.utils.MortemOverlay
@@ -245,8 +244,10 @@ object CatacombMapOverlay : MortemOverlay {
         val baseOffsetX = (gridX / 2) * combinedWidth + if (gridX.isHallway) roomWidth else 0
         val baseOffsetY = (gridY / 2) * combinedHeight + if (gridY.isHallway) roomHeight else 0
 
-        val x = baseOffsetX + (roomWidth * scalarX).roundToInt()
-        val y = baseOffsetY + (roomHeight * scalarY).roundToInt()
+        val actualWidth = if (gridX.isHallway) verticalHallwayWidth else roomWidth
+        val actualHeight = if (gridY.isHallway) horizontalHallwayWidth else roomHeight
+        val x = baseOffsetX + (actualWidth * scalarX).roundToInt()
+        val y = baseOffsetY + (actualHeight * scalarY).roundToInt()
         translated(x, y) {
             centeredText(
                 McClient.self.font,
