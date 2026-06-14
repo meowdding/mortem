@@ -8,7 +8,7 @@ plugins {
     idea
     id("net.fabricmc.fabric-loom")
     id("org.jetbrains.kotlinx.kover") version "0.9.8"
-    kotlin("jvm") version "2.3.20"
+    kotlin("jvm") version "2.4.0"
     alias(libs.plugins.ksp)
     alias(libs.plugins.meowdding.auto.mixins)
     `versioned-catalogues`
@@ -29,7 +29,6 @@ repositories {
 }
 
 dependencies {
-
     minecraft(versionedCatalog["minecraft"])
 
     api(libs.skyblockapi) {
