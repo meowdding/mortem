@@ -111,7 +111,8 @@ tasks.withType<KotlinCompile>().configureEach {
         optIn.add("kotlin.time.ExperimentalTime")
 
         freeCompilerArgs.add("-Xname-based-destructuring=complete")
-        freeCompilerArgs.add("-Xcontext-parameters")
+        freeCompilerArgs.add("-Xexplicit-context-arguments")
+        freeCompilerArgs.add("-Xcollection-literals")
         freeCompilerArgs.add("-Xnullability-annotations=@org.jspecify.annotations:warn")
     }
 
