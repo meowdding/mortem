@@ -21,8 +21,6 @@ import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.extensions.endText
 import me.owdding.mortem.utils.extensions.sendWithPrefix
 import me.owdding.mortem.utils.extensions.toVector3dc
-import me.owdding.mortem.utils.getFloatOrNull
-import me.owdding.mortem.utils.getIntOrNull
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.game.ClientboundMapItemDataPacket
@@ -46,6 +44,8 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McLevel
 import tech.thatgravyboat.skyblockapi.helpers.McPlayer
 import tech.thatgravyboat.skyblockapi.utils.extentions.parseDuration
+import tech.thatgravyboat.skyblockapi.utils.extentions.parseFormattedFloat
+import tech.thatgravyboat.skyblockapi.utils.extentions.parseFormattedInt
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toJsonOrThrow
 import tech.thatgravyboat.skyblockapi.utils.json.Json.toPrettyString
 import tech.thatgravyboat.skyblockapi.utils.regex.matchWhen
@@ -291,11 +291,11 @@ object CatacombsManager {
             }
             case(extraStatsRegex) { McClient.sendCommand("/showextrastats") }
             case(bitsRegex, "bits") { destructured ->
-                val bits = destructured["bits"]?.getIntOrNull() ?: return@case
+                val bits = destructured["bits"]?.parseFormattedInt() ?: return@case
                 cachedEndData?.bits = bits
             }
             case(expRegex, "exp", "type") { destructed ->
-                val exp = destructed["exp"]?.getFloatOrNull() ?: return@case
+                val exp = destructed["exp"]?.parseFormattedFloat() ?: return@case
                 val type = destructed["type"] ?: return@case
                 when (type) {
                     "Catacombs" -> {
@@ -309,15 +309,15 @@ object CatacombsManager {
             }
             case(damageRegex, "class", "damage") { destructed ->
                 val catacombClass = destructed["class"]?.let { CatacombClass.byName(it) } ?: return@case
-                val damage = destructed["damage"]?.getIntOrNull() ?: return@case
+                val damage = destructed["damage"]?.parseFormattedInt() ?: return@case
                 cachedEndData?.damageDealt = damage.toLong()
             }
             case(enemiesKilledRegex, "kills") {destructured ->
-                val kills = destructured["kills"]?.getIntOrNull() ?: return@case
+                val kills = destructured["kills"]?.parseFormattedInt() ?: return@case
                 cachedEndData?.enemiesKilled = kills
             }
             case(personalSecretsFoundRegex, "secrets") {destructed ->
-                val found = destructed["secrets"]?.getIntOrNull() ?: return@case
+                val found = destructed["secrets"]?.parseFormattedInt() ?: return@case
                 cachedEndData?.secretsFound = found
             }
         }
