@@ -5,13 +5,14 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.mortem.Mortem
+import me.owdding.mortem.config.category.CatacombsConfig
 import me.owdding.mortem.config.category.MiscConfig
 import me.owdding.mortem.config.category.NotifierConfig
 import me.owdding.mortem.config.category.OverlayConfig
 import me.owdding.mortem.config.category.OverlayPositions
 import java.util.function.UnaryOperator
 
-object Config : ConfigKt("mortem/config") {
+object Config : ConfigKt("mortem/config"), AutoTranslated {
 
     override val name: TranslatableValue = TranslatableValue("Mortem")
     override val description: TranslatableValue = TranslatableValue("Mortem (${Mortem.VERSION})")
@@ -21,6 +22,7 @@ object Config : ConfigKt("mortem/config") {
         category(OverlayConfig)
         category(NotifierConfig)
         category(MiscConfig)
+        category(CatacombsConfig)
 
         category(OverlayPositions)
     }
@@ -28,4 +30,5 @@ object Config : ConfigKt("mortem/config") {
 
     override val patches: Map<Int, UnaryOperator<JsonObject>> = emptyMap()
     override val version: Int = patches.size
+    override val translationBase: String = "mortem.config"
 }
