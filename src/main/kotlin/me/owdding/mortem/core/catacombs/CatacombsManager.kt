@@ -200,18 +200,6 @@ object CatacombsManager {
         }
     }
 
-    @Subscription(TickEvent::class)
-    fun onTick() {
-        if (cachedEndData != null) {
-            val cache = cachedEndData ?: return
-            if (cache.ableToPost && !eventFired) {
-                eventFired = true
-                CatacombsEndEvent(cache).post()
-                cachedEndData = null
-            }
-        }
-    }
-
     /**
      * ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
      *                  Master Mode The Catacombs - Floor I
@@ -266,6 +254,13 @@ object CatacombsManager {
             } else {
                 inEndText = false
                 waitingForHeader = false
+
+                val cache = cachedEndData ?: return
+                if (cache.ableToPost && !eventFired) {
+                    eventFired = true
+                    CatacombsEndEvent(cache).post()
+                    cachedEndData = null
+                }
             }
             return
         }
@@ -331,7 +326,7 @@ object CatacombsManager {
     @Subscription
     fun onChatPost(event: ChatReceivedEvent.Post) {
         val catacomb = catacomb ?: return
-        // TODO: cancel the messages
+        // TODO: cancel the messages if config option enabled
     }
 
     fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(pos.x, pos.z)
