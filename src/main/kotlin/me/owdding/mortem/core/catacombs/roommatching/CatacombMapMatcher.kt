@@ -127,7 +127,7 @@ object CatacombMapMatcher {
         CatacombWorldMatcher.matchData(rooms)
     }
 
-    fun Catacomb.mergeNodes(position: Vector2i, oneOffset: Vector2i, twoOffset: Vector2i) {
+    fun Catacomb.mergeNodes(position: Vector2ic, oneOffset: Vector2ic, twoOffset: Vector2ic) {
         val room = getOrCreateNode(position - twoOffset, CatacombNodeType.Room)
         grid[position] = room
         grid[position - oneOffset] = room

@@ -7,8 +7,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     idea
     id("net.fabricmc.fabric-loom")
-    id("org.jetbrains.kotlinx.kover") version "0.9.8"
     kotlin("jvm") version "2.4.0"
+    //id("org.jetbrains.kotlinx.kover") version "0.9.8"
     alias(libs.plugins.ksp)
     alias(libs.plugins.meowdding.auto.mixins)
     `versioned-catalogues`
@@ -145,6 +145,7 @@ autoMixins {
     //mixinExtrasVersion = "0.5.0"
 }
 
+/*
 kover {
     reports {
         filters {
@@ -163,3 +164,4 @@ kover {
         }
     }
 }
+*/

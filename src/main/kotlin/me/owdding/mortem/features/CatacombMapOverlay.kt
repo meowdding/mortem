@@ -13,6 +13,8 @@ import me.owdding.mortem.utils.Overlay
 import me.owdding.mortem.utils.extensions.isHallway
 import me.owdding.mortem.utils.extensions.isHorizontalHallway
 import me.owdding.mortem.utils.extensions.isVerticalHallway
+import me.owdding.mortem.utils.extensions.x
+import me.owdding.mortem.utils.extensions.y
 import me.owdding.mortem.utils.opaque
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.PlayerFaceExtractor

@@ -56,3 +56,6 @@ val Vector2ic.isHorizontalHallway get() = (y() % 2 == 1)
 val Int.isHallway get() = (this % 2 == 1)
 val Vector2ic.isAnyHallway get() = isVerticalHallway || isHorizontalHallway
 val Vector2ic.isCrossHallway get() = isVerticalHallway && isHorizontalHallway
+
+val Vector2ic.x get() = this.x()
+val Vector2ic.y get() = this.y()

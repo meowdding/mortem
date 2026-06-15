@@ -84,8 +84,10 @@ class RoomNode(
 
     fun checkmark(): CatacombRoomCheckmark? = checkmark.takeIf { roomType.canHaveCheckmarks }
 
+    val highest get() = positions.maxOfNotNullOrNull { CatacombWorldMatcher.heightmap[it * 2] }
+
     private fun calculateRotation() {
-        val height = positions.maxOfNotNullOrNull { CatacombWorldMatcher.heightmap[it * 2] } ?: return
+        val height = highest ?: return
         updateRotation(height)
     }
 
@@ -110,7 +112,7 @@ class RoomNode(
     private val vectorZeroThree = Vector2i(0, 3)
 
     @Suppress("IntroduceWhenSubject")
-    fun getMiddleChunkOffset(): Vector2i? {
+    fun getMiddleChunkOffset(): Vector2ic? {
         val xSize = positions.distinctBy { it.x }.count()
         val minX = positions.minBy { (x) -> x }.x
         val minY = positions.minBy { (y) -> y }.y
