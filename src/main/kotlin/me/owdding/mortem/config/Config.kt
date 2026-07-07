@@ -9,6 +9,7 @@ import me.owdding.mortem.config.category.MiscConfig
 import me.owdding.mortem.config.category.NotifierConfig
 import me.owdding.mortem.config.category.OverlayConfig
 import me.owdding.mortem.config.category.OverlayPositions
+import me.owdding.mortem.config.category.catacombs.CatacombsMapConfig
 import me.owdding.mortem.config.category.catacombs.CatacombsColorConfig
 import me.owdding.mortem.config.category.catacombs.CatacombsConfig
 import java.util.function.UnaryOperator
@@ -24,7 +25,7 @@ object Config : ConfigKt("mortem/config"), AutoTranslated {
         category(NotifierConfig)
         category(MiscConfig)
         category(CatacombsConfig) {
-            category(CatacombsColorConfig)
+            categories(CatacombsColorConfig, CatacombsMapConfig)
         }
 
         category(OverlayPositions)

@@ -3,10 +3,12 @@ package me.owdding.mortem.features
 import me.owdding.ktmodules.Module
 import me.owdding.lib.overlays.Position
 import me.owdding.mortem.config.category.OverlayPositions
+import me.owdding.mortem.config.category.catacombs.CatacombsMapConfig
 import me.owdding.mortem.core.catacombs.Catacomb
 import me.owdding.mortem.core.catacombs.CatacombPlayer
 import me.owdding.mortem.core.catacombs.CatacombsManager
 import me.owdding.mortem.core.catacombs.nodes.CatacombRoomShape.*
+import me.owdding.mortem.core.catacombs.nodes.DoorNode
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.utils.MortemOverlay
 import me.owdding.mortem.utils.Overlay
@@ -34,7 +36,6 @@ import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
 import kotlin.math.absoluteValue
-import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Overlay
@@ -42,14 +43,18 @@ import kotlin.math.roundToInt
 object CatacombMapOverlay : MortemOverlay {
     override val name: Component get() = Text.of("Catacomb Map")
     override val position: Position get() = OverlayPositions.dungeonMap
-    override val bounds: Pair<Int, Int> = 20 to 20
+    override val enabled: Boolean get() = CatacombsManager.catacomb != null
+    override val bounds: Pair<Int, Int> get() {
+        val catacomb = CatacombsManager.catacomb ?: return 0 to 0
+        return (catacomb.size.xRooms * combinedWidth - verticalHallwayWidth) to (catacomb.size.yRooms * combinedHeight - horizontalHallwayWidth)
+    }
 
-    inline val roomWidth get() = 50
-    inline val roomHeight get() = 50
-    inline val horizontalHallwayWidth get() = 4
-    inline val verticalHallwayWidth get() = 4
-    inline val doorWidth get() = 4
-    inline val headSize get() = 8
+    inline val roomWidth get() = CatacombsMapConfig.roomWidth
+    inline val roomHeight get() = CatacombsMapConfig.roomHeight
+    inline val horizontalHallwayWidth get() = CatacombsMapConfig.hallwayHeight
+    inline val verticalHallwayWidth get() = CatacombsMapConfig.hallwayWidth
+    inline val doorWidth get() = CatacombsMapConfig.doorWidth
+    inline val headSize get() = CatacombsMapConfig.headSize
 
     inline val combinedWidth get() = roomWidth + verticalHallwayWidth
     inline val combinedHeight get() = roomHeight + horizontalHallwayWidth
@@ -61,15 +66,32 @@ object CatacombMapOverlay : MortemOverlay {
         val text = mutableListOf<() -> Unit>()
         catacomb.grid.forEach { [pos, node] ->
 
-            val isVerticalDoor = pos.isHorizontalHallway
-            val isHorizontalDoor = pos.isVerticalHallway
+            val isHorizontalHallway = pos.isHorizontalHallway
+            val isVerticalHallway = pos.isVerticalHallway
+            val isDoor = node is DoorNode
             val (x, y) = pos
 
-            val width = min(if (isHorizontalDoor) doorWidth else roomWidth, node.dimensions)
-            val height = min(if (isVerticalDoor) doorWidth else roomWidth, node.dimensions)
+            val width = when {
+                isHorizontalHallway && isDoor -> doorWidth
+                isVerticalHallway -> verticalHallwayWidth
+                else -> roomWidth
+            }
+            val height  = when {
+                isVerticalHallway && isDoor -> doorWidth
+                isHorizontalHallway -> horizontalHallwayWidth
+                else -> roomHeight
+            }
 
-            val xOffset = (x / 2) * combinedWidth + if (isHorizontalDoor) roomWidth else (roomWidth - width) / 2
-            val yOffset = (y / 2) * combinedHeight + if (isVerticalDoor) roomHeight else (roomHeight - height) / 2
+            val xOffset = (x / 2) * combinedWidth + when {
+                isHorizontalHallway && isDoor -> (roomWidth - width) / 2
+                isVerticalHallway -> roomWidth
+                else -> 0
+            }
+            val yOffset = (y / 2) * combinedHeight + when {
+                isVerticalHallway && isDoor -> (roomHeight - height) / 2
+                isHorizontalHallway -> roomHeight
+                else -> 0
+            }
 
             val roomNode = node as? RoomNode
             graphics.fill(
@@ -109,7 +131,7 @@ object CatacombMapOverlay : MortemOverlay {
 
                         if (isHorizontal) {
                             textWidth = combinedWidth + roomWidth
-                            x = xOffset - verticalHallwayWidth / 2
+                            x = xOffset
                             y = yOffset + height / 2 - McFont.height / 2
                         } else {
                             x = xOffset + width / 2
@@ -250,7 +272,11 @@ object CatacombMapOverlay : MortemOverlay {
         val actualHeight = if (gridY.isHallway) horizontalHallwayWidth else roomHeight
         val x = baseOffsetX + (actualWidth * scalarX).roundToInt()
         val y = baseOffsetY + (actualHeight * scalarY).roundToInt()
-        translated(x, y) {
+
+        player.minimapX = x
+        player.minimapY = y
+
+        translated(player.minimapX, player.minimapY) {
             centeredText(
                 McClient.self.font,
                 player.name,

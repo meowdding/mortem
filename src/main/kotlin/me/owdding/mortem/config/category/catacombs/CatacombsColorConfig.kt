@@ -1,6 +1,5 @@
 package me.owdding.mortem.config.category.catacombs
 
-import com.teamresourceful.resourcefulconfig.api.types.elements.ResourcefulConfigEntryElement
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
 import me.owdding.mortem.config.AutoTranslated
@@ -8,8 +7,8 @@ import me.owdding.mortem.config.ResettableCategory
 import me.owdding.mortem.config.remember
 import me.owdding.mortem.utils.colors.CatppuccinColors
 
-object CatacombsColorConfig : CategoryKt("catacombs"), AutoTranslated, ResettableCategory {
-    override val translationBase: String = "mortem.config.catacombs.map"
+object CatacombsColorConfig : CategoryKt("colors"), AutoTranslated, ResettableCategory {
+    override val translationBase: String = "mortem.config.catacombs.colors"
 
     override val entries: MutableList<RConfigKtEntry<*>> = mutableListOf()
 
