@@ -1,16 +1,18 @@
 package me.owdding.mortem.core.catacombs.types
 
+import me.owdding.mortem.config.category.catacombs.CatacombsColorConfig
+
 enum class CatacombRoomType(val provider: CatacombsColorProvider, val canHaveCheckmarks: Boolean = true) : CatacombsColorProvider by provider {
-    NORMAL({ 0xAb6b00 }),
-    RARE({ 0xAb6b00 }),
-    TRAP({ 0xFF7F0F }),
-    FAIRY({ 0xF080FF }, false),
-    PUZZLE({ 0xe050F0 }),
-    MINIBOSS({ 0xFFFF00 }),
-    BLOOD({ 0xFF0000 }),
-    START({ 0x00FF00 }, false),
-    UNKNOWN({ 0xababab }),
-    DEFAULT({ 0x000000 }, false),
+    NORMAL(CatacombsColorConfig::normalRoom),
+    RARE(CatacombsColorConfig::rareRoom),
+    TRAP(CatacombsColorConfig::trapRoom),
+    FAIRY(CatacombsColorConfig::fairyRoom, false),
+    PUZZLE(CatacombsColorConfig::puzzleRoom),
+    MINIBOSS(CatacombsColorConfig::minibossRoom),
+    BLOOD(CatacombsColorConfig::bloodRoom),
+    START(CatacombsColorConfig::startRoom, false),
+    UNKNOWN(CatacombsColorConfig::unknownRoom),
+    DEFAULT(CatacombsColorConfig::defaultRoom, false),
     ;
 
     companion object {

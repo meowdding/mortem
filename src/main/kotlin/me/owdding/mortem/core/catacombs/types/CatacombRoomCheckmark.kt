@@ -1,10 +1,12 @@
 package me.owdding.mortem.core.catacombs.types
 
-enum class CatacombRoomCheckmark(val provider: CatacombsColorProvider, val puzzleOnly: Boolean = false): CatacombsColorProvider by provider {
-    CLEARED({ 0xffffff }),
-    COMPLETE({ 0x00ff00}),
-    FAILED({ 0xff0000 }, true),
-    NONE({ 0xababab }),
+import me.owdding.mortem.config.category.catacombs.CatacombsColorConfig
+
+enum class CatacombRoomCheckmark(val provider: CatacombsColorProvider, val puzzleOnly: Boolean = false) : CatacombsColorProvider by provider {
+    CLEARED(CatacombsColorConfig::clearedCheckmark),
+    COMPLETE(CatacombsColorConfig::completeCheckmark),
+    FAILED(CatacombsColorConfig::failedCheckmark, true),
+    NONE(CatacombsColorConfig::noneCheckmark),
     ;
 
     fun canMutateTo(other: CatacombRoomCheckmark) = when (this) {

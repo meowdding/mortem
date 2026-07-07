@@ -2,8 +2,10 @@ package me.owdding.mortem.config
 
 import com.teamresourceful.resourcefulconfigkt.api.*
 import com.teamresourceful.resourcefulconfigkt.api.builders.CategoryBuilder
+import com.teamresourceful.resourcefulconfigkt.api.builders.EntriesBuilder
 import com.teamresourceful.resourcefulconfigkt.api.builders.SeparatorBuilder
 import tech.thatgravyboat.skyblockapi.helpers.McClient
+import kotlin.reflect.KProperty
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.DurationUnit
@@ -40,3 +42,18 @@ fun <T, R> ConfigDelegateProvider<RConfigKtEntry<T>>.cachedTransform(from: (R) -
 fun <T, R> ConfigDelegateProvider<RConfigKtEntry<T>>.transform(from: (R) -> T, to: (T) -> R) = TransformedEntry(this, from, to)
 
 fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.observable(onChange: (T, T) -> Unit) = ObservableEntry(this, onChange)
+
+interface ResettableCategory {
+    val entries: MutableList<RConfigKtEntry<*>>
+}
+
+context(category: ResettableCategory)
+fun <T> ConfigDelegateProvider<RConfigKtEntry<T>>.remember() = object : ConfigDelegateProvider<RConfigKtEntry<T>> {
+    override fun provideDelegate(
+        entries: EntriesBuilder,
+        prop: KProperty<*>,
+    ): RConfigKtEntry<T> {
+        return this@remember.provideDelegate(entries, prop).apply(category.entries::add)
+    }
+
+}

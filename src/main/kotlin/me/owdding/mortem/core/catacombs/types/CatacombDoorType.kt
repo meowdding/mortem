@@ -1,14 +1,16 @@
 package me.owdding.mortem.core.catacombs.types
 
+import me.owdding.mortem.config.category.catacombs.CatacombsColorConfig
+
 enum class CatacombDoorType(val provider: CatacombsColorProvider) : CatacombsColorProvider by provider {
-    WITHER({ 0x4f4f4f }),
-    BLOOD({ 0xFF0000 }),
-    NORMAL({ 0xab6b00 }),
-    TRAP({ 0xff7f0f }),
-    MINIBOSS({ 0xFFFF00 }),
-    PUZZLE({ 0xe060f0 }),
-    FAIRY({ 0xf080ff }),
-    DEFAULT({ 0x000000 }),
+    WITHER(CatacombsColorConfig::witherDoor),
+    BLOOD(CatacombsColorConfig::bloodDoor),
+    NORMAL(CatacombsColorConfig::normalDoor),
+    TRAP(CatacombsColorConfig::trapDoor),
+    MINIBOSS(CatacombsColorConfig::minibossDoor),
+    PUZZLE(CatacombsColorConfig::puzzleDoor),
+    FAIRY(CatacombsColorConfig::fairyDoor),
+    DEFAULT(CatacombsColorConfig::defaultDoor),
 ;
 
     companion object {

@@ -1,4 +1,4 @@
-package me.owdding.mortem.config.category
+package me.owdding.mortem.config.category.catacombs
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.mortem.config.AutoTranslated

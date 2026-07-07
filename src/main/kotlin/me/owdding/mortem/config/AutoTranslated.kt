@@ -1,5 +1,6 @@
 package me.owdding.mortem.config
 
+import com.teamresourceful.resourcefulconfigkt.api.builders.ButtonBuilder
 import com.teamresourceful.resourcefulconfigkt.api.builders.ColorBuilder
 import com.teamresourceful.resourcefulconfigkt.api.builders.DraggableBuilder
 import com.teamresourceful.resourcefulconfigkt.api.builders.EntriesBuilder
@@ -13,9 +14,11 @@ import com.teamresourceful.resourcefulconfigkt.api.builders.TypeBuilder
 interface AutoTranslated {
     val translationBase: String
 
+    fun makeTranslation(id: String) = listOf(translationBase, id).filter { it.isNotEmpty() }.joinToString(".")
+
     context(entryBuilder: EntriesBuilder)
     fun TypeBuilder.makeTranslations() {
-        this.translation = listOf(translationBase, id).filter { it.isNotEmpty() }.joinToString(".")
+        this.translation = makeTranslation(id)
     }
 
     context(entryBuilder: EntriesBuilder)
@@ -137,5 +140,12 @@ interface AutoTranslated {
     context(entryBuilder: EntriesBuilder)
     fun <T : Enum<T>> autoDraggable(id: String, vararg value: T, builder: DraggableBuilder<T>.() -> Unit = {}) = entryBuilder.draggable(id, value = value, wrap(builder))
 
+    context(entryBuilder: EntriesBuilder)
+    fun autoButton(id: String, buttonBuilder: ButtonBuilder.() -> Unit) = entryBuilder.button {
+        this.description = makeTranslation(id) + ".desc"
+        this.title = makeTranslation(id)
+        this.text = makeTranslation(id) + ".text"
+        buttonBuilder()
+    }
 
 }
