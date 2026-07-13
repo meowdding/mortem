@@ -8,8 +8,10 @@ import me.owdding.mortem.core.catacombs.types.CatacombRoomCheckmark
 import me.owdding.mortem.core.catacombs.types.CatacombRoomType
 import me.owdding.mortem.core.catacombs.types.CatacombsColorProvider
 import me.owdding.mortem.core.catacombs.types.StoredCatacombRoom
+import me.owdding.mortem.core.event.catacomb.CatacombRoomCheckmarkChangeEvent
 import me.owdding.mortem.utils.GizmoUtils
 import me.owdding.mortem.utils.Utils
+import me.owdding.mortem.utils.Utils.post
 import me.owdding.mortem.utils.colors.CatppuccinColors
 import me.owdding.mortem.utils.extensions.maxOfNotNullOrNull
 import me.owdding.mortem.utils.extensions.mutableCopy
@@ -72,6 +74,11 @@ class RoomNode(
     var shape: CatacombRoomShape = CatacombRoomShape.ONE_BY_ONE
     val positions: MutableSet<Vector2i> = mutableSetOf()
     private var checkmark: CatacombRoomCheckmark = CatacombRoomCheckmark.NONE
+        set(value) {
+            val previous = field
+            field = value
+            CatacombRoomCheckmarkChangeEvent(this, previous, value).post()
+        }
     var backingData: StoredCatacombRoom? = null
     var rotation: Rotation? = null
 

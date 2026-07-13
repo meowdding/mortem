@@ -1,4 +1,4 @@
-package me.owdding.mortem.features
+package me.owdding.mortem.features.catacomb
 
 import me.owdding.ktmodules.Module
 import me.owdding.mortem.config.category.ChatType

@@ -1,4 +1,4 @@
-package me.owdding.mortem.features
+package me.owdding.mortem.features.catacomb
 
 import me.owdding.ktmodules.Module
 import me.owdding.lib.overlays.Position
@@ -22,6 +22,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.gui.components.PlayerFaceExtractor
 import net.minecraft.network.chat.Component
 import net.minecraft.util.ARGB
+import net.minecraft.util.FormattedCharSequence
 import net.minecraft.world.level.block.Rotation
 import org.joml.Vector2i
 import org.joml.Vector3d
@@ -31,10 +32,12 @@ import tech.thatgravyboat.skyblockapi.helpers.McClient
 import tech.thatgravyboat.skyblockapi.helpers.McFont
 import tech.thatgravyboat.skyblockapi.platform.rotate
 import tech.thatgravyboat.skyblockapi.platform.scale
+import tech.thatgravyboat.skyblockapi.platform.translate
 import tech.thatgravyboat.skyblockapi.utils.extentions.translated
 import tech.thatgravyboat.skyblockapi.utils.text.Text
 import tech.thatgravyboat.skyblockapi.utils.text.Text.asComponent
 import tech.thatgravyboat.skyblockapi.utils.text.TextStyle.color
+import tech.thatgravyboat.skyblockapi.utils.text.TextUtils.split
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
@@ -104,15 +107,21 @@ object CatacombMapOverlay : MortemOverlay {
 
             val data = roomNode?.backingData
             if (data != null && CatacombsManager.worldPosToGridPos(roomNode.getCenter()) == pos) {
-                fun renderScaledOrNormal(x: Int, y: Int, component: Component, maxWidth: Int) = text.add {
-                    val componentWidth = McFont.width(component)
+                fun renderScaledOrNormal(x: Int, y: Int, component: List<Component>, maxWidth: Int) = text.add {
+                    val componentWidth = component.maxOf { McFont.width(it) }
                     val scale = if (componentWidth > maxWidth) {
                         maxWidth / componentWidth.toFloat()
                     } else 1f
 
+
+                    val amount = (component.size * McFont.height * scale) / 2
+
                     graphics.translated(x, y) {
+                        graphics.translate(0, -amount)
                         graphics.scale(scale, scale)
-                        graphics.centeredText(McFont.self, component, 0, 0, -1)
+                        component.forEachIndexed { index, sequence ->
+                            graphics.centeredText(McFont.self, sequence, 0, index * McFont.height, -1)
+                        }
                     }
                 }
 
@@ -122,7 +131,7 @@ object CatacombMapOverlay : MortemOverlay {
                 when (roomNode.shape) {
                     ONE_BY_ONE -> {
                         x = xOffset + width / 2
-                        y = yOffset + height / 2 - McFont.height / 2
+                        y = yOffset + height / 2
                         textWidth = roomWidth
                     }
 
@@ -132,11 +141,11 @@ object CatacombMapOverlay : MortemOverlay {
                         if (isHorizontal) {
                             textWidth = combinedWidth + roomWidth
                             x = xOffset
-                            y = yOffset + height / 2 - McFont.height / 2
+                            y = yOffset + height / 2
                         } else {
                             x = xOffset + width / 2
                             textWidth = roomWidth
-                            y = yOffset - horizontalHallwayWidth / 2 - McFont.height / 2
+                            y = yOffset - horizontalHallwayWidth / 2
                         }
                     }
 
@@ -146,35 +155,40 @@ object CatacombMapOverlay : MortemOverlay {
                         if (isHorizontal) {
                             textWidth = combinedWidth + roomWidth
                             x = xOffset + roomWidth / 2
-                            y = yOffset + height / 2 - McFont.height / 2
+                            y = yOffset + height / 2
                         } else {
                             textWidth = roomWidth
                             x = xOffset + roomWidth / 2
-                            y = yOffset - horizontalHallwayWidth / 2 - McFont.height / 2
+                            y = yOffset + height / 2
                         }
                     }
 
                     TWO_BY_TWO -> {
                         x = xOffset + verticalHallwayWidth / 2
-                        y = yOffset + horizontalHallwayWidth / 2 - McFont.height / 2
+                        y = yOffset + horizontalHallwayWidth / 2
                         textWidth = combinedWidth + roomWidth
                     }
 
                     STAIR -> {
                         x = xOffset + roomWidth / 2
-                        y = yOffset + roomWidth / 2 - McFont.height / 2
+                        y = yOffset + roomWidth / 2
                         textWidth = roomWidth
                     }
                 }
                 val name = data.name.asComponent {
                     this.color = roomNode.checkmark()?.getColor()?.opaque() ?: -1
                 }
-                if (data.secretCount != 0) {
-                    renderScaledOrNormal(x, y - McFont.height / 2, name, textWidth)
-                    renderScaledOrNormal(x, y + McFont.height / 2, "0 / ${data.secretCount}".asComponent(), textWidth)
-                } else {
-                    renderScaledOrNormal(x, y, name, textWidth)
+
+                val lineWidth = textWidth - 5
+
+                val currentText =buildList {
+                    addAll(name.split(" "))
+                    add("0 / ${data.secretCount}".asComponent {
+                        this.color = roomNode.checkmark()?.getColor() ?: 0xababab.opaque()
+                    })
                 }
+
+                renderScaledOrNormal(x, y, currentText, lineWidth)
             }
         }
 
