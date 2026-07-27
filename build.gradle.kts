@@ -133,6 +133,21 @@ tasks.processResources {
     }
 }
 
+val archiveName = "mortem"
+
+base {
+    archivesName.set("$archiveName-${archivesName.get()}")
+}
+
+tasks.named("build") {
+    doLast {
+        val sourceFile = rootProject.projectDir.resolve("versions/${project.name}/build/libs/${archiveName}-${stonecutter.current.version}-$version.jar")
+        val targetFile = rootProject.projectDir.resolve("build/libs/${archiveName}-$version-${stonecutter.current.version}.jar")
+        targetFile.parentFile.mkdirs()
+        targetFile.writeBytes(sourceFile.readBytes())
+    }
+}
+
 idea {
     module {
         isDownloadJavadoc = true

@@ -1,0 +1,34 @@
+name: Build
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+permissions:
+    contents: read
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v5
+            -   name: Setup JDK 21
+                uses: actions/setup-java@v5
+                with:
+                    distribution: temurin
+                    java-version: '25'
+            -   name: Setup gradle
+                uses: gradle/actions/setup-gradle@v5
+            -   run: chmod +x gradlew
+            -   name: Build
+                run: ./gradlew build -PskipDetekt -Pdatagen
+            -   name: Upload Artifact
+                uses: actions/upload-artifact@v7.0.0
+                with:
+                    archive: false
+                    path: build/libs/*-26.1.jar
+            -   uses: actions/upload-artifact@v7.0.0
+                with:
+                    archive: false
+                    path: build/libs/*-26.2.jar
