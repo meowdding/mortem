@@ -5,6 +5,7 @@ import com.teamresourceful.resourcefulconfig.api.types.info.ResourcefulConfigLin
 import com.teamresourceful.resourcefulconfig.api.types.options.TranslatableValue
 import com.teamresourceful.resourcefulconfigkt.api.ConfigKt
 import me.owdding.mortem.Mortem
+import me.owdding.mortem.config.category.CommandsConfig
 import me.owdding.mortem.config.category.MiscConfig
 import me.owdding.mortem.config.category.NotifierConfig
 import me.owdding.mortem.config.category.OverlayConfig
@@ -24,6 +25,7 @@ object Config : ConfigKt("mortem/config"), AutoTranslated {
         category(OverlayConfig)
         category(NotifierConfig)
         category(MiscConfig)
+        category(CommandsConfig)
         category(CatacombsConfig) {
             categories(CatacombsColorConfig, CatacombsMapConfig)
         }

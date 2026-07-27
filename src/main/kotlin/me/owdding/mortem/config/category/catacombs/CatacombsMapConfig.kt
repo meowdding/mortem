@@ -2,11 +2,13 @@ package me.owdding.mortem.config.category.catacombs
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.mortem.config.AutoTranslated
+import me.owdding.mortem.config.category.CommandsConfig
 import net.minecraft.util.EasingType
 import kotlin.time.Duration.Companion.milliseconds
 
 object CatacombsMapConfig : CategoryKt("map"), AutoTranslated {
     override val translationBase: String = "mortem.config.catacombs.map"
+    override val name = Translated(translationBase)
 
     val roomWidth by autoInt(20)
     val roomHeight by autoInt(20)

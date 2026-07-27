@@ -121,6 +121,9 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.processResources {
     inputs.property("version", version)
+    with(copySpec {
+        from(rootProject.file("src/lang")).include("*.json").into("assets/mortem/lang")
+    })
 
     filesMatching("fabric.mod.json") {
         expand(mapOf(

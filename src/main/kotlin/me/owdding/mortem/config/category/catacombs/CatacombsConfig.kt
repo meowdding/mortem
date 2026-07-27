@@ -5,4 +5,5 @@ import me.owdding.mortem.config.AutoTranslated
 
 object CatacombsConfig : CategoryKt("catacombs"), AutoTranslated {
     override val translationBase: String = "mortem.config.catacombs"
+    override val name = Translated(translationBase)
 }

@@ -4,19 +4,21 @@ import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import com.teamresourceful.resourcefulconfigkt.api.RConfigKtEntry
 import me.owdding.mortem.config.AutoTranslated
 import me.owdding.mortem.config.ResettableCategory
+import me.owdding.mortem.config.category.CommandsConfig
 import me.owdding.mortem.config.remember
 import me.owdding.mortem.utils.colors.CatppuccinColors
 
 object CatacombsColorConfig : CategoryKt("colors"), AutoTranslated, ResettableCategory {
     override val translationBase: String = "mortem.config.catacombs.colors"
+    override val name = Translated(translationBase)
 
     override val entries: MutableList<RConfigKtEntry<*>> = mutableListOf()
 
-    var archer by color(0xff0000).remember()
-    var berserker by color(0xffaa00).remember()
-    var healer by color(0xff00aa).remember()
-    var mage by color(0x0000ff).remember()
-    var tank by color(0x00ff00).remember()
+    var archer by autoColor(0xff0000).remember()
+    var berserker by autoColor(0xffaa00).remember()
+    var healer by autoColor(0xff00aa).remember()
+    var mage by autoColor(0x0000ff).remember()
+    var tank by autoColor(0x00ff00).remember()
 
     var normalRoom by autoColor(0xAb6b00).remember()
     var rareRoom by autoColor(0x0000FF).remember()

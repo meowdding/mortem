@@ -14,7 +14,7 @@ import com.teamresourceful.resourcefulconfigkt.api.builders.TypeBuilder
 interface AutoTranslated {
     val translationBase: String
 
-    fun makeTranslation(id: String) = listOf(translationBase, id).filter { it.isNotEmpty() }.joinToString(".")
+    fun makeTranslation(id: String) = listOf(translationBase, id).filter { it.isNotEmpty() }.joinToString(".").replace("-", ".")
 
     context(entryBuilder: EntriesBuilder)
     fun TypeBuilder.makeTranslations() {

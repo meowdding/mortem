@@ -249,7 +249,7 @@ class RoomNode(
                 val blockState = level.getBlockState(pos)
 
                 when (blockState.block) {
-                    Blocks.BLUE_TERRACOTTA -> {
+                    Blocks.DYED_TERRACOTTA.blue() -> {
                         if (airNeighbours(pos) < 2) continue
 
                         rotation = clayRotation.rotation

@@ -1,17 +1,16 @@
 package me.owdding.mortem.config.category
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
+import me.owdding.mortem.config.AutoTranslated
 import me.owdding.mortem.features.ItemRefill
 
-object MiscConfig : CategoryKt("misc") {
-    override val name = Translated("mortem.config.misc")
+object MiscConfig : CategoryKt("misc"), AutoTranslated {
+    override val translationBase: String = "mortem.config.misc"
+    override val name = Translated(translationBase)
 
-    var itemRefill by select(ItemRefill.RefillItems.ENDER_PEARL) {
-        translation = "mortem.config.misc.item_refill"
-    }
+    var itemRefill by autoSelect(ItemRefill.RefillItems.ENDER_PEARL)
 
-    var automaticRefillOnEnter by boolean(false) {
-        translation = "mortem.config.misc.automatic_refill_on_enter"
+    var automaticRefillOnEnter by autoBoolean(false) {
         condition = { false }
     }
 

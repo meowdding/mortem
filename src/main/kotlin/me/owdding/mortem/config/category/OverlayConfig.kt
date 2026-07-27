@@ -2,27 +2,22 @@ package me.owdding.mortem.config.category
 
 import com.teamresourceful.resourcefulconfigkt.api.CategoryKt
 import me.owdding.lib.overlays.ConfigPosition
+import me.owdding.mortem.config.AutoTranslated
 import me.owdding.mortem.config.separator
 
-object OverlayConfig  : CategoryKt("overlays") {
-    val translation = "mortem.config.overlays"
-    override val name = Translated(translation)
+object OverlayConfig : CategoryKt("overlays"), AutoTranslated {
+    override val translationBase = "mortem.config.overlays"
+    override val name = Translated(translationBase)
 
     init {
-        separator("$translation.dungeonbreaker_separator")
+        separator("$translationBase.dungeon_breaker")
     }
 
-    var dungeonBreakerOverlay by boolean(true) {
-        translation = "$translation.dungeonbreaker_overlay"
-    }
+    var dungeonBreakerOverlay by autoBoolean("dungeon_breaker-overlay", true)
 
-    var dungeonBreakerOverlayPrefix by boolean(true) {
-        translation = "$translation.dungeonbreaker_overlay_prefix"
-    }
+    var dungeonBreakerOverlayPrefix by autoBoolean("dungeon_breaker-prefix", true)
 
-    var dungeonBreakerShowWhenHolding by boolean(false) {
-        translation = "$translation.dungeonbreaker_show_when_holding"
-    }
+    var dungeonBreakerShowWhenHolding by autoBoolean("dungeon_breaker-show_when_holding", false)
 }
 
 object OverlayPositions : CategoryKt("overlaysPositions") {

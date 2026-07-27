@@ -1,0 +1,217 @@
+{
+  "@meowdding:metadata": {
+    "allowMultiline": true,
+    "allowReferences": true,
+    "allowTags": true,
+    "objectAsKeys": true
+  },
+  "mortem": {
+    "config": {
+      "overlays": {
+        "@value": "Overlays",
+        "dungeon breaker": {
+          "@value": "Dungeon Breaker Config",
+          "desc": "Shows dungeon breaker usages in the hud.",
+          "overlay": {
+            "@value": "Enable Overlay",
+            "desc": "Enables the dungeon breaker overlay."
+          },
+          "prefix": {
+            "@value": "Prefix",
+            "desc": "Enables the dungeon breaker prefix."
+          },
+          "show when holding": {
+            "@value": "Only when holding",
+            "desc": "Hides the overlay while not holding a dungeon breaker."
+          }
+        }
+      },
+      "notifier": {
+        "@value": "Notifier",
+        "max secrets notifier": {
+          "@value": "Enable notifier",
+          "desc": "Enables the chat message.",
+          "separator": {
+            "@value": "Max secrets notifier",
+            "desc": "Sends a chat message when max secrets are reached."
+          },
+          "type": {
+            "@value": "Announce Type",
+            "desc": "Where to send the chat message"
+          }
+        }
+      },
+      "misc": {
+        "@value": "Misc",
+        "item refiller": {
+          "@value": "Item Refill",
+          "desc": "Refills some useful dungeon items."
+        }
+      },
+      "commands": {
+        "@value": "Commands",
+        "join": {
+          "@value": "Join Commands",
+          "desc": "Adds /join[f/m][1-7] commands"
+        }
+      },
+      "catacombs": {
+        "@value": "Catacombs",
+        "colors": {
+          "@value": "Colors",
+          "archer": {
+            "@value": "Archer Color",
+            "desc": "The color used for the Archer."
+          },
+          "berserker": {
+            "@value": "Berserker Color",
+            "desc": "The color used for the Berserker."
+          },
+          "healer": {
+            "@value": "Healer Color",
+            "desc": "The color used for the Healer."
+          },
+          "mage": {
+            "@value": "Mage Color",
+            "desc": "The color used for the Mage."
+          },
+          "tank": {
+            "@value": "Tank Color",
+            "desc": "The color used for the Tank."
+          },
+          "normalRoom": {
+            "@value": "Normal Room Color",
+            "desc": "The color used for the Normal Room."
+          },
+          "rareRoom": {
+            "@value": "Rare Room Color",
+            "desc": "The color used for the Rare Room."
+          },
+          "trapRoom": {
+            "@value": "Trap Room Color",
+            "desc": "The color used for the Trap Room."
+          },
+          "fairyRoom": {
+            "@value": "Fairy Room Color",
+            "desc": "The color used for the Fairy Room."
+          },
+          "puzzleRoom": {
+            "@value": "Puzzle Room Color",
+            "desc": "The color used for the Puzzle Room."
+          },
+          "minibossRoom": {
+            "@value": "Miniboss Room Color",
+            "desc": "The color used for the Miniboss Room."
+          },
+          "bloodRoom": {
+            "@value": "Blood Room Color",
+            "desc": "The color used for the Blood Room."
+          },
+          "startRoom": {
+            "@value": "Start Room Color",
+            "desc": "The color used for the Start Room."
+          },
+          "unknownRoom": {
+            "@value": "Unknown Room Color",
+            "desc": "The color used for the Unknown Room."
+          },
+          "defaultRoom": {
+            "@value": "Default Room Color",
+            "desc": "The color used for the Default Room."
+          },
+          "clearedCheckmark": {
+            "@value": "Cleared Checkmark Color",
+            "desc": "The color used for the Cleared Checkmark."
+          },
+          "completeCheckmark": {
+            "@value": "Complete Checkmark Color",
+            "desc": "The color used for the Complete Checkmark."
+          },
+          "failedCheckmark": {
+            "@value": "Failed Checkmark Color",
+            "desc": "The color used for the Failed Checkmark."
+          },
+          "noneCheckmark": {
+            "@value": "None Checkmark Color",
+            "desc": "The color used for the None Checkmark."
+          },
+          "witherDoor": {
+            "@value": "Wither Door Color",
+            "desc": "The color used for the Wither Door."
+          },
+          "bloodDoor": {
+            "@value": "Blood Door Color",
+            "desc": "The color used for the Blood Door."
+          },
+          "normalDoor": {
+            "@value": "Normal Door Color",
+            "desc": "The color used for the Normal Door."
+          },
+          "trapDoor": {
+            "@value": "Trap Door Color",
+            "desc": "The color used for the Trap Door."
+          },
+          "minibossDoor": {
+            "@value": "Miniboss Door Color",
+            "desc": "The color used for the Miniboss Door."
+          },
+          "puzzleDoor": {
+            "@value": "Puzzle Door Color",
+            "desc": "The color used for the Puzzle Door."
+          },
+          "fairyDoor": {
+            "@value": "Fairy Door Color",
+            "desc": "The color used for the Fairy Door."
+          },
+          "defaultDoor": {
+            "@value": "Default Door Color",
+            "desc": "The color used for the Default Door."
+          }
+        },
+        "map": {
+          "@value": "Map",
+          "roomWidth": {
+            "@value": "Room Width",
+            "desc": "Width used for rooms in pixels on the map."
+          },
+          "roomHeight": {
+            "@value": "Room Height",
+            "desc": "Height used for rooms in pixels on the map."
+          },
+          "hallwayHeight": {
+            "@value": "Hallway Height",
+            "desc": "Height used for hallways in pixels on the map."
+          },
+          "hallwayWidth": {
+            "@value": "Hallway Width",
+            "desc": "Width used for hallways in pixels on the map."
+          },
+          "doorWidth": {
+            "@value": "Door Width",
+            "desc": "Width used for doors in pixels on the map."
+          },
+          "headSize": {
+            "@value": "Head Size",
+            "desc": "Size used for heads on the map in pixels."
+          },
+          "xInterpolationTime": {
+            "@value": "Interpolation Time X",
+            "desc": "Time the interpolation of the x coordinate takes."
+          },
+          "xEasingFunction": {
+            "@value": "Easing Function X",
+            "desc": "The easing function used for the interpolation of the x coordinate."
+          },
+          "yInterpolationTime": {
+            "@value": "Interpolation Time Y",
+            "desc": "Time the interpolation of the y coordinate takes."
+          },
+          "yEasingFunction": {
+            "@value": "Easing Function Y",
+            "desc": "The easing function used for the interpolation of the y coordinate."
+          }
+        }
+      }
+    }
+  }
+}
