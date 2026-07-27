@@ -126,9 +126,16 @@ tasks.processResources {
     })
 
     filesMatching("fabric.mod.json") {
+        val range = if (versionedCatalog.versions.has("minecraft.range")) {
+            versionedCatalog.versions["minecraft.range"].toString()
+        } else {
+            val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
+            val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
+            ">=$start <=$end"
+        }
         expand(mapOf(
             "version" to version,
-            "minecraft" to versionedCatalog.versions["minecraft"]
+            "minecraft" to range
         ))
     }
 }
