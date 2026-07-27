@@ -21,7 +21,15 @@
     "mortem.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16",
-    "minecraft": "${minecraft}"
+    "fabricloader": ">=0.16.10",
+    "minecraft": "${minecraft_range}",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${fabric_lang_kotlin}",
+    "resourcefullib": ">=${rlib}",
+    "olympus": ">=${olympus}",
+    "skyblock-api": ">=${sbapi}",
+    "meowdding-lib": ">=${mlib}",
+    "resourcefulconfigkt": ">=${rconfigkt}",
+    "resourcefulconfig": ">=${rconfig}"
   }
 }

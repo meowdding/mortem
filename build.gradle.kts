@@ -125,18 +125,28 @@ tasks.processResources {
         from(rootProject.file("src/lang")).include("*.json").into("assets/mortem/lang")
     })
 
+    val range = if (versionedCatalog.versions.has("minecraft.range")) {
+        versionedCatalog.versions["minecraft.range"].toString()
+    } else {
+        val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
+        val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
+        ">=$start <=$end"
+    }
+    val replacements = mapOf(
+        "version" to version,
+        "minecraft_range" to range,
+        "fabric_lang_kotlin" to versionedCatalog.versions["fabric.language.kotlin"],
+        "sbapi" to versionedCatalog.versions["skyblockapi"],
+        "rlib" to versionedCatalog.versions["resourceful.lib"],
+        "olympus" to versionedCatalog.versions["olympus"],
+        "mlib" to versionedCatalog.versions["meowdding.lib"],
+        "rconfigkt" to versionedCatalog.versions["resourceful-configkt"],
+        "rconfig" to versionedCatalog.versions["resourceful.config"]
+    )
+    inputs.properties(replacements)
+
     filesMatching("fabric.mod.json") {
-        val range = if (versionedCatalog.versions.has("minecraft.range")) {
-            versionedCatalog.versions["minecraft.range"].toString()
-        } else {
-            val start = versionedCatalog.versions.getOrFallback("minecraft.start", "minecraft")
-            val end = versionedCatalog.versions.getOrFallback("minecraft.end", "minecraft")
-            ">=$start <=$end"
-        }
-        expand(mapOf(
-            "version" to version,
-            "minecraft" to range
-        ))
+        expand(replacements)
     }
 }
 
