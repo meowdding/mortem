@@ -46,7 +46,7 @@ import kotlin.math.roundToInt
 object CatacombMapOverlay : MortemOverlay {
     override val name: Component get() = Text.of("Catacomb Map")
     override val position: Position get() = OverlayPositions.dungeonMap
-    override val enabled: Boolean get() = CatacombsManager.catacomb != null
+    override val enabled: Boolean get() = CatacombsManager.catacomb != null && CatacombsMapConfig.enable
     override val bounds: Pair<Int, Int> get() {
         val catacomb = CatacombsManager.catacomb ?: return 0 to 0
         return (catacomb.size.xRooms * combinedWidth - verticalHallwayWidth) to (catacomb.size.yRooms * combinedHeight - horizontalHallwayWidth)

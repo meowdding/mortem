@@ -175,15 +175,6 @@ object CatacombsManager {
     @Subscription(TickEvent::class)
     fun tick() = catacomb?.tick()
 
-    @Subscription
-    fun onNodeSwitch(event: CatacombNodeChangeEvent<*, *>) {
-        Text.of("Room switch, ${event.previous} -> ${event.current}").sendWithPrefix()
-    }
-    @Subscription
-    fun onRoomSwitch(event: CatacombRoomChangeEvent) {
-        Text.of("Room switch, ${event.previous?.backingData?.name} -> ${event.current.backingData?.name}").sendWithPrefix()
-    }
-
     @Subscription(TickEvent::class)
     @TimePassed("5s")
     fun saveAll() {
@@ -198,7 +189,6 @@ object CatacombsManager {
     fun worldPosToGridPos(pos: BlockPos): Vector2i = worldPosToGridPos(pos.x, pos.z)
     fun worldPosToGridPos(pos: Vector2ic): Vector2i = worldPosToGridPos(pos.x(), pos.y())
     fun worldPosToGridPos(pos: Vector3d): Vector2i = worldPosToGridPos(pos.x().floor(), pos.z().floor())
-
 
     fun worldPosToGridPos(scalar: Int): Int {
         val chunk = floor(scalar / 16f).toInt()

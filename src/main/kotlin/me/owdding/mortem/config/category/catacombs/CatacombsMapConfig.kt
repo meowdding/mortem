@@ -10,6 +10,8 @@ object CatacombsMapConfig : CategoryKt("map"), AutoTranslated {
     override val translationBase: String = "mortem.config.catacombs.map"
     override val name = Translated(translationBase)
 
+    val enable by autoBoolean(true)
+
     val roomWidth by autoInt(20)
     val roomHeight by autoInt(20)
 

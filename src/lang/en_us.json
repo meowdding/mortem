@@ -170,6 +170,10 @@
         },
         "map": {
           "@value": "Map",
+          "enable": {
+            "@value": "Enable map overlay",
+            "desc": "Whether to render the map overlay or not."
+          },
           "roomWidth": {
             "@value": "Room Width",
             "desc": "Width used for rooms in pixels on the map."
