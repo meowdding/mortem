@@ -7,8 +7,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     idea
     id("net.fabricmc.fabric-loom")
-    kotlin("jvm") version "2.4.0"
-    //id("org.jetbrains.kotlinx.kover") version "0.9.8"
+    kotlin("jvm") version "2.4.21"
     alias(libs.plugins.ksp)
     alias(libs.plugins.meowdding.auto.mixins)
     `versioned-catalogues`
@@ -177,26 +176,4 @@ idea {
 autoMixins {
     mixinPackage = "me.owdding.mortem.mixins"
     projectName = "mortem"
-    //mixinExtrasVersion = "0.5.0"
 }
-
-/*
-kover {
-    reports {
-        filters {
-            excludes {
-                packages("me.owdding.mortem.generated")
-                annotatedBy("me.owdding.mortem.IgnoreCoverage")
-            }
-        }
-        total {
-            html {
-                title = "Mortem coverage"
-                onCheck = false
-                charset = "UTF-8"
-                htmlDir = project.layout.buildDirectory.dir("coverage")
-            }
-        }
-    }
-}
-*/

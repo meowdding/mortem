@@ -1,0 +1,24 @@
+[versions]
+
+minecraft = "26.3"
+minecraft_range = "26.3.x"
+fabric-api="0.162.0+26.3"
+
+resourceful-configkt = "4.0.0-beta.1"
+
+resourceful-lib = "6.0.1"
+resourceful-config = "6.0.2"
+olympus = "1.9.5"
+placeholders = "3.1.0-beta.1+26.2"
+
+[libraries]
+
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+
+resourceful-config-kotlin = { module = "com.teamresourceful.resourcefulconfigkt:resourcefulconfigkt-26.1-rc-1", version.ref = "resourceful-configkt" }
+
+resourceful-lib = { module = "com.teamresourceful.resourcefullib:resourcefullib-fabric-26.3", version.ref = "resourceful-lib" }
+resourceful-config = { module = "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-26.3", version.ref = "resourceful-config" }
+olympus = { module = "earth.terrarium.olympus:olympus-fabric-26.3", version.ref = "olympus" }
+placeholders = { module = "eu.pb4:placeholder-api", version.ref = "placeholders" }

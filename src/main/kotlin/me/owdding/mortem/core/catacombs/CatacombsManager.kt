@@ -3,7 +3,6 @@ package me.owdding.mortem.core.catacombs
 import me.owdding.ktmodules.Module
 import me.owdding.lib.extensions.floor
 import me.owdding.lib.extensions.shorten
-import me.owdding.mortem.Mortem
 import me.owdding.mortem.core.catacombs.nodes.RoomNode
 import me.owdding.mortem.core.catacombs.roommatching.CatacombMapMatcher
 import me.owdding.mortem.core.catacombs.roommatching.CatacombWorldMatcher
@@ -22,6 +21,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.game.ClientboundMapItemDataPacket
 import net.minecraft.world.level.chunk.status.ChunkStatus
 import org.joml.Vector2i
+import org.joml.Vector2ic
+import org.joml.Vector3d
 import org.joml.Vector3dc
 import tech.thatgravyboat.skyblockapi.api.events.base.Subscription
 import tech.thatgravyboat.skyblockapi.api.events.base.predicates.OnlyIn
@@ -46,12 +47,6 @@ import kotlin.io.path.createDirectories
 import kotlin.io.path.writeText
 import kotlin.math.abs
 import kotlin.math.floor
-import me.owdding.mortem.core.event.catacomb.CatacombNodeChangeEvent
-import me.owdding.mortem.core.event.catacomb.CatacombRoomChangeEvent
-import me.owdding.mortem.utils.extensions.isCrossHallway
-import me.owdding.mortem.utils.extensions.isHorizontalHallway
-import org.joml.Vector2ic
-import org.joml.Vector3d
 
 @Module
 object CatacombsManager {
